@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration>
+ 
+<log4j:configuration debug="true">
+
+
+
+<logger name="MatchResultsLogger" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="MatchResultsAppender"/>
+</logger>
+
+<logger name="MatchStatsLogger" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="MatchStatsAppender"/>
+</logger>
+  
+<logger name="NPILogger" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="NPILoggerAppender"/>
+</logger>
+ 
+ <logger name="ConceptNotFoundLogger" additivity="false">
+		<level value="INFO"/>
+		<appender-ref ref="ConceptNotFoundAppender"/>
+</logger>
+
+<logger name="ca.uhn.hl7v2.parser" additivity="false">
+		<level value="WARN"/>
+		<appender-ref ref="HapiAppender"/>
+</logger>
+
+
+
+<logger name="org.openmrs.module.patientmatching" additivity="false">
+		<appender-ref ref="patient_matching_file_log"/>
+		<appender-ref ref="MatchStatsAppender"/>
+		<appender-ref ref="MatchResultsAppender"/>
+</logger>
+
+<logger name="org.regenstrief.linkage"  additivity="false" >
+		<level value="INFO"/>
+		<appender-ref ref="patient_matching_file_log"/>
+</logger>
+
+<logger name="org.org.module"  additivity="false" >
+		<appender-ref ref="error-out"/>
+		<appender-ref ref="info-out"/>
+		
+</logger>
+
+ 
+ <root>
+ 	<level value="info"/>
+ 	<appender-ref ref="error-out"/>
+	<appender-ref ref="info-out"/>
+</root> 
+
+
+
+<appender name="patient_matching_file_log" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/link_module.log"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/>
+    </layout>
+  </appender> 
+	
+
+<appender name="error-out" class="org.apache.log4j.DailyRollingFileAppender"> 
+                <param name="File" value="${catalina.home}/logs/nbs_error.log"/> 
+                <layout class="org.apache.log4j.PatternLayout"> 
+                        <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/> 
+                </layout> 
+                <filter class="org.apache.log4j.varia.LevelRangeFilter">
+                        <param name="LevelMax" value="error"/>
+                        <param name="LevelMin" value="error"/>
+                        <param name="AcceptOnMatch" value="true"/>
+                </filter>
+ </appender> 
+ 
+ <appender name="info-out" class="org.apache.log4j.DailyRollingFileAppender"> 
+                <param name="File" value="${catalina.home}/logs/nbs.log"/> 
+                <layout class="org.apache.log4j.PatternLayout"> 
+                        <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/> 
+                </layout> 
+                <filter class="org.apache.log4j.varia.LevelRangeFilter">
+                        <param name="LevelMax" value="warn"/>
+                        <param name="LevelMin" value="info"/>
+                        <param name="AcceptOnMatch" value="true"/>
+                </filter>
+ </appender> 
+
+
+
+  <appender name="ResultsAppender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/results.log"/>
+    <param name="Threshold" value="INFO"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%m%n"/>
+    </layout>
+  </appender>
+    
+ <appender name="MatchResultsAppender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/MatchResults.log"/>
+    <param name="Threshold" value="INFO"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/>
+    </layout>
+  </appender> 
+  
+ <appender name="MatchStatsAppender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/MatchStats.log"/>
+    <param name="Threshold" value="INFO"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/>
+    </layout>
+  </appender> 
+  
+  <appender name="HapiAppender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/Hapi.log"/>
+    <param name="Threshold" value="WARN"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/>
+    </layout>
+  </appender> 
+  
+  <appender name="DuplicateAppender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/duplicates.log"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%m%n"/>
+    </layout>
+  </appender> 
+  
+  <appender name="MD5Appender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/md5.log"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%m%n"/>
+    </layout>
+  </appender> 
+  
+  <appender name="ATDLoggerAppender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/ATDLogger.log"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/>
+    </layout>
+  </appender> 
+  
+  <appender name="HL7LoggerAppender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/HL7Logger.log"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="[%d{yyyy-MM-dd HH:mm:ss.SSS}]|%p|%C{1}.%M||%L|%m%n"/>
+    </layout>
+  </appender> 
+  
+  <appender name="ConceptNotFoundAppender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/ConceptNotFound.log"/>
+    <param name="Threshold" value="INFO"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/>
+    </layout>
+  </appender> 
+  
+  <appender name="NPILoggerAppender" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/NPI.log"/>
+    <param name="Threshold" value="INFO"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/>
+    </layout>
+  </appender> 
+
+  <appender name="SimpleServer" class="org.apache.log4j.DailyRollingFileAppender">
+    <param name="File" value="${catalina.home}/logs/SimpleServer.log"/>
+    <param name="Threshold" value="INFO"/>
+    <param name="Append" value="true"/>
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/>
+    </layout>
+  </appender> 
+  
+</log4j:configuration>

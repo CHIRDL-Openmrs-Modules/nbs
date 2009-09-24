@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqldiff PUBLIC "-//OpenMRS//DTD OpenMRS SQL Diff Config 1.0//EN" "http://resources.openmrs.org/doctype/sqldiff-1.0.dtd">
+
+<sqldiff version="1.0">
+	<help>
+		USE:
+			The diffs are ordered by datamodel version number.
+			The script can be run in a top down fashion and is
+			expected to not failor overwrite old data
+		
+		EXPECT:
+			- "use business-database-name;" was called prior to
+			   calling this script
+	</help>
+	
+	<diff>
+		<version>1.0.0</version>
+		<author>Vibha Anand</author>
+		<date>Nov 8th 2006</date>
+		<description>
+			nbs_alert table added
+		</description>
+		<sql>
+		DROP TABLE IF EXISTS `nbs_alert`;
+		CREATE TABLE `nbs_alert` (
+  `nbs_alert_id` int(11) NOT NULL auto_increment,
+  `alert_id` int(11) NOT NULL,
+  `form_id` int(11) NOT NULL,
+  `patient_id` int(11) default NULL,
+  `encounter_id` int(11) default NULL,
+  `mrn` varchar(20) default NULL,
+  `provider` varchar(100) default NULL,
+  `retired` tinyint(1) NOT NULL,
+  `datestamp` datetime default NULL,
+  `Record_Sta` varchar(20) default NULL,
+  `Time_Stamp` varchar(20) default NULL,
+  `status` int(11) default '0',
+  PRIMARY KEY  (`nbs_alert_id`),
+  KEY `patient_id` (`patient_id`),
+  CONSTRAINT `patient_id` FOREIGN KEY (`patient_id`) REFERENCES `patient_identifier` (`patient_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+ 		</sql>
+ 	</diff>
+ 
+	
+		<diff>
+		<version>1.0.2</version>
+		<author>Tammy Dugan</author>
+		<date>July 10th 2008</date>
+		<description>
+			Added provider_id field to nbs_alert table.
+		</description>
+		<sql>
+		alter table nbs_alert add provider_id int(11);
+		</sql>
+	</diff>
+	
+		<diff>
+		<version>1.0.3</version>
+		<author>Meena Sheley</author>
+		<date>May 12th 2009</date>
+		<description>
+			Add listener task.
+		</description>
+		<sql>
+INSERT IGNORE INTO scheduler_task_config
+   (`name`, `schedulable_class`, `start_time_pattern`, `repeat_interval`, `start_on_startup`, `started`, `created_by`, `date_created`)
+select 'RileyMessageProcessor', 'org.openmrs.module.nbsmodule.hl7.messageProcessor', 
+'MM/dd/yyyy HH:mm:ss', 86400000, 1, 0, 1,NOW() from 
+(select count(*) as cnt from scheduler_task_config where name='RileyMessageProcessor') a
+where a.cnt=0;
+
+INSERT IGNORE INTO scheduler_task_config_property
+   (`name`, `value`, `task_config_id`)
+select a.* from 
+(select 'port', '5002', max(task_config_id) from scheduler_task_config where name='RileyMessageProcessor')a,
+(select count(*) as cnt from scheduler_task_config_property where name='port'
+and task_config_id=(select max(task_config_id) from scheduler_task_config where name='RileyMessageProcessor') )b
+where b.cnt=0;
+
+INSERT IGNORE INTO scheduler_task_config
+   (`name`, `schedulable_class`, `start_time_pattern`, `repeat_interval`, `start_on_startup`, `started`, `created_by`, `date_created`)
+select 'INPCMessageProcessor', 'org.openmrs.module.nbsmodule.hl7.messageProcessor', 
+'MM/dd/yyyy HH:mm:ss', 86400000, 1, 0, 1,NOW() from 
+(select count(*) as cnt from scheduler_task_config where name='INPCMessageProcessor') a
+where a.cnt=0;
+
+ INSERT IGNORE INTO scheduler_task_config_property
+   (`name`, `value`, `task_config_id`)
+select a.* from 
+(select 'port', '5003', max(task_config_id) from scheduler_task_config where name='INPCMessageProcessor')a,
+(select count(*) as cnt from scheduler_task_config_property where name='port'
+and task_config_id=(select max(task_config_id) from scheduler_task_config where name='INPCMessageProcessor') )b
+where b.cnt=0;
+
+INSERT IGNORE INTO `scheduler_task_config` 
+(`name`, `schedulable_class`, `start_time_pattern`, `repeat_interval`, `start_on_startup`, `started`, `created_by`, `date_created`)
+select 'NBSResponseGenerator', 'org.openmrs.module.nbsmodule.ResponseGenerator', 
+'MM/dd/yyyy HH:mm:ss', 86400000, 1, 0, 1,NOW() from 
+(select count(*) as cnt from scheduler_task_config where name='NBSResponseGenerator') a
+where a.cnt=0;
+
+INSERT IGNORE INTO scheduler_task_config_property
+   (`name`, `value`, `task_config_id`)
+select a.* from 
+(select 'port', '8765', max(task_config_id) from scheduler_task_config where name='NBSResponseGenerator')a,
+(select count(*) as cnt from scheduler_task_config_property where name='port'
+and task_config_id=(select max(task_config_id) from scheduler_task_config where name='NBSResponseGenerator') )b
+where b.cnt=0;
+
+		</sql>
+	</diff>
+	
+	
+</sqldiff>

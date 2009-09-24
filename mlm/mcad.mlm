@@ -1,0 +1,44 @@
+Maintenance:
+	Title:		MCAD Reminder;;
+	Filename:	mcad;;
+	Version:	0.2;;
+	Institution:	Indiana University School of Medicine;;
+	Author:		Steve Downs;;
+	Specialist:	Pediatrics;;
+	Date:		05-22-2007;;
+	Validation:	;;
+Library:
+	Purpose:	Provides a specific reminder, tailored to the patient who identified one or more fatty acid disorders;;
+	Explanation:	Based on AAP screening recommendations;;
+  	Keywords:	fatty, acid, fatty acid disorder;;
+	Citations:	Screening for fatty acid disorder AAP;;
+	Links:	;;
+Knowledge:
+	Type:	data_driven;;
+/*	Priority:	232;;
+	Evoke:	;;
+	Urgency:	;;
+*/	
+Data:
+
+fa := read last {FATTY ACID DISORDERS} ;
+hal := read first {TYPE OF PROTEIN FEED} ;
+
+;;
+Priority:	232;;
+Evoke:	;;
+
+Logic:
+If hal = 'HYPERAL(TPN)' then conclude False;
+If fa = 'C8-C-01-003' then conclude True;
+
+
+;;
+Action:
+
+/*write provider At provider */
+provider := call patientproviderNames;
+
+write ("The above results are suggestive of Medium Chain ACYL-CoA Dehydrogenase Deficiency. An immediate recollection is necessary to further evaluate this infant") At paragraphText;
+;;
+end:

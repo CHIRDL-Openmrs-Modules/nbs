@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="org.openmrs.module.nbsmodule">
+
+	<class name="org.openmrs.module.nbsmodule.NBSModuleResponse" table="nbs_alert">
+
+		<id name="nbsalertId" type="int" column="nbs_alert_id">
+			<generator class="native" />
+		</id>
+			
+		
+		<property name="formId" type="java.lang.Integer" column="form_id"
+				length="11" not-null="true"/>
+		<property name="alertId" type="java.lang.Integer" column="alert_id"
+				length="11" not-null="true"/>
+		
+		<property name="retired" type="boolean" column="retired"
+			length="1" not-null="true" />
+		<!-- <property name="response" type="java.lang.String" column="alert"
+			not-null="true" length="10000" /> -->
+		<property name="datestamp" type="java.util.Date" column="datestamp"
+			not-null="true" length="20" />
+		
+		<many-to-one name="patient" class="org.openmrs.Patient" not-null="true">
+			<column name="patient_id" />
+		</many-to-one>
+		
+		<many-to-one name="encounter" class="org.openmrs.Encounter" not-null="true">
+			<column name="encounter_id" />
+		</many-to-one>
+		
+		<property name="recordSta" type="java.lang.String" column="Record_Sta"
+			length="11" not-null="true" />
+			
+		<property name="provider" type="java.lang.String" column="provider"
+			length="100" not-null="true" />
+
+		<property name="mrn" type="java.lang.String" column="mrn"
+			length="20" not-null="true" />	
+
+		<property name="status" type="java.lang.Integer" column="status" />
+		
+		<property name="providerId" type="java.lang.Integer" column="provider_id" />
+
+	</class>
+	
+</hibernate-mapping>
