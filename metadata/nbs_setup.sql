@@ -86,6 +86,185 @@ INSERT INTO `form_field` VALUES ('1505', '15', '1505', '40', null, null, null, n
 
 INSERT INTO `encounter_type` VALUES ('1', 'HL7Message', 'Encounter from hl7 source', '1', '2009-05-07 00:00:00', '0', null, null, null);
 
+
+insert into location ( name, description, creator, date_created, retired) VALUES ( 'RILEY', 'RILEY', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES ('IHIE', 'IHIE' ,'1', '2008-04-24 00:00:00', '0' );
+insert into location ( name, description, creator, date_created, retired) VALUES (  '0','UNIVERSITY/RILEY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES ( '001', 'RILEY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES ( '002', 'UNIVERSITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES ( '003', 'MID AMERICA CLINICAL LAB', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES ( '010', 'WISHARD HOSPITAL-PEDIATRICS', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES ( '020', 'CHILDBEARING CENTER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES ( '023', 'HENDRICKS COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '024', 'ST. VINCENT HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '025', 'BLOOMINGTON HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '029', 'KINGS DAUGHTERS  HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '030', 'COMMUNITY EAST HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '031', 'COMMUNITY HOSPITAL OF ANDERSON', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '032', 'WOMENS HOSPITAL OF INDPLS', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '033', 'DUPONT HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '034', 'ST. ELIZABETHS HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '035', 'RIVERVIEW HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '037', 'ST. VINCENT - FRANKFORT', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '038', 'SCOTT COUNTY MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '039', 'TERRE HAUTE MEDICAL LAB', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '041', 'DEACONESS HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '042', 'GOOD SAMARITAN HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '044', 'WOMENS HOSPITAL-NEWBURGH', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '047', 'JOHNSON MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '048', 'LUTHERAN HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '049', 'FAYETTE MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '051', 'ST. MARYS MEDICAL CTR-EVANS.', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '052', 'BEDFORD MEDICAL CENTER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '054', 'DEARBORN COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '056', 'HANCOCK MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '057', 'HENRY COUNTY MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '062', 'COLUMBUS REGIONAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '064', 'REID MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '066', 'LAFAYETTE HOME HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '067', 'HOWARD COMMUNITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '068', 'JACKSON CO. SCHNECK HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '069', 'PARKVIEW HEALTH SYSTEM', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '070', 'PARKVIEW MEM. HOSP.-NORTH', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '073', 'ST. JOSEPH - FT. WAYNE', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '078', 'BLUFFTON REGIONAL MED CTR.', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '079', 'ST. VINCENT - CLAY', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '082', 'ST. CLARE MEDICAL CENTER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '083', 'DAVIESS COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '084', 'DECATUR CO. MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '085', 'DUKES MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '087', 'JASPER COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '088', 'LAPORTE HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '089', 'MARION GENERAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '095', 'MORGAN HOSP. & MED. CENTER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '224', 'ST. VINCENT - CARMEL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '251', 'PORTER MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '253', 'PUTNAM COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '258', 'ST. ANTHONY CROWN POINT', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '260', 'ST. JOHNS MEDICAL CENTER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '262', 'TERRE HAUTE REGIONAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '263', 'TIPTON COUNTY MEMORIAL HOSP.', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '265', 'WABASH COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '267', 'MAJOR HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '269', 'CLARK CO. MEM. HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '271', 'GIBSON GENERAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '272', 'SULLIVAN CO. COMM. HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '273', 'WHITE COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '274', 'WIRTH HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '302', 'COMMUNITY NORTH HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '333', 'ST. FRANCIS - MOORESVILLE', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '501', 'WHITLEY COUNTY MEMORIAL HOSP.', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '502', 'JAY COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '503', 'HUNTINGTON MEMORIAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '504', 'LOGANSPORT MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '505', 'COMMUNITY BREMEN HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '506', 'STARKE MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '507', 'ADAMS COUNTY MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '508', 'METHODIST HOSP OF MERRILLVILLE', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '509', 'METHODIST HOSP. OF GARY', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '510', 'ST. VINCENT - RANDOLPH', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '511', 'MICHIANA COMMUNITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '512', 'BLACKFORD COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '513', 'PARKVIEW NOBLE HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '514', 'GREENE COUNTY GENERAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '515', 'ST. JOSEPH - HUNTINGBURG', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '516', 'PULASKI MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '517', 'CAMERON MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '518', 'WOODLAWN HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '519', 'ST. JOSEPH - PLYMOUTH', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '520', 'DUNN MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '521', 'DEKALB MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '522', 'LAGRANGE COMM. HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '523', 'ST. VINCENT MERCY HOSP.', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '524', 'WELLS COMMUNITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '525', 'MARGARET MARY COMMUNITY HOSP.', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '526', 'JASPER MEMORIAL HOSP & H.C.CTR', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '528', 'PERRY COUNTY MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '530', 'WITHAM MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '531', 'WEST CENTRAL COMM HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '532', 'ST. CATHERINE HOSP./E. CHICAGO', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '533', 'MUNSTER COMMUNITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '534', 'WELBORN BAPTIST HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '536', 'FLOYD MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '537', 'HARRISON COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '538', 'BLOOMINGTON HOSP/ORANGE CO', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '539', 'WASHINGTON COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '544', 'BALL MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '545', 'ELKHART GENERAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '546', 'GOSHEN GENERAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '547', 'KOSCIUSKO COMMUNITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '548', 'MICHIGAN CITY MEMORIAL HOSP', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '549', 'SOUTH BEND MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '550', 'ST. ANTHONY MEMORIAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '551', 'ST. JOSEPH MISHAWAKA', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '552', 'ST. MARGARET HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '553', 'ST. MARYS - HOBART', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '554', 'RUSH MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '556', 'ST. JOSEPH SOUTH BEND', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '557', 'ACL LABORATORIES', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '558', 'SOUTH BEND MEDICAL FOUNDATION', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '559', 'COMMUNITY SOUTH HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '600', 'KATHY BECZE', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '605', 'INDIANA MIDWIVES ASSOCIATION', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '610', 'BARBARA PARKER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '613', 'ST. FRANCIS HOSPITAL', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '614', 'METHODIST HOSPITAL OF INDPLS.', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '615', 'CLARIAN WEST MED. CENTER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '616', 'INDIANAPOLIS PEDIATRIC ASSOC.', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '620', 'BARRINGTON HEALTH CENTER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '631', 'ST. JOSEPH - KOKOMO', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '700', 'MISCELLANEOUS', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '702', 'GATEWAY HEALTH SERVICES', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '716', 'RILEY NEWBORN COORDINATOR', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '720', 'ANGELMEYER CLINIC', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '725', 'CASTLETON PEDIATRICS', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '750', 'ST. MARGARET - SOUTH HOSP.', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '775', 'VISITING NURSE OF NW INDIANA', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '777', 'DR.GRIDAR VEERULA', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '785', 'PARKVIEW HOME HEALTH', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '800', 'ANN TAYLOR', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '801', 'CM HEALTH CARE RESOURCES', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '802', 'CLARIAN HOME CARE', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '806', 'PAULA ROSE', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '810', 'MARY DOEZEMA', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '814', 'HEIDE HAWLEY', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '815', 'LAFAYETTE HOME HEALTH', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '817', 'JENNIFER WILLIAMS', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '818', 'CAROL VELASQUEZ', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '820', 'CAROLYN MCDONALD', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '822', 'MARY JANE YODER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '825', 'SYLVIA EICHER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '830', 'LYDIANN SCHWARTZ', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '833', 'MARY AYRES', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '835', 'JULIE PAHORESKY', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '840', 'ROXANNE PARKER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '842', 'CATHERINE MAUSER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '844', 'DIANE HOLMES', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '845', 'ANDREA YODER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '847', 'DONNA COBLENTZ', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '850', 'ALTERNATIVE BIRTH CARE', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '875', 'NEW EDEN CARE CENTER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '876', 'DIANA SANDERS', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '877', 'ANN ALAN', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '878', 'WANTINA BROOKS', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '879', 'JULIA FRITZ', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '880', 'CHRISTINE HAMILTON', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '881', 'LYNDA HITCHCOCK', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '882', 'POLLYANNA HOCHSTETLER', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '883', 'KRYSTN MADRINE', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '884', 'GAYLENE VENEGAS', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '885', 'LORI BARTRUG', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '886', 'LAURA GILBERT', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '887', 'RHODA BAUGHMAN', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '888', 'MARY ANN GRIFFIN', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  '900', 'BIRTH AND BEYOND', '1', '2008-04-24 00:00:00', '0');
+insert into location ( name, description, creator, date_created, retired) VALUES (  'INPC', 'INPC', '1', '2008-04-24 00:00:00', '0');
+
+
+insert into location_tag (tag, description, creator, date_created) values ('Default', 'Default location tag', 1, now());
+insert into location_tag (tag, description, creator, date_created) values ('Alternate', 'Alternate location tag', 1, now());
+
+
 INSERT INTO `atd_form_attribute` VALUES ('1', 'defaultMergeDirectory', 'Default directory where Teleform looks for xml to merge for this form');
 INSERT INTO `atd_form_attribute` VALUES ('2', 'defaultExportDirectory', 'Default directory where application looks for Teleform export xml.');
 INSERT INTO `atd_form_attribute` VALUES ('3', 'formInstanceIdTag', 'XML tagname that contains the form_instance_id for the form instance.');
@@ -93,15 +272,12 @@ INSERT INTO `atd_form_attribute` VALUES ('4', 'formInstanceIdTag2', 'Alternate X
 INSERT INTO `atd_form_attribute` VALUES ('5', 'defaultImageDirectory', 'Default directory where appllication looks for Teleform generated image');
 
 
-INSERT INTO `atd_form_attribute_value` VALUES ('1', '16', 'C:\\nbs\\merge\\MCAD', '1');
-INSERT INTO `atd_form_attribute_value` VALUES ('2', '16', 'C:\\chica\\scan\\MCAD', '2');
-INSERT INTO `atd_form_attribute_value` VALUES ('3', '15', 'C:\\nbs\\scan\\CAH', '2');
-INSERT INTO `atd_form_attribute_value` VALUES ('4', '15', 'C:\\nbs\\merge\\CAH', '1');
-INSERT INTO `atd_form_attribute_value` VALUES ('5', '15', 'c:\\nbs\\images\\CAH', '5');
-INSERT INTO `atd_form_attribute_value` VALUES ('6', '16', 'c:\\nbs\\images\\MCAD', '5');
-
-
-
+INSERT INTO `atd_form_attribute_value` VALUES ('1', '16', 'C:\\nbs\\merge\\MCAD', '1', '1', '1');
+INSERT INTO `atd_form_attribute_value` VALUES ('2', '16', 'C:\\chica\\scan\\MCAD', '2', '1', '1');
+INSERT INTO `atd_form_attribute_value` VALUES ('3', '15', 'C:\\nbs\\scan\\CAH', '2', '1', '1');
+INSERT INTO `atd_form_attribute_value` VALUES ('4', '15', 'C:\\nbs\\merge\\CAH', '1', '1', '1');
+INSERT INTO `atd_form_attribute_value` VALUES ('5', '15', 'c:\\nbs\\images\\CAH', '5','1', '1');
+INSERT INTO `atd_form_attribute_value` VALUES ('6', '16', 'c:\\nbs\\images\\MCAD', '5','1', '1');
 
 
 
@@ -4182,183 +4358,50 @@ INSERT INTO `sockethl7listener_npi` VALUES (2,'abdullah','ma\'n','1598766891',NU
 (130,'zafar','atif','1144279340',NULL),
 (131,'zerr','ann','1558304469',NULL);
 
-	
-insert into location ( name, description, creator, date_created, retired) VALUES ( 'RILEY', 'RILEY', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES ('IHIE', 'IHIE' ,'1', '2008-04-24 00:00:00', '0' );
-insert into location ( name, description, creator, date_created, retired) VALUES (  '0','UNIVERSITY/RILEY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES ( '001', 'RILEY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES ( '002', 'UNIVERSITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES ( '003', 'MID AMERICA CLINICAL LAB', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES ( '010', 'WISHARD HOSPITAL-PEDIATRICS', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES ( '020', 'CHILDBEARING CENTER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES ( '023', 'HENDRICKS COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '024', 'ST. VINCENT HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '025', 'BLOOMINGTON HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '029', 'KINGS DAUGHTERS  HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '030', 'COMMUNITY EAST HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '031', 'COMMUNITY HOSPITAL OF ANDERSON', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '032', 'WOMENS HOSPITAL OF INDPLS', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '033', 'DUPONT HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '034', 'ST. ELIZABETHS HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '035', 'RIVERVIEW HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '037', 'ST. VINCENT - FRANKFORT', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '038', 'SCOTT COUNTY MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '039', 'TERRE HAUTE MEDICAL LAB', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '041', 'DEACONESS HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '042', 'GOOD SAMARITAN HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '044', 'WOMENS HOSPITAL-NEWBURGH', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '047', 'JOHNSON MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '048', 'LUTHERAN HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '049', 'FAYETTE MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '051', 'ST. MARYS MEDICAL CTR-EVANS.', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '052', 'BEDFORD MEDICAL CENTER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '054', 'DEARBORN COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '056', 'HANCOCK MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '057', 'HENRY COUNTY MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '062', 'COLUMBUS REGIONAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '064', 'REID MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '066', 'LAFAYETTE HOME HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '067', 'HOWARD COMMUNITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '068', 'JACKSON CO. SCHNECK HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '069', 'PARKVIEW HEALTH SYSTEM', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '070', 'PARKVIEW MEM. HOSP.-NORTH', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '073', 'ST. JOSEPH - FT. WAYNE', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '078', 'BLUFFTON REGIONAL MED CTR.', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '079', 'ST. VINCENT - CLAY', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '082', 'ST. CLARE MEDICAL CENTER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '083', 'DAVIESS COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '084', 'DECATUR CO. MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '085', 'DUKES MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '087', 'JASPER COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '088', 'LAPORTE HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '089', 'MARION GENERAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '095', 'MORGAN HOSP. & MED. CENTER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '224', 'ST. VINCENT - CARMEL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '251', 'PORTER MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '253', 'PUTNAM COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '258', 'ST. ANTHONY CROWN POINT', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '260', 'ST. JOHNS MEDICAL CENTER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '262', 'TERRE HAUTE REGIONAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '263', 'TIPTON COUNTY MEMORIAL HOSP.', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '265', 'WABASH COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '267', 'MAJOR HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '269', 'CLARK CO. MEM. HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '271', 'GIBSON GENERAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '272', 'SULLIVAN CO. COMM. HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '273', 'WHITE COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '274', 'WIRTH HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '302', 'COMMUNITY NORTH HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '333', 'ST. FRANCIS - MOORESVILLE', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '501', 'WHITLEY COUNTY MEMORIAL HOSP.', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '502', 'JAY COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '503', 'HUNTINGTON MEMORIAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '504', 'LOGANSPORT MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '505', 'COMMUNITY BREMEN HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '506', 'STARKE MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '507', 'ADAMS COUNTY MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '508', 'METHODIST HOSP OF MERRILLVILLE', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '509', 'METHODIST HOSP. OF GARY', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '510', 'ST. VINCENT - RANDOLPH', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '511', 'MICHIANA COMMUNITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '512', 'BLACKFORD COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '513', 'PARKVIEW NOBLE HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '514', 'GREENE COUNTY GENERAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '515', 'ST. JOSEPH - HUNTINGBURG', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '516', 'PULASKI MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '517', 'CAMERON MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '518', 'WOODLAWN HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '519', 'ST. JOSEPH - PLYMOUTH', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '520', 'DUNN MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '521', 'DEKALB MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '522', 'LAGRANGE COMM. HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '523', 'ST. VINCENT MERCY HOSP.', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '524', 'WELLS COMMUNITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '525', 'MARGARET MARY COMMUNITY HOSP.', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '526', 'JASPER MEMORIAL HOSP & H.C.CTR', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '528', 'PERRY COUNTY MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '530', 'WITHAM MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '531', 'WEST CENTRAL COMM HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '532', 'ST. CATHERINE HOSP./E. CHICAGO', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '533', 'MUNSTER COMMUNITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '534', 'WELBORN BAPTIST HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '536', 'FLOYD MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '537', 'HARRISON COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '538', 'BLOOMINGTON HOSP/ORANGE CO', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '539', 'WASHINGTON COUNTY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '544', 'BALL MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '545', 'ELKHART GENERAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '546', 'GOSHEN GENERAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '547', 'KOSCIUSKO COMMUNITY HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '548', 'MICHIGAN CITY MEMORIAL HOSP', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '549', 'SOUTH BEND MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '550', 'ST. ANTHONY MEMORIAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '551', 'ST. JOSEPH MISHAWAKA', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '552', 'ST. MARGARET HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '553', 'ST. MARYS - HOBART', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '554', 'RUSH MEMORIAL HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '556', 'ST. JOSEPH SOUTH BEND', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '557', 'ACL LABORATORIES', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '558', 'SOUTH BEND MEDICAL FOUNDATION', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '559', 'COMMUNITY SOUTH HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '600', 'KATHY BECZE', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '605', 'INDIANA MIDWIVES ASSOCIATION', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '610', 'BARBARA PARKER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '613', 'ST. FRANCIS HOSPITAL', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '614', 'METHODIST HOSPITAL OF INDPLS.', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '615', 'CLARIAN WEST MED. CENTER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '616', 'INDIANAPOLIS PEDIATRIC ASSOC.', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '620', 'BARRINGTON HEALTH CENTER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '631', 'ST. JOSEPH - KOKOMO', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '700', 'MISCELLANEOUS', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '702', 'GATEWAY HEALTH SERVICES', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '716', 'RILEY NEWBORN COORDINATOR', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '720', 'ANGELMEYER CLINIC', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '725', 'CASTLETON PEDIATRICS', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '750', 'ST. MARGARET - SOUTH HOSP.', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '775', 'VISITING NURSE OF NW INDIANA', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '777', 'DR.GRIDAR VEERULA', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '785', 'PARKVIEW HOME HEALTH', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '800', 'ANN TAYLOR', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '801', 'CM HEALTH CARE RESOURCES', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '802', 'CLARIAN HOME CARE', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '806', 'PAULA ROSE', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '810', 'MARY DOEZEMA', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '814', 'HEIDE HAWLEY', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '815', 'LAFAYETTE HOME HEALTH', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '817', 'JENNIFER WILLIAMS', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '818', 'CAROL VELASQUEZ', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '820', 'CAROLYN MCDONALD', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '822', 'MARY JANE YODER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '825', 'SYLVIA EICHER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '830', 'LYDIANN SCHWARTZ', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '833', 'MARY AYRES', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '835', 'JULIE PAHORESKY', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '840', 'ROXANNE PARKER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '842', 'CATHERINE MAUSER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '844', 'DIANE HOLMES', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '845', 'ANDREA YODER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '847', 'DONNA COBLENTZ', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '850', 'ALTERNATIVE BIRTH CARE', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '875', 'NEW EDEN CARE CENTER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '876', 'DIANA SANDERS', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '877', 'ANN ALAN', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '878', 'WANTINA BROOKS', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '879', 'JULIA FRITZ', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '880', 'CHRISTINE HAMILTON', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '881', 'LYNDA HITCHCOCK', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '882', 'POLLYANNA HOCHSTETLER', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '883', 'KRYSTN MADRINE', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '884', 'GAYLENE VENEGAS', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '885', 'LORI BARTRUG', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '886', 'LAURA GILBERT', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '887', 'RHODA BAUGHMAN', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '888', 'MARY ANN GRIFFIN', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  '900', 'BIRTH AND BEYOND', '1', '2008-04-24 00:00:00', '0');
-insert into location ( name, description, creator, date_created, retired) VALUES (  'INPC', 'INPC', '1', '2008-04-24 00:00:00', '0');
 
-insert into global_property values ('sockethl7listener.archiveHL7MessageDirectory', 'c:\\nbs\\archiveHL7Messages', 'Directory to store all incoming hl7 messages') 
-on duplicate key update property_value =  'c:\\nbs\\archiveHL7Messages'
+
+update global_property set property_value = 'C:\\NBS\\OutboundHL7Archive' where
+property like 'nbsmodule.outboundHl7ArchiveDirectory';
+
+insert into global_property values ('nbsmodule.outboundHl7ArchiveDirectory', 'c:\\nbs\\OutboundHL7Archive', 'Location to place outbound hl7 files') ;
 
 insert into global_property values ('sockethl7listener.exportFileType', 'pdf', 'File type of merged image') 
-on duplicate key update property_value =  'pdf'
+on duplicate key update property_value =  'pdf';
+
+update global_property set property_value = 'C:\\NBS\\javaRuleDirectory' where
+property like 'dss.javaRuleDirectory';
+
+update global_property set property_value = 'C:\\NBS\\mlmRuleDirectory' where
+property like 'dss.mlmRuleDirectory';
+
+INSERT INTO `dss_rule` VALUES ('1', 'C:\\nbs\\ruleClassDirectory/org/openmrs/module/nbsmodule/rule/mcad.class', '2008-04-21 12:58:57', '232', 'MCAD Reminder', '0.2', 'Indiana University School of Medicine', 'Steve Downs', 'Pediatrics', '05-22-2007', 'Provides a specific reminder, tailored to the patient who identified one or more fatty acid disorders', 'Based on AAP screening recommendations', 'fatty, acid, fatty acid disorder', 'Screening for fatty acid disorder AAP', null, 'read read', 'If conclude If conclude', 'call write', '2010-02-25 16:30:17', 'mcad', 'mcad', null, null, null, null);
+INSERT INTO `dss_rule` VALUES ('2', 'C:\\nbs\\ruleClassDirectory/org/openmrs/module/nbsmodule/rule/cah.class', '2009-05-07 16:08:58', '232', 'CAH Reminder', '0.3', 'Indiana University School of Medicine', 'Steve Downs', 'Pediatrics', '03-20-2008', 'Provides a specific reminder, tailored to the patient who identified one or more endocrine acid disorders', 'Based on AAP screening recommendations', 'endocrine, cah, endocrine disorder', 'Screening for endocrine disorder AAP', null, 'read', 'If conclude', 'write', '2010-02-25 16:30:23', 'cah', 'cah', null, null, null, null);
+
+insert into chirdlutil_location_attribute (name, description)
+values ('hl7ConfigFile', 'Configuration file for outbound hl7 messages');
+
+insert into chirdlutil_location_attribute_value (location_id, value, location_attribute_id)
+values (1, 'c:\\nbs\\config\\hl7_config.xml' ,(select location_attribute_id from
+chirdlutil_location_attribute where name like 'hl7ConfigFile'));
+
+
+INSERT INTO `nbs_alert_status` (name, description, date_created) 
+    VALUES ( 'waiingt_for_export', 'Inserted in nbs_alert and pending export', now() );
+INSERT INTO `nbs_alert_status` (name, description, date_created) 
+    VALUES ( 'processing_alert', 'Constructing hl7 message for alert', now() );
+INSERT INTO `nbs_alert_status` (name, description, date_created) 
+    VALUES ( 'transmitting_hl7', 'Sent message on port', now() );
+INSERT INTO `nbs_alert_status` (name, description, date_created) 
+    VALUES ( 'waiting_for_ack', 'Waiting for ACK from RMRS', now() );
+INSERT INTO `nbs_alert_status` (name, description, date_created) 
+    VALUES ( 'ack_received', 'Inserted in nbs_alert and pending export', now() );
+INSERT INTO `nbs_alert_status` (name, description, date_created) 
+    VALUES ( 'waiting_to_scan', 'Waiting for ATD from physician', now() );
+INSERT INTO `nbs_alert_status` (name, description, date_created) 
+    VALUES ( 'image_not_found', 'Unable to find image file to attach to hl7 mesage', now() );
+INSERT INTO `nbs_alert_status` (name, description, date_created) 
+    VALUES ( 'do_not_send', 'Do not transmit hl7 message', now() );
+INSERT INTO `nbs_alert_status` (name, description, date_created) 
+    VALUES ( 'hl7_config_file_not_found', 'HL7 configuration file not found', now() );
+
 

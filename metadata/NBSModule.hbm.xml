@@ -14,15 +14,15 @@
 		
 		<property name="formId" type="java.lang.Integer" column="form_id"
 				length="11" not-null="true"/>
-		<property name="alertId" type="java.lang.Integer" column="alert_id"
+		<property name="formInstanceId" type="java.lang.Integer" column="form_instance_id"
 				length="11" not-null="true"/>
 		
 		<property name="retired" type="boolean" column="retired"
 			length="1" not-null="true" />
 		<!-- <property name="response" type="java.lang.String" column="alert"
 			not-null="true" length="10000" /> -->
-		<property name="datestamp" type="java.util.Date" column="datestamp"
-			not-null="true" length="20" />
+		<property name="dateCreated" type="java.util.Date" column="date_created"
+			not-null="true" />
 		
 		<many-to-one name="patient" class="org.openmrs.Patient" not-null="true">
 			<column name="patient_id" />

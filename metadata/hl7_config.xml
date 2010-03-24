@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>Hl7</comment>
+	<entry key="acknowledgement_type">NE</entry> 
+	<entry key="app_acknowledgement_type">NE</entry> 
+	<entry key="check_digit_algorithm">M10</entry>
+	<entry key="check_for_duplicates">false</entry>
+	<entry key="coding_system">L</entry>
+	<entry key="encoding">BASE64</entry>
+	<entry key="event_type_code">R01</entry>
+	<entry key="uid">NBS</entry>
+	<entry key="OBX_size">500000</entry>
+	<entry key="ADD_size">30000</entry>
+	<entry key="message_type">ORU</entry>
+	<entry key="msh_processing_id">D</entry>
+	<entry key="OBX_data_type">image</entry>
+    <entry key="OBX_sub_data_type">tiff</entry>
+    <entry key="OBX_universal_id">OUTIMG</entry>
+	<entry key="our_app">NBS_ALERT</entry>
+	<entry key="our_facility">NBS_SERV</entry>
+	<entry key="patient_class">O</entry>
+	<entry key="pid_2_required">true</entry>
+	<entry key="receiving_app">NEWBORN</entry>
+    <entry key="receiving_facility">REGEN</entry>
+	<entry key="result_status">F</entry>
+	<entry key="socket_read_timeout">20</entry>
+	<entry key="specimen_action_code">F</entry>
+	<entry key="test_type">Newborn Screening</entry>
+	<entry key="univ_serv_id">556</entry>
+	<entry key="univ_serv_id_name">Newborn Screening</entry>
+	<entry key="version">2.5</entry>
+	<entry key="doReadAck">true</entry>
+	<entry key="interval">5</entry>
+</properties>	
+	

@@ -32,7 +32,7 @@ public class NBSServlet extends HttpServlet {
 			log.debug("Got service object: " + o);
 			NBSService service = (NBSService)o;
 			NBSModuleResponse r = service.getNBSModuleResponse(pid);
-			writer.print("Response: " + r.getAlertId() + "\n");
+			writer.print("Response: " + r.getFormInstanceId() + "\n");
 			}
 		catch (APIException apiexception) {
 			apiexception.printStackTrace(writer);

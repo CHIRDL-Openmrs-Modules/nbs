@@ -462,18 +462,30 @@ public class MatchHandler extends org.openmrs.module.sockethl7listener.MatchHand
 	public Patient setPatient(Patient hl7Patient, Patient matchedPatient,
 			Date encounterDate)
 	{
+		
+		PersonService personService = Context.getPersonService();
+		
 		Patient resolvedPatient = super.setPatient(hl7Patient, matchedPatient, encounterDate );
 		
+		PersonAttributeType matchInfoAttributeType = personService.getPersonAttributeTypeByName(MATCH_INFO);
+
 		bestProv = getBestProvider(hl7Patient, resolvedPatient,
 				encounterDate);
 		
-		String attribute = updateAttribute(resolvedPatient, bestIdentifier,
+		String newAttributeValue = updateAttribute(resolvedPatient, bestIdentifier,
 				bestName, correctGender, DOB, bestProv, bestAddress,
 				bestNKAttribute, bestTelephoneAttr);
-
-		if(resolvedPatient.getAttribute(MATCH_INFO) != null){
-			resolvedPatient.getAttribute(MATCH_INFO).setValue(attribute);
-		}
+		
+		PersonAttribute newPersonAttribute = new PersonAttribute(matchInfoAttributeType, newAttributeValue);
+		
+		//addAttribute method: If attribute with this type and value exist and are identical, nothing is done.
+		//If attribute with this type has a different value, it voids that one and creates a new one.
+		//If attribute of that type does not exist, it creates the attribute;
+		resolvedPatient.addAttribute(newPersonAttribute);
+//
+	//	if(resolvedPatient.getAttribute(MATCH_INFO) != null){
+	//		resolvedPatient.getAttribute(MATCH_INFO).setValue(attribute);
+	//	}
 
 		return resolvedPatient;
 	}

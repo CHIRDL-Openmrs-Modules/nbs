@@ -1,9 +1,12 @@
 package org.openmrs.module.nbsmodule.db;
 
+import java.util.Date;
 import java.util.List;
 
+import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.api.db.DAOException;
+import org.openmrs.module.atd.hibernateBeans.FormInstance;
 import org.openmrs.module.nbsmodule.NBSModuleResponse;
 
 /**
@@ -41,7 +44,15 @@ public interface NBSModuleDAO {
 	
 	public List<NBSModuleResponse> getResponses() throws DAOException;
 	
-	public List<NBSModuleResponse> getNBSAlertsByPatient(Integer pid);
+	//public List<NBSModuleResponse> getNBSAlertsByPatient(Patient patient);
+	public List<NBSModuleResponse> getNBSAlerts(Patient patient, Integer formId, Integer providerId,
+			Encounter encounter, Date date, Integer status);
+	
+	/**
+	 * Get the nbs alert status id by name string.
+	 * @param name
+	 * @return status
+	 */
+	public Integer getAlertStatusIdByName(String name);
 
-	public boolean duplicateAlert(NBSModuleResponse alert);
 }

@@ -4,6 +4,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
+import org.openmrs.hl7.HL7Service;
+import org.openmrs.hl7.HL7Source;
 import org.openmrs.module.sockethl7listener.HL7ObsHandler25;
 import org.openmrs.module.sockethl7listener.PatientHandler;
 import org.openmrs.module.sockethl7listener.SimpleServer;
@@ -57,15 +59,19 @@ public class messageProcessor extends AbstractTask {
 			PatientHandler patientHandler = new PatientHandler();
 			HL7SocketHandler socketHandler = new HL7SocketHandler(parser,
 					patientHandler, new HL7ObsHandler25(), new org.openmrs.module.sockethl7listener.HL7EncounterHandler25(),
-					new org.openmrs.module.sockethl7listener.HL7PatientHandler25());
+					new org.openmrs.module.sockethl7listener.HL7PatientHandler25(),null);
+			socketHandler.setPort(port);
+	
 			this.server = new SimpleServer(port, LowerLayerProtocol.makeLLP(),
 					parser, patientHandler, socketHandler);
 			log.info("Starting SimpleServer...");
+			
+			
 		} catch (Exception e)
 		{
 			log.error("Error starting SimpleServer...");
 			this.log.error(e.getMessage());
-			this.log.error(org.openmrs.module.dss.util.Util.getStackTrace(e));
+			this.log.error(org.openmrs.module.chirdlutil.util.Util.getStackTrace(e));
 		} finally{
 			Context.closeSession();
 		}
@@ -81,7 +87,7 @@ public class messageProcessor extends AbstractTask {
 		} catch (Exception e)
 		{
 			this.log.error(e.getMessage());
-			this.log.error(org.openmrs.module.dss.util.Util.getStackTrace(e));
+			this.log.error(org.openmrs.module.chirdlutil.util.Util.getStackTrace(e));
 		}finally{
 			Context.closeSession();
 		}
@@ -100,7 +106,7 @@ public class messageProcessor extends AbstractTask {
 		} catch (Exception e)
 		{
 			this.log.error(e.getMessage());
-			this.log.error(org.openmrs.module.dss.util.Util.getStackTrace(e));
+			this.log.error(org.openmrs.module.chirdlutil.util.Util.getStackTrace(e));
 		}
 	}
 

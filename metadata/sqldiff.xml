@@ -23,22 +23,21 @@
 		<sql>
 		DROP TABLE IF EXISTS `nbs_alert`;
 		CREATE TABLE `nbs_alert` (
-  `nbs_alert_id` int(11) NOT NULL auto_increment,
-  `alert_id` int(11) NOT NULL,
-  `form_id` int(11) NOT NULL,
-  `patient_id` int(11) default NULL,
-  `encounter_id` int(11) default NULL,
-  `mrn` varchar(20) default NULL,
-  `provider` varchar(100) default NULL,
-  `retired` tinyint(1) NOT NULL,
-  `datestamp` datetime default NULL,
-  `Record_Sta` varchar(20) default NULL,
-  `Time_Stamp` varchar(20) default NULL,
-  `status` int(11) default '0',
-  PRIMARY KEY  (`nbs_alert_id`),
-  KEY `patient_id` (`patient_id`),
-  CONSTRAINT `patient_id` FOREIGN KEY (`patient_id`) REFERENCES `patient_identifier` (`patient_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	  	`nbs_alert_id` int(11) NOT NULL AUTO_INCREMENT,
+	  	`form_instance_id` int(11) NOT NULL,
+	  	`form_id` int(11) NOT NULL,
+	  	`patient_id` int(11) NOT NULL,
+	  	`encounter_id` int(11) NOT NULL,
+	  	`mrn` varchar(20) DEFAULT NULL,
+	  	`provider` varchar(100) DEFAULT NULL,
+	  	`retired` tinyint(1) NOT NULL,
+	  	`date_created` datetime DEFAULT NULL,
+	  	`Record_Sta` varchar(20) DEFAULT NULL,
+	  	`status` int(11) DEFAULT '0',
+	  	PRIMARY KEY (`nbs_alert_id`),
+		 KEY `patient_id` (`patient_id`),
+		 CONSTRAINT `patient_id` FOREIGN KEY (`patient_id`) REFERENCES `patient_identifier` (`patient_id`)
+		) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
  		</sql>
  	</diff>
  
@@ -107,6 +106,29 @@ select a.* from
 (select count(*) as cnt from scheduler_task_config_property where name='port'
 and task_config_id=(select max(task_config_id) from scheduler_task_config where name='NBSResponseGenerator') )b
 where b.cnt=0;
+
+		</sql>
+	</diff>
+	
+	<diff>
+		<version>1.0.4</version>
+		<author>Meena Sheley</author>
+		<date>Mar 17th 2010</date>
+		<description>
+			Add nbs_alert_status table.
+		</description>
+		<sql>
+		DROP TABLE IF EXISTS `nbs_alert_status`;
+		CREATE TABLE `nbs_alert_status` (
+		  `status_id` int(11) NOT NULL auto_increment,
+		  `name` varchar(200) default NULL,
+		  `description` varchar(200) default NULL,
+		  `date_created` datetime default NULL,
+		  PRIMARY KEY  (`status_id`),
+		  KEY `status_id` USING BTREE (`status_id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 
 		</sql>
 	</diff>

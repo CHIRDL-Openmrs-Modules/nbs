@@ -5,23 +5,31 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
 import org.openmrs.Location;
 import org.openmrs.Patient;
+import org.openmrs.PatientIdentifier;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
+import org.openmrs.module.Module;
+import org.openmrs.module.ModuleFactory;
 import org.openmrs.module.atd.hibernateBeans.Session;
 import org.openmrs.module.atd.service.ATDService;
 import org.openmrs.module.nbsmodule.util.MatchLogger;
 import org.openmrs.module.nbsmodule.util.Util;
 import org.openmrs.module.sockethl7listener.HL7EncounterHandler;
+import org.openmrs.module.sockethl7listener.HL7Filter;
 import org.openmrs.module.sockethl7listener.HL7ObsHandler;
 import org.openmrs.module.sockethl7listener.HL7PatientHandler;
 import org.openmrs.module.sockethl7listener.PatientHandler;
@@ -38,58 +46,41 @@ public class HL7SocketHandler extends
 	private Integer sessionId = null;
 	private Date timeCheckinHL7Received = null;
 	
+	
 	public HL7SocketHandler(ca.uhn.hl7v2.parser.Parser parser,
 			PatientHandler patientHandler, HL7ObsHandler hl7ObsHandler,
 			HL7EncounterHandler hl7EncounterHandler,
-			HL7PatientHandler hl7PatientHandler)
+			HL7PatientHandler hl7PatientHandler, ArrayList<HL7Filter> filters)
 	{
 		super(parser, patientHandler, hl7ObsHandler, hl7EncounterHandler,
-				hl7PatientHandler,null);
-	}
-	
-	@Override
-	public Message processMessage(Message message) throws ApplicationException
-	{
-		this.timeCheckinHL7Received = null;
-		this.sessionId = null;
-		String incomingMessageString = null;
+				hl7PatientHandler,filters);
 		
-		try
-		{
-			incomingMessageString = this.parser.encode(message);
-			//archiveHL7Message(incomingMessageString);
-			
-			
-		} catch (HL7Exception e)
-		{
-			logger.error(e.getMessage());
-			logger.error(Util.getStackTrace(e));
-		}
-
-	
-		return super.processMessage(message);
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.openmrs.module.sockethl7listener.HL7SocketHandler#createEncounter(ca.uhn.hl7v2.model.v25.segment.MSH,
-	 *      ca.uhn.hl7v2.model.v25.segment.PID, org.openmrs.Location,
-	 *      org.openmrs.Patient, java.util.Date,
-	 *      org.openmrs.module.sockethl7listener.Provider)
+	
+	/* (non-Javadoc)
+	 * @see org.openmrs.module.sockethl7listener.HL7SocketHandler#createEncounter(org.openmrs.Patient, org.openmrs.Encounter, org.openmrs.module.sockethl7listener.Provider, java.util.HashMap)
 	 */
 	@Override
 	protected org.openmrs.Encounter createEncounter(Patient resultPatient,
-			org.openmrs.Encounter newEncounter, Provider provider)
+			org.openmrs.Encounter newEncounter, Provider provider, HashMap<String,Object> parameters)
 	{
 		
-		org.openmrs.Encounter encounter = super.createEncounter(resultPatient,newEncounter,provider);
+		org.openmrs.Encounter encounter = super.createEncounter(resultPatient,newEncounter,provider, parameters);
 		
 		//add state/session code here
+		Session session = null;
 		ATDService atdService = Context.getService(ATDService.class);
-		Session session = atdService.getSession(getSessionId());
+		if (encounter != null) {
+			List<Session> sessions = atdService.getSessionsByEncounter(encounter.getEncounterId());
+			if (sessions.size()> 0) session = sessions.get(0);
+			else {
+				session = atdService.addSession();
+			}
+		}
 		session.setEncounterId(encounter.getEncounterId());
 		atdService.updateSession(session);
+		
 		
 		//State state = atdService.getStateByName("Clinic Registration");
 		//PatientState patientState = atdService.addPatientState(resultPatient, state, getSessionId(), null);
@@ -110,20 +101,26 @@ public class HL7SocketHandler extends
 		return encounter;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.openmrs.module.sockethl7listener.HL7SocketHandler#checkin(org.openmrs.module.sockethl7listener.Provider, org.openmrs.Patient, java.util.Date, ca.uhn.hl7v2.model.Message, java.lang.String, org.openmrs.Encounter, java.util.HashMap)
+	 */
 	@Override
 	public Encounter checkin(Provider provider, Patient patient,
 			Date encounterDate, Message message, String incomingMessageString,
-			Encounter newEncounter)
+			Encounter newEncounter,HashMap<String,Object> parameters)
 	{
 		
 		MatchHandler.setPatientMatchingAttribute(provider, patient, encounterDate);
         
 		return super.checkin(provider, patient, encounterDate,  message,
-				incomingMessageString, newEncounter);
+				incomingMessageString, newEncounter, parameters);
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.openmrs.module.sockethl7listener.HL7SocketHandler#findPatient(org.openmrs.Patient, java.util.Date, java.util.HashMap)
+	 */
 	@Override
-	public Patient findPatient(Patient hl7Patient, Date encounterDate)
+	public Patient findPatient(Patient hl7Patient, Date encounterDate,HashMap<String,Object> parameters)
 	{
 		PatientService patientService = Context.getPatientService();
 		Patient resultPatient = new Patient();
@@ -132,7 +129,31 @@ public class HL7SocketHandler extends
 		try {
 			Patient matchedPatient = patientService.findPatient(hl7Patient);
 			if (matchedPatient == null) {
-				resultPatient = createPatient(hl7Patient);
+				Map<String,Module> moduleMap = ModuleFactory.getLoadedModulesMap();
+				if (moduleMap != null){
+					boolean pmExists = moduleMap.containsKey("patientmatching");
+					boolean atdExists = moduleMap.containsKey("atd");
+					if (!pmExists){
+						PatientIdentifier pid = hl7Patient.getPatientIdentifier();
+						if (pid != null){
+							List<Patient> patients = patientService.getPatientsByIdentifier(pid.getIdentifier(), false);
+							if (patients != null && patients.size() > 0){
+								matchedPatient = patients.get(0);
+								resultPatient = updatePatient(matchedPatient,
+										hl7Patient,encounterDate);
+							}else {
+								resultPatient = createPatient(hl7Patient);
+							}
+						}
+						
+					}
+					if (pmExists){
+						resultPatient = createPatient(hl7Patient);
+					}
+					
+				}
+				
+				
 			}
 			else {
 				resultPatient = updatePatient(matchedPatient,
@@ -213,16 +234,7 @@ public class HL7SocketHandler extends
 		return this.timeCheckinHL7Received;
 	}
 
-	private Integer getSessionId()
-	{
-		if (this.sessionId == null)
-		{
-			ATDService atdService = Context.getService(ATDService.class);
-			Session session = atdService.addSession();
-			this.sessionId = session.getSessionId();
-		}
-		return this.sessionId;
-	}
+	
 	
 	
 	@Override
@@ -292,7 +304,6 @@ public class HL7SocketHandler extends
 		
 		return resultPatient;
 	}
-	
 	
 
 }

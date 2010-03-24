@@ -2,21 +2,16 @@ package org.openmrs.module.nbsmodule.advice;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.util.Properties;
-import java.util.logging.Logger;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
-import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.atd.TeleformFileMonitor;
 import org.openmrs.module.atd.TeleformFileState;
-import org.openmrs.module.nbsmodule.NBSService;
+import org.openmrs.module.atd.hibernateBeans.FormInstance;
 import org.openmrs.module.sockethl7listener.ProcessedMessagesManager;
-import org.openmrs.module.sockethl7listener.util.Util;
-import org.openmrs.util.OpenmrsClassLoader;
 import org.springframework.aop.AfterReturningAdvice;
 
 public class TriggerPatientAfterAdvice implements AfterReturningAdvice {
@@ -57,37 +52,33 @@ public class TriggerPatientAfterAdvice implements AfterReturningAdvice {
 				String processedFilename =  tfState.getFilename();
 				File processedFile = new File(processedFilename);
 				
-				int formInstanceId = tfState.getFormInstanceId();
-				int formId = tfState.getFormId();
-				
-				int lastIndex = processedFilename.lastIndexOf("\\");
+				FormInstance formInstance = tfState.getFormInstance();
+				Integer formInstanceId = null;
+				if (formInstance != null){
+					formInstanceId = formInstance.getFormInstanceId();
+					int lastIndex = processedFilename.lastIndexOf("\\");
+					String directory = processedFilename.substring(0,lastIndex);
 			
-				String directory = processedFilename.substring(0,lastIndex);
+				
+						if(criteria == "EXISTS")
+				    	{
+				    		TeleformFileMonitor.addToTifFileProcessing( formInstance, directory, ".tif");
+					   	}
+				    	else if (criteria == "GT_SENTINEL_TIME")
+				    	{
+				    		String tifFilenameDesired =   directory + "//" + Integer.valueOf(formInstanceId) + ".tif";
+					    	File tifFileDesired = new File(tifFilenameDesired);
+					    	processedFile.renameTo(tifFileDesired);
+				    	}
+				    	else
+				    	{
+				    		
+				    		System.out.println("*****ERROR: criteria is not exist:" );
+				    	}
+				}
+				
+				TeleformFileMonitor.statesProcessed();
 		
-			//	if(processedFile.exists())
-			//	{
-					if(criteria == "EXISTS")
-			    	{
-			    		TeleformFileMonitor.addToTifFileProcessing(formId, formInstanceId, directory, ".tif");
-				   	}
-			    	else if (criteria == "GT_SENTINEL_TIME")
-			    	{
-			    		String tifFilenameDesired =   directory + "//" + Integer.valueOf(formInstanceId) + ".tif";
-				    	File tifFileDesired = new File(tifFilenameDesired);
-				    	processedFile.renameTo(tifFileDesired);
-			    	}
-			    	else
-			    	{
-			    		
-			    		System.out.println("*****ERROR: criteria is not exist:" );
-			    	}
-					
-					TeleformFileMonitor.statesProcessed();
-			//	}
-			//	else
-			//	{
-			//		System.out.println("*****ERROR: Processed file does not exist:" + processedFilename);
-			//	}
 			}
 		}catch(Exception e){
 			log.error(e.getMessage(), e);

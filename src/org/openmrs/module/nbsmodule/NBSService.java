@@ -1,6 +1,7 @@
 package org.openmrs.module.nbsmodule;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
@@ -51,11 +52,35 @@ public interface NBSService {
 	@Authorized({"View Hello World Response"})
 	public List<NBSModuleResponse> getResponses() throws APIException;
 	
+	
 	/**
-	 * @param resultPatient
-	 * @param prop
+	 * Get NBS alerts that have not yet been sent to providers.
+	 * @param patient
+	 * @param formId
+	 * @param providerId
+	 * @param encounter
+	 * @param date
 	 * @return
 	 */
-	public List<String> getAlerts(Patient resultPatient, Properties prop);
+	public List<NBSModuleResponse>  getNBSAlerts(Patient resultPatient, Integer formId, 
+			Integer providerId, Encounter encounter, Date date, Integer status);
+	/**
+	 * Gets the unprocessed alerts and modifies status to indicate currently being processed.
+	 * @param resultPatient
+	 * @param formId
+	 * @param providerId
+	 * @param encounter
+	 * @param date
+	 * @return
+	 */
+	public List<NBSModuleResponse>  captureNBSAlerts(Patient resultPatient, Integer formId, 
+			Integer providerId, Encounter encounter, Date date);
+		
+	
+	/**
+	 * @param name
+	 * @return
+	 */
+	public Integer getAlertStatusIdByName(String name);
 
 }

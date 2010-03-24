@@ -26,7 +26,7 @@
 </logger>
 
 <logger name="ca.uhn.hl7v2.parser" additivity="false">
-		<level value="WARN"/>
+		<level value="INFO"/>
 		<appender-ref ref="HapiAppender"/>
 </logger>
 
@@ -122,7 +122,7 @@
   
   <appender name="HapiAppender" class="org.apache.log4j.DailyRollingFileAppender">
     <param name="File" value="${catalina.home}/logs/Hapi.log"/>
-    <param name="Threshold" value="WARN"/>
+    <param name="Threshold" value="INFO"/>
     <param name="Append" value="true"/>
     <layout class="org.apache.log4j.PatternLayout">
       <param name="ConversionPattern" value="%C{1}.%M|%d{ISO8601}|%t|%m%n"/>

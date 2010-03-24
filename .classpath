@@ -62,11 +62,13 @@
 	<classpathentry kind="lib" path="lib-common/junit/hsqldb.jar"/>
 	<classpathentry kind="lib" path="/dss/dist"/>
 	<classpathentry kind="lib" path="/atd/dist"/>
-	<classpathentry kind="lib" path="lib-common/openmrs-api-1.5.0.7653-dev.jar" sourcepath="/openmrs-chirdl/src"/>
-	<classpathentry kind="lib" path="lib-common/tests-openmrs-api-1.5.0.7653-dev.jar"/>
-	<classpathentry kind="lib" path="lib-common/web-openmrs-api-1.5.0.7653-dev.jar"/>
-	<classpathentry kind="lib" path="lib-common/dss-2.27.2.jar"/>
-	<classpathentry kind="lib" path="lib-common/sockethl7listener-1.3.4.jar"/>
-	<classpathentry kind="lib" path="lib-common/atd-1.55.11.jar"/>
+	<classpathentry kind="lib" path="lib-common/dss-2.27.11.jar" sourcepath="/dss/src"/>
+	<classpathentry kind="lib" path="lib-common/openmrs-api-1.5.0.10396-dev.jar" sourcepath="/openmrs-chirdl/src"/>
+	<classpathentry kind="lib" path="lib-common/tests-openmrs-api-1.5.0.10396-dev.jar"/>
+	<classpathentry kind="lib" path="lib-common/web-openmrs-api-1.5.0.10396-dev.jar"/>
+	<classpathentry kind="lib" path="lib-common/chirdlutil-1.0.6.jar" sourcepath="/chirdlutil/src"/>
+	<classpathentry kind="lib" path="lib-common/atd-1.56.10.jar" sourcepath="/atd/src"/>
+	<classpathentry kind="lib" path="lib-common/patientmatching-1.2.2.jar" sourcepath="/Patient Matching/src"/>
+	<classpathentry kind="lib" path="lib-common/sockethl7listener-1.3.20.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

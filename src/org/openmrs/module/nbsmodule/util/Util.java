@@ -33,112 +33,9 @@ public class Util
 	public static final String MONTH_ABBR = "mo";
 	public static final String WEEK_ABBR = "wk";
 	public static final String DAY_ABBR = "do";
-	
-	/**
-	 * Converts specific measurements in English units to metric
-	 * 
-	 * @param measurement measurement to be converted
-	 * @param measurementUnits units of the measurement
-	 * @return double metric value of the measurement
-	 */
-	public static double convertUnitsToMetric(double measurement,
-			String measurementUnits)
-	{
-		if (measurementUnits == null)
-		{
-			return measurement;
-		}
 
-		if (measurementUnits.equalsIgnoreCase(MEASUREMENT_IN))
-		{
-			measurement = measurement * 2.54; // convert inches to centimeters
-		}
-
-		if (measurementUnits.equalsIgnoreCase(MEASUREMENT_LB))
-		{
-			measurement = measurement * 0.45359237; // convert pounds to kilograms
-		}
-		return measurement; // truncate to one decimal
-												  // place
-	}
-	
-	/**
-	 * Returns the numeric part of a string input as a string
-	 * @param input alphanumeric input
-	 * @return String all numeric
-	 */
-	public static String extractIntFromString(String input)
-	{
-		if(input == null)
-		{
-			return null;
-		}
-		String[] tokens = Pattern.compile("\\D").split(input);
-		StringBuffer result = new StringBuffer();
-		for (int i = 0; i < tokens.length; i++)
-			result.append(tokens[i]);
-		return result.toString();
-	}
-	
-	/**
-	 * Adds period if necessary to a package prefix
-	 * @param packagePrefix a java package prefix
-	 * @return String formatted package prefix
-	 */
-	public static String formatPackagePrefix(String packagePrefix)
-	{
-		if (packagePrefix!=null&&!packagePrefix.endsWith("."))
-		{
-			packagePrefix += ".";
-		}
-		return packagePrefix;
-	}
-	
-	public static String toProperCase(String str)
-	{
-		if(str == null || str.length()<1)
-		{
-			return str;
-		}
-		
-		StringBuffer resultString = new StringBuffer();
-		String delimiter = " ";
-		
-		StringTokenizer tokenizer = new StringTokenizer(str,delimiter,true);
-		
-		String currToken = null;
-		
-		while(tokenizer.hasMoreTokens())
-		{
-			currToken = tokenizer.nextToken();
-			
-			if(!currToken.equals(delimiter))
-			{
-				if(currToken.length()>0)
-				{
-					currToken = currToken.substring(0, 1).toUpperCase()
-						+ currToken.substring(1).toLowerCase();
-				}
-			}
-			
-			resultString.append(currToken);
-		}
-		
-		return resultString.toString();
-	}
 	
 	
-	public static Double round(Double value,int decimalPlaces)
-	{
-		if(decimalPlaces<0||value == null)
-		{
-			return value;
-		}
-		
-		double intermVal = value*Math.pow(10, decimalPlaces);
-		intermVal = Math.round(intermVal);
-		return intermVal/(Math.pow(10, decimalPlaces));
-	}
 	
 	public static String getStackTrace(Exception x) {
 		OutputStream buf = new ByteArrayOutputStream();
@@ -195,6 +92,30 @@ public class Util
 		return result;
 	}
 	
+	
+	public static Date removeTime(Date date) {
+	    if(date == null) {
+	      throw new IllegalArgumentException("The argument 'date' cannot be null.");
+	    }
+
+	    // Get an instance of the Calendar.
+	    Calendar calendar = Calendar.getInstance();
+
+	    // Make sure the calendar will not perform automatic correction.
+	    calendar.setLenient(false);
+
+	    // Set the time of the calendar to the given date.
+	    calendar.setTime(date);
+
+	    // Remove the hours, minutes, seconds and milliseconds.
+	    calendar.set(Calendar.HOUR_OF_DAY, 0);
+	    calendar.set(Calendar.MINUTE, 0);
+	    calendar.set(Calendar.SECOND, 0);
+	    calendar.set(Calendar.MILLISECOND, 0);
+
+	    // Return the date again.
+	    return calendar.getTime();
+	  }
 
 	
 }

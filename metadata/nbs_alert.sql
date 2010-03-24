@@ -13,7 +13,7 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 CREATE TABLE `nbs_alert` (
   `nbs_alert_id` int(11) NOT NULL auto_increment,
-  `alert_id` int(11) NOT NULL,
+  `form_instance_id` int(11) NOT NULL,
   `form_id` int(11) NOT NULL,
   `patient_id` int(11) default NULL,
   `encounter_id` int(11) default NULL,

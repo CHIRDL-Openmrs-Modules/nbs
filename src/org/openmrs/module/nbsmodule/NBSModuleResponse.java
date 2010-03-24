@@ -19,16 +19,20 @@ public class NBSModuleResponse implements java.io.Serializable {
 
 	// Fields
 	private Integer nbsalertId;
-	private Integer alertId;
+	private Integer formInstanceId;
+	
+
 	private Boolean retired = false;
-	private Date datestamp;
+	private Date dateCreated;
+	
+
 	private Patient patient;
 	private Encounter encounter;
 	private String recordSta = "23";
 	private String mrn = "";
 	private String provider = "";
 	private Integer formId;
-	private Integer status = 0;
+	private Integer status;
 	private Integer providerId = null;
 
 	// Constructors
@@ -41,16 +45,16 @@ public class NBSModuleResponse implements java.io.Serializable {
 	public boolean equals(Object obj) {
 		if (obj instanceof NBSModuleResponse) {
 			NBSModuleResponse t = (NBSModuleResponse)obj;
-			if (this.getAlertId() != null && t.getAlertId() != null)
-				return (this.getAlertId().equals(t.getAlertId()));
+			if (this.getFormInstanceId() != null && t.getFormInstanceId() != null)
+				return (this.getFormInstanceId().equals(t.getFormInstanceId()));
 		}
 		return false;
 	}
 	
 	@Override
 	public int hashCode() {
-		if (this.getAlertId() == null) return super.hashCode();
-		return this.getAlertId().hashCode();
+		if (this.getFormInstanceId() == null) return super.hashCode();
+		return this.getFormInstanceId().hashCode();
 	}
 
 	// Property accessors
@@ -70,20 +74,12 @@ public class NBSModuleResponse implements java.io.Serializable {
 		this.nbsalertId = nbsalertId;
 	}
 
-	/**
-	 * @return the alertId
-	 */
-	public Integer getAlertId()
-	{
-		return this.alertId;
+	public Integer getFormInstanceId() {
+		return formInstanceId;
 	}
 
-	/**
-	 * @param alertId the alertId to set
-	 */
-	public void setAlertId(Integer alertId)
-	{
-		this.alertId = alertId;
+	public void setFormInstanceId(Integer formInstanceId) {
+		this.formInstanceId = formInstanceId;
 	}
 
 	/**
@@ -100,22 +96,6 @@ public class NBSModuleResponse implements java.io.Serializable {
 	public void setRetired(Boolean retired)
 	{
 		this.retired = retired;
-	}
-
-	/**
-	 * @return the datestamp
-	 */
-	public Date getDatestamp()
-	{
-		return this.datestamp;
-	}
-
-	/**
-	 * @param datestamp the datestamp to set
-	 */
-	public void setDatestamp(Date datestamp)
-	{
-		this.datestamp = datestamp;
 	}
 
 	/**
@@ -238,5 +218,13 @@ public class NBSModuleResponse implements java.io.Serializable {
 	public void setProviderId(Integer providerId)
 	{
 		this.providerId = providerId;
+	}
+	
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 }
