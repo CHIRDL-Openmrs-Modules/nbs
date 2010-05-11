@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +22,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.openmrs.Encounter;
 import org.openmrs.Form;
+import org.openmrs.FormField;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.PatientIdentifier;
@@ -30,6 +32,7 @@ import org.openmrs.api.EncounterService;
 import org.openmrs.api.FormService;
 import org.openmrs.api.context.Context;
 import org.openmrs.logic.result.Result;
+import org.openmrs.module.atd.ParameterHandler;
 import org.openmrs.module.atd.TeleformFileMonitor;
 import org.openmrs.module.atd.hibernateBeans.FormAttributeValue;
 import org.openmrs.module.atd.hibernateBeans.FormInstance;
@@ -38,6 +41,7 @@ import org.openmrs.module.atd.service.ATDService;
 import org.openmrs.module.dss.hibernateBeans.Rule;
 import org.openmrs.module.dss.service.DssService;
 import org.openmrs.module.nbsmodule.NBSModuleResponse;
+import org.openmrs.module.nbsmodule.NBSParameterHandler;
 import org.openmrs.module.nbsmodule.NBSService;
 import org.openmrs.module.nbsmodule.db.NBSModuleDAO;
 import org.openmrs.module.nbsmodule.util.Util;
@@ -420,5 +424,25 @@ public class NBSServiceImpl implements NBSService {
 		return getNBSModuleDAO().getAlertStatusIdByName(name);
 	}
 
-	
+	public void consume(InputStream input, Patient patient, Integer encounterId, FormInstance formInstance,
+	                    Integer sessionId, List<FormField> fieldsToConsume, Integer locationTagId) {
+		try {
+			DssService dssService = Context.getService(DssService.class);
+			ATDService atdService = Context.getService(ATDService.class);
+			ParameterHandler parameterHandler = new NBSParameterHandler();
+			
+			// make sure storeObs gets loaded before running consume
+			// rules
+			dssService.loadRule("storeObs", false);
+			
+			atdService.consume(input, formInstance, patient, encounterId, null, null, parameterHandler, fieldsToConsume,
+			    locationTagId, sessionId);
+			
+		}
+		catch (Exception e) {
+			log.error(e.getMessage());
+			log.error(Util.getStackTrace(e));
+		}
+	}
+
 }

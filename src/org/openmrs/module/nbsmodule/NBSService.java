@@ -1,14 +1,17 @@
 package org.openmrs.module.nbsmodule;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import org.openmrs.Encounter;
+import org.openmrs.FormField;
 import org.openmrs.Patient;
 import org.openmrs.annotation.Authorized;
 import org.openmrs.api.APIException;
+import org.openmrs.module.atd.hibernateBeans.FormInstance;
 import org.openmrs.module.nbsmodule.db.NBSModuleDAO;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,5 +85,8 @@ public interface NBSService {
 	 * @return
 	 */
 	public Integer getAlertStatusIdByName(String name);
+	
+	public void consume(InputStream input, Patient patient, Integer encounterId, FormInstance formInstance,
+	                    Integer sessionId, List<FormField> fieldsToConsume, Integer locationTagId);
 
 }
