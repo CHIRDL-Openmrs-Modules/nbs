@@ -1,0 +1,88 @@
+Maintenance:
+ Title: Diabetes Hba1c;;
+ Filename: Diabetes_Hba1c;;
+ Version: 1.0;;
+ Institution: Indiana University School of Medicine;;
+ Author: Tammy Dugan;;
+ Specialist: Pediatrics;;
+ Date: 2010-08-03T11:00:00-0400;;
+ Validation: ;;
+Library:
+ Purpose: Lookup up Hba1c results for diabetic patients.                                                                                                                                                                                                                                                                                                                                                                                                                                        ;;
+ Explanation:            ;;
+ Keywords: ;;
+ Citations: ;;
+ Links: ;;
+Knowledge:
+ Type: data_driven;;
+Data:
+
+mode:=read {mode from Parameters};
+If (mode = PRODUCE) then
+
+hba1c_1:= read last {Glycated Hb-Total (Hplc) from RMRS} Where it Occurred Within Past 1 Years;
+hba1c_2:= read last {Hgb A1C Bld Qn HPLC from RMRS} Where it Occurred Within Past 1 Years;
+hba1c_3:= read last {Glycated Hgb %	from RMRS} Where it Occurred Within Past 1 Years;
+hba1c_4:= read last {Glycos Hgb A-1% from RMRS} Where it Occurred Within Past 1 Years;
+hba1c_5:= read last {Hgb A1C Bld Qn (Meth) from RMRS} Where it Occurred Within Past 1 Years;
+hba1c_6:= read last {Hgb A1c Bld Qn (POC)	from RMRS}Where it Occurred Within Past 1 Years;
+hba1c_7:= read last {Hgb A1c Bld Qn IA from RMRS} Where it Occurred Within Past 1 Years;
+hba1c_8:= read last {Hgb Glycosylated (VA) from RMRS} Where it Occurred Within Past 1 Years;
+hba1c_9:= read last {HgbA1C % Ser EIA from RMRS} Where it Occurred Within Past 1 Years;
+hba1c_10:= read last {Glycated Hgb from RMRS} Where it Occurred Within Past 1 Years;
+hba1c_11:= read last {Glycos Hgb A-1 from RMRS} Where it Occurred Within Past 1 Years;
+hba1c_12:= read last {Hgb A1C Bld Qn HPLC from RMRS} Where it Occurred Within Past 1 Years;
+
+
+/*hba1c_13:= read {Hosp Procedures from RMRS} Where it Occurred Within Past 1 Years;*/
+
+endif
+;;
+Priority: ;;
+ Evoke: ;;
+Logic:
+If (mode = PRODUCE) then
+
+
+/*result1:= call mostRecentResultWithAnswer With "HG A1C LEVEL < 7.0%","hba1c_13_object";
+
+result2:= call mostRecentResultWithAnswer With "HG A1C LEVEL 7.0-9.0%","hba1c_13_object";
+
+result3:= call mostRecentResultWithAnswer With "HEMOGLOBIN A1C LEVEL > 9.0%","hba1c_13_object";
+
+result4:= call mostRecentResultWithAnswer With "HEMOGLOBIN A1C LEVEL <= 9.0%","hba1c_13_object";
+
+result5:= call mostRecentResultWithAnswer With "GLYCATED HEMOGLOBIN TEST","hba1c_13_object";
+
+result6:= call mostRecentResultWithAnswer With "GLYCOSYLATED HB, HOME DEV","hba1c_13_object";
+
+
+finalResult:= call mostRecentResult With "hba1c_1_object","hba1c_2_object","hba1c_3_object","hba1c_4_object",
+"hba1c_5_object","hba1c_6_object","hba1c_7_object","hba1c_8_object","hba1c_9_object","hba1c_10_object","hba1c_11_object",
+"hba1c_12_object",
+"result1_object","result2_object",
+"result3_object","result4_object","result5_object","result6_object";  
+*/
+
+finalResult:= call mostRecentResult With "hba1c_1_object","hba1c_2_object","hba1c_3_object","hba1c_4_object",
+"hba1c_5_object","hba1c_6_object","hba1c_7_object","hba1c_8_object","hba1c_9_object","hba1c_10_object","hba1c_11_object",
+"hba1c_12_object";  
+
+finalResultConceptName:= call conceptNameResult With "finalResult_object";
+finalResultUnits:= call getConceptUnits with "finalResultConceptName";
+conclude true;
+
+
+endif
+;;
+Action:
+
+write ("|| finalResult_date ||") At hba1cResultDate;
+write ("|| finalResult_value ||") At hba1cResultValue;
+write ("|| finalResultConceptName_value ||") At hba1cConceptName;           
+write ("|| finalResultUnits_value ||") At hba1cResultUnit;     
+                                                                                                                                                                                                                                                                            
+;;
+Age_Min: 0 years;;
+Age_Max: 100 years;;
+end:

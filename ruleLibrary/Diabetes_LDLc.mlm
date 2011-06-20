@@ -1,0 +1,86 @@
+Maintenance:
+ Title: Diabetes_LDLc;;
+ Filename: Diabetes_LDLc;;
+ Version: 1.0;;
+ Institution: Indiana University School of Medicine;;
+ Author: Tammy Dugan;;
+ Specialist: Pediatrics;;
+ Date: 2010-08-03T11:00:00-0400;;
+ Validation: ;;
+Library:
+ Purpose: Lookup up LDLc results for diabetic patients.                                                                                                                                                                                                                                                                                                                                                                                                                                        ;;
+ Explanation:            ;;
+ Keywords: ;;
+ Citations: ;;
+ Links: ;;
+Knowledge:
+ Type: data_driven;;
+Data:
+
+mode:=read {mode from Parameters};
+If (mode = PRODUCE) then
+
+ldlc_1:= read last {LDL SerPl Elp unit/vol from RMRS} Where it Occurred Within Past 1 Years;
+ldlc_2:= read last {LDL Calc Bld Qn (POC) from RMRS} Where it Occurred Within Past 1 Years;
+ldlc_3:= read last {LDL SerPl Calc Qn	from RMRS} Where it Occurred Within Past 1 Years;
+ldlc_4:= read last {LDL SerPl UC Qn from RMRS} Where it Occurred Within Past 1 Years;
+ldlc_5:= read last {LDL Direct SerPl Qn from RMRS} Where it Occurred Within Past 1 Years;
+ldlc_6:= read last {LDL Total Direct SerPl Qn UC from RMRS} Where it Occurred Within Past 1 Years;
+ldlc_7:= read last {LDL Total Sum Direct SerPl Qn UC from RMRS} Where it Occurred Within Past 1 Years;
+ldlc_8:= read last {LDL SerPl Qn mmol/L from RMRS} Where it Occurred Within Past 1 Years;
+ldlc_9:= read last {LIPID PROFILE from RMRS} Where it Occurred Within Past 1 Years;
+ldlc_10:= read last {LDL SerPl Qn Calc from RMRS} Where it Occurred Within Past 1 Years;
+ldlc_11:= read last {LDL SerPl Qn Elp from RMRS} Where it Occurred Within Past 1 Years;
+
+ldlc_12:= read {Hosp Procedures from RMRS} Where it Occurred Within Past 1 Years;
+
+endif
+;;
+Priority: ;;
+ Evoke: ;;
+Logic:
+If (mode = PRODUCE) then
+
+result1:= call mostRecentResultWithAnswer With "LDL-C <100 MG/DL","ldlc_12_object";
+
+result2:= call mostRecentResultWithAnswer With "LDL-C 100-129 MG/DL","ldlc_12_object";
+
+result3:= call mostRecentResultWithAnswer With "LDL-C>= 130 MG/DL","ldlc_12_object";
+
+result4:= call mostRecentResultWithAnswer With "LIPID PANEL","ldlc_12_object";
+
+result5:= call mostRecentResultWithAnswer With "LIPIDS, BLOOD; TOTAL","ldlc_12_object";
+
+result6:= call mostRecentResultWithAnswer With "LIPOPROTEIN BLD, HR FRACT","ldlc_12_object";
+
+result7:= call mostRecentResultWithAnswer With "LIPOPROTEIN, BLD, BY NMR","ldlc_12_object";
+
+result8:= call mostRecentResultWithAnswer With "ASSAY OF BLOOD LIPOPROTEIN","ldlc_12_object";
+
+result9:= call mostRecentResultWithAnswer With "ASSAY OF BLOOD LIPOPROTEINS","ldlc_12_object";
+
+
+
+finalResult:= call mostRecentResult With "ldlc_1_object","ldlc_2_object","ldlc_3_object","ldlc_4_object",
+"ldlc_5_object","ldlc_6_object","ldlc_7_object","ldlc_8_object","ldlc_9_object","result1_object","result2_object",
+"result3_object","result4_object","result5_object","result6_object","ldlc_10_object","ldlc_11_object","result7_object",
+"result8_object","result9_object";  
+
+
+finalResultConceptName:= call conceptNameResult With "finalResult_object";
+finalResultUnits:= call getConceptUnits with "finalResultConceptName";
+conclude true;
+
+endif
+;;
+Action:
+
+write ("|| finalResult_date ||") At ldlcResultDate;
+write ("|| finalResult_value ||") At ldlcResultValue;
+write ("|| finalResultConceptName_value ||") At ldlcConceptName;           
+write ("|| finalResultUnits_value ||") At ldlResultUnit;                              
+                                                                                                                                                                                                                                                                            
+;;
+Age_Min: 0 years;;
+Age_Max: 100 years;;
+end:

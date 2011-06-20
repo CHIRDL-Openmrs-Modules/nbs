@@ -1,0 +1,62 @@
+Maintenance:
+	Title:		Research Autism Sibling;;
+	Filename:		R_AutismSiblingPSF;;
+	Version:	1.0;;
+	Institution:	Indiana University School of Medicine;;
+	Author:		Steve Downs;;
+	Specialist:	Pediatrics;;
+	Date:		2010-09-21T11:00:00-0400;;
+	Validation:	;;
+Library:
+	Purpose:		Assess whether child has a sibling with autism.                                                                                                                                                                                                                                                                                                                                                                                                                                        ;;
+	Explanation:	       This is a risk factor for autism                                                                                                                                                                                                                                                                                                                                                                            ;;
+	Keywords:	autism;;
+	Citations:		;;
+	Links:		;;
+Knowledge:
+	Type:		data_driven;;
+Data:
+
+mode:=read {mode from Parameters};
+Box1:=read {box1 from Parameters};
+Box2:=read {box2 from Parameters};
+
+If (mode = PRODUCE) then
+CurrentStatus := read {CHICA_Autism_Status from CHICA} ;
+RecentlyAsked := read {CHICA_Autism_Risk from CHICA} Where it Occurred Within Past 180 Days;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
+endif
+;;
+Priority:		4;;
+	Evoke:		;;
+Logic:
+If (mode = PRODUCE) then
+
+mchatInterventionSite := call LocationAttributeLookup With "isMchatInterventionLocation";
+If(mchatInterventionSite = null) OR NOT (mchatInterventionSite = "true") then conclude False;
+
+If ('Autism_Diagnosed' is in CurrentStatus) OR ('Referred_For_Eval_17-23_months' is in CurrentStatus) OR ('Referred_For_Eval_24-35_months' is in CurrentStatus) then conclude False;
+If ('Sibling_With_Autism' is in RecentlyAsked) OR ('no_Sibling_With_Autism' is in RecentlyAsked) then conclude False;
+
+conclude true;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
+
+endif
+
+If (mode = CONSUME) then
+
+If  (Box1=true) then
+ CALL storeObs With "CHICA_Autism_Risk","Sibling_With_Autism";
+endif;
+If  (Box2=true) then
+ CALL storeObs With "CHICA_Autism_Risk","no_Sibling_With_Autism";
+endif;
+
+
+endif
+;;
+Action:
+write ("Does || firstname || have a brother or sister with autism?");
+write ("¿Tiene || firstname || un/a hermano/a con autismo?") At Spanish;                                                                                                                                                                                                                                                                            
+;;
+Age_Min: 17 months;;
+Age_Max: 36 months;;
+end:

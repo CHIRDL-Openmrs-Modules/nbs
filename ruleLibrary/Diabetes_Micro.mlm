@@ -1,0 +1,165 @@
+Maintenance:
+ Title: Diabetes_Micro;;
+ Filename: Diabetes_Micro;;
+ Version: 1.0;;
+ Institution: Indiana University School of Medicine;;
+ Author: Tammy Dugan;;
+ Specialist: Pediatrics;;
+ Date: 2010-08-03T11:00:00-0400;;
+ Validation: ;;
+Library:
+ Purpose: Lookup up Microalbumin results for diabetic patients.                                                                                                                                                                                                                                                                                                                                                                                                                                        ;;
+ Explanation:            ;;
+ Keywords: ;;
+ Citations: ;;
+ Links: ;;
+Knowledge:
+ Type: data_driven;;
+Data:
+
+mode:=read {mode from Parameters};
+If (mode = PRODUCE) then
+
+micro_1:= read last {Protein 12H Ur Qn from RMRS} Where it Occurred Within Past 1 Years;
+micro_2:= read last {Alb/Creat 24H Ur Mass Rto from RMRS} Where it Occurred Within Past 1 Years;
+micro_3:= read last {Protein/creat 24H Ur from RMRS} Where it Occurred Within Past 1 Years;
+micro_4:= read last {Albumin/Min Ur from RMRS} Where it Occurred Within Past 1 Years;
+micro_5:= read last {Microalbumin 24H Ur from RMRS} Where it Occurred Within Past 1 Years;
+micro_6:= read last {Microalbumin R-Ur Qn from RMRS} Where it Occurred Within Past 1 Years;
+micro_7:= read last {Microalbumin Ur from RMRS} Where it Occurred Within Past 1 Years;
+micro_8:= read last {Microalbumin Ur Qn from RMRS} Where it Occurred Within Past 1 Years;
+micro_9:= read last {Microalbumin Ur Qn mg/dL from RMRS} Where it Occurred Within Past 1 Years;
+micro_10:= read last {Microalbumin/Creat 24H Ur from RMRS} Where it Occurred Within Past 1 Years;
+micro_11:= read last {Microalbumin/Creat Ur mcg/mg Cr from RMRS} Where it Occurred Within Past 1 Years;
+micro_12:= read last {Microalbumin/Creat Ur Qn from RMRS} Where it Occurred Within Past 1 Years;
+micro_13:= read last {Albumin Ur QL from RMRS} Where it Occurred Within Past 1 Years;
+micro_14:= read last {Albumin R-Ur from RMRS} Where it Occurred Within Past 1 Years;
+micro_15:= read last {Albumin Ur Qn (POC) from RMRS} Where it Occurred Within Past 1 Years;
+micro_16:= read last {Albumin 24H Ur Qn from RMRS} Where it Occurred Within Past 1 Years;
+micro_17:= read last {Protein 24H Cnc' from RMRS} Where it Occurred Within Past 1 Years;
+micro_18:= read last {Protein Timed Ur Qn from RMRS} Where it Occurred Within Past 1 Years;
+micro_19:= read last {Protein R-Ur Qn from RMRS} Where it Occurred Within Past 1 Years;
+micro_20:= read last {Protein-Lcf Ur from RMRS} Where it Occurred Within Past 1 Years;
+micro_21:= read last {Protein-Ur Qn from RMRS} Where it Occurred Within Past 1 Years;
+micro_22:= read last {Protein (Ur Elp) from RMRS} Where it Occurred Within Past 1 Years;
+micro_23:= read last {Protein 24H Ur Qn from RMRS} Where it Occurred Within Past 1 Years;
+micro_24:= read last {Protein 24H Ur Qn Elp from RMRS} Where it Occurred Within Past 1 Years;
+micro_25:= read last {Protein TV Ur Qn from RMRS} Where it Occurred Within Past 1 Years;
+micro_26:= read last {Protein R-Ur Qn mg/gm Cr from RMRS} Where it Occurred Within Past 1 Years;
+micro_27:= read last {Protein/Creat Ur from RMRS} Where it Occurred Within Past 1 Years;
+micro_28:= read last {Microalbumin 24H Ur Cnc from RMRS} Where it Occurred Within Past 1 Years;
+micro_29:= read last {Albumin/Creat Rnd Ur from RMRS} Where it Occurred Within Past 1 Years;
+micro_30:= read last {Albumin/Creat Ur from RMRS} Where it Occurred Within Past 1 Years;
+micro_31:= read last {Albumin/Creat Ur Ratio (POC) from RMRS} Where it Occurred Within Past 1 Years;
+micro_32:= read last {Microalbumin Ur Excretion Rate from RMRS} Where it Occurred Within Past 1 Years;
+micro_33:= read last {Microalbumin Ur Panel from RMRS} Where it Occurred Within Past 1 Years;
+micro_34:= read last {R-UR ALBUMIN/CREAT from RMRS} Where it Occurred Within Past 1 Years;
+
+micro_35:= read {Hosp Procedures from RMRS} Where it Occurred Within Past 1 Years;
+
+endif
+
+/*If (mode = PRODUCE) then
+
+micro_1:= read last {Protein 12H Ur Qn from RMRS};
+micro_2:= read last {Alb/Creat 24H Ur Mass Rto from RMRS} ;
+micro_3:= read last {Protein/creat 24H Ur from RMRS}  ;
+micro_4:= read last {Albumin/Min Ur from RMRS}  ;
+micro_5:= read last {Microalbumin 24H Ur from RMRS}  ;
+micro_6:= read last {Microalbumin R-Ur Qn from RMRS}  ;
+micro_7:= read last {Microalbumin Ur from RMRS}  ;
+micro_8:= read last {Microalbumin Ur Qn from RMRS}  ;
+micro_9:= read last {Microalbumin Ur Qn mg/dL from RMRS}  ;
+micro_10:= read last {Microalbumin/Creat 24H Ur from RMRS}  ;
+micro_11:= read last {Microalbumin/Creat Ur mcg/mg Cr from RMRS}  ;
+micro_12:= read last {Microalbumin/Creat Ur Qn from RMRS}  ;
+micro_13:= read last {Albumin Ur QL from RMRS}  ;
+micro_14:= read last {Albumin R-Ur from RMRS}  ;
+micro_15:= read last {Albumin Ur Qn (POC) from RMRS}  ;
+micro_16:= read last {Albumin 24H Ur Qn from RMRS}  ;
+micro_17:= read last {Protein 24H Cnc' from RMRS}  ;
+micro_18:= read last {Protein Timed Ur Qn from RMRS}  ;
+micro_19:= read last {Protein R-Ur Qn from RMRS}  ;
+micro_20:= read last {Protein-Lcf Ur from RMRS}  ;
+micro_21:= read last {Protein-Ur Qn from RMRS}  ;
+micro_22:= read last {Protein (Ur Elp) from RMRS}  ;
+micro_23:= read last {Protein 24H Ur Qn from RMRS}  ;
+micro_24:= read last {Protein 24H Ur Qn Elp from RMRS}  ;
+micro_25:= read last {Protein TV Ur Qn from RMRS}  ;
+micro_26:= read last {Protein R-Ur Qn mg/gm Cr from RMRS}  ;
+micro_27:= read last {Protein/Creat Ur from RMRS}  ;
+micro_28:= read last {Microalbumin 24H Ur Cnc from RMRS}  ;
+micro_29:= read last {Albumin/Creat Rnd Ur from RMRS}  ;
+micro_30:= read last {Albumin/Creat Ur from RMRS}  ;
+micro_31:= read last {Albumin/Creat Ur Ratio (POC) from RMRS}  ;
+micro_32:= read last {Microalbumin Ur Excretion Rate from RMRS}  ;
+micro_33:= read last {Microalbumin Ur Panel from RMRS}  ;
+micro_34:= read last {R-UR ALBUMIN/CREAT from RMRS}  ;
+
+micro_35:= read {Hosp Procedures from RMRS}  ;
+
+endif*/
+;;
+Priority: ;;
+ Evoke: ;;
+Logic:
+If (mode = PRODUCE) then
+
+result1:= call mostRecentResultWithAnswer With "POS MICROALBUMINURIA REV","micro_35_object";
+
+result2:= call mostRecentResultWithAnswer With "NEG MICROALBUMINURIA REV","micro_35_object";
+
+result3:= call mostRecentResultWithAnswer With "ASSAY OF URINE ALBUMIN","micro_35_object";
+
+result4:= call mostRecentResultWithAnswer With "MICROALBUMIN, QUANTITATIVE","micro_35_object";
+
+result5:= call mostRecentResultWithAnswer With "MICROALBUMIN, SEMIQUANT","micro_35_object";
+
+result6:= call mostRecentResultWithAnswer With "ASSAY OF PROTEIN, URINE","micro_35_object";
+
+
+
+finalResult:= call mostRecentResult With "micro_1_object","micro_2_object","micro_3_object","micro_4_object",
+"micro_5_object","micro_6_object","micro_7_object","micro_8_object","micro_9_object","result1_object","result2_object",
+"result3_object","result4_object","result5_object","result6_object","micro_10_object","micro_11_object",
+"micro_12_object","micro_13_object","micro_14_object","micro_15_object","micro_16_object","micro_17_object",
+"micro_18_object","micro_19_object","micro_20_object","micro_21_object","micro_22_object","micro_23_object",
+"micro_24_object","micro_25_object","micro_26_object","micro_27_object","micro_28_object","micro_29_object",
+"micro_30_object","micro_31_object","micro_32_object","micro_33_object","micro_34_object";  
+
+finalResults = call getAllWithSameDate With "finalResult_object","micro_1_object","micro_2_object","micro_3_object","micro_4_object",
+"micro_5_object","micro_6_object","micro_7_object","micro_8_object","micro_9_object","result1_object","result2_object",
+"result3_object","result4_object","result5_object","result6_object","micro_10_object","micro_11_object",
+"micro_12_object","micro_13_object","micro_14_object","micro_15_object","micro_16_object","micro_17_object",
+"micro_18_object","micro_19_object","micro_20_object","micro_21_object","micro_22_object","micro_23_object",
+"micro_24_object","micro_25_object","micro_26_object","micro_27_object","micro_28_object","micro_29_object",
+"micro_30_object","micro_31_object","micro_32_object","micro_33_object","micro_34_object";
+
+element1 = call getResultElement With "0","finalResults_object";
+finalResultConceptName1:= call conceptNameResult With "element1_object";
+finalResultUnits1:= call getConceptUnits with "finalResultConceptName1";
+
+element2 = call getResultElement With "1","finalResults_object";
+finalResultConceptName2:= call conceptNameResult With "element2_object";
+finalResultUnits2:= call getConceptUnits with "finalResultConceptName2";
+
+conclude true;
+
+
+endif
+;;
+Action:
+
+write ("|| element1_date ||") At microResultDate1;
+write ("|| element1_value ||") At microResultValue1;
+write ("|| finalResultConceptName1_value ||") At microConceptName1;           
+write ("|| finalResultUnits1_value ||") At microResultUnit1;        
+
+write ("|| element2_date ||") At microResultDate2;
+write ("|| element2_value ||") At microResultValue2;
+write ("|| finalResultConceptName2_value ||") At microConceptName2;           
+write ("|| finalResultUnits2_value ||") At microResultUnit2;                                                                                                                                                                                                                                                                   
+;;
+Age_Min: 0 years;;
+Age_Max: 100 years;;
+end:

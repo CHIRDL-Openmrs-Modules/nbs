@@ -1,0 +1,47 @@
+Maintenance:
+	Title:		Asthma_JIT                                                   ;;
+	Filename:		Asthma_JIT                                    ;;
+	Version:	1.0       ;;
+	Institution:	Indiana University School of Medicine             ;;
+	Author:		Steve Downs                                     ;;
+	Specialist:	Pediatrics;;
+	Date:		2010-07-05T03:38:06-0400;;
+	Validation:	;;
+Library:
+	Purpose:		Alerts MD to update lab tests for diabetic patients.                                                                                                                                                                                                                                                                                                                                             ;;
+	Explanation:	Alerts MD to update lab tests for diabetic
+	patients with scheduled appointments at clinic.                                                                                                                                                                                                                                                                                                              ;;
+	Keywords:	diabetes                                                               ;;
+	Citations:		Brody DS, Hahn SR, Spitzer RL, et al, Arch Intern Med. 1998; 158:2469-75                             ;;
+	Links:		http://medicine.ucsf.edu/resources/guidelines/guide5html                                            ;;
+Knowledge:
+	Type:		data_driven;;
+Data:
+
+mode:=read {mode from Parameters};
+
+If (mode = PRODUCE) then
+asthma := read Exist {ASTHMA_COHORT from RMRS} ;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+endif
+
+;;
+Priority:		1       ;;
+	Evoke:		;;
+Logic:
+If (mode = PRODUCE) then
+
+If (asthma = True) conclude True;
+Else conclude False; 
+
+endif
+
+
+
+;;
+Action:
+                                          
+CALL storeObs With "ASTHMA_COHORT","true"; 										  
+
+;;
+
+end:

@@ -6,132 +6,105 @@
 		USE:
 			The diffs are ordered by datamodel version number.
 			The script can be run in a top down fashion and is
-			expected to not failor overwrite old data
+			expected to not fail or overwrite old data
 		
 		EXPECT:
 			- "use business-database-name;" was called prior to
 			   calling this script
 	</help>
-	
-	<diff>
-		<version>1.0.0</version>
-		<author>Vibha Anand</author>
-		<date>Nov 8th 2006</date>
-		<description>
-			nbs_alert table added
-		</description>
-		<sql>
-		DROP TABLE IF EXISTS `nbs_alert`;
-		CREATE TABLE `nbs_alert` (
-	  	`nbs_alert_id` int(11) NOT NULL AUTO_INCREMENT,
-	  	`form_instance_id` int(11) NOT NULL,
-	  	`form_id` int(11) NOT NULL,
-	  	`patient_id` int(11) NOT NULL,
-	  	`encounter_id` int(11) NOT NULL,
-	  	`mrn` varchar(20) DEFAULT NULL,
-	  	`provider` varchar(100) DEFAULT NULL,
-	  	`retired` tinyint(1) NOT NULL,
-	  	`date_created` datetime DEFAULT NULL,
-	  	`Record_Sta` varchar(20) DEFAULT NULL,
-	  	`status` int(11) DEFAULT '0',
-	  	PRIMARY KEY (`nbs_alert_id`),
-		 KEY `patient_id` (`patient_id`),
-		 CONSTRAINT `patient_id` FOREIGN KEY (`patient_id`) REFERENCES `patient_identifier` (`patient_id`)
-		) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
- 		</sql>
- 	</diff>
- 
-	
-		<diff>
-		<version>1.0.2</version>
-		<author>Tammy Dugan</author>
-		<date>July 10th 2008</date>
-		<description>
-			Added provider_id field to nbs_alert table.
-		</description>
-		<sql>
-		alter table nbs_alert add provider_id int(11);
-		</sql>
-	</diff>
-	
-		<diff>
-		<version>1.0.3</version>
+<diff>
+		<version>1.3.9</version>
 		<author>Meena Sheley</author>
-		<date>May 12th 2009</date>
+		<date>May 18, 2011</date>
 		<description>
-			Add listener task.
+		Initial setup.
 		</description>
-		<sql>
-INSERT IGNORE INTO scheduler_task_config
-   (`name`, `schedulable_class`, `start_time_pattern`, `repeat_interval`, `start_on_startup`, `started`, `created_by`, `date_created`)
-select 'RileyMessageProcessor', 'org.openmrs.module.nbsmodule.hl7.messageProcessor', 
-'MM/dd/yyyy HH:mm:ss', 86400000, 1, 0, 1,NOW() from 
-(select count(*) as cnt from scheduler_task_config where name='RileyMessageProcessor') a
-where a.cnt=0;
+<sql>
 
-INSERT IGNORE INTO scheduler_task_config_property
-   (`name`, `value`, `task_config_id`)
-select a.* from 
-(select 'port', '5002', max(task_config_id) from scheduler_task_config where name='RileyMessageProcessor')a,
-(select count(*) as cnt from scheduler_task_config_property where name='port'
-and task_config_id=(select max(task_config_id) from scheduler_task_config where name='RileyMessageProcessor') )b
-where b.cnt=0;
+DROP TABLE IF EXISTS nbs_hl7_export_status;
+CREATE TABLE nbs_hl7_export_status (
+  `hl7_export_status_id` int(11) NOT NULL,
+  `name` varchar(200) DEFAULT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `date_created` datetime DEFAULT NULL,
+  PRIMARY KEY (`hl7_export_status_id`),
+  KEY `rgrta_hl7_export_status_id` (`hl7_export_status_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	DROP TABLE IF EXISTS `nbs`.`nbs_hl7_export`;
+	CREATE TABLE  `nbs`.`nbs_hl7_export` (
+  `queue_id` int(11) NOT NULL AUTO_INCREMENT,
+  `encounter_id` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1',
+  `date_inserted` datetime NOT NULL DEFAULT '0002-11-30 00:00:00',
+  `date_processed` datetime DEFAULT NULL,
+  `ack_date` datetime DEFAULT NULL,
+  `voided` smallint(6) NOT NULL DEFAULT '0',
+  `date_voided` datetime DEFAULT NULL,
+  PRIMARY KEY (`queue_id`),
+  KEY `FK_nbs_hl7_export_1` (`status`),
+  KEY `nbs_hl7_export_fk_encounter` (`encounter_id`),
+  CONSTRAINT `nbs_hl7_export_fk_encounter` FOREIGN KEY (`encounter_id`) REFERENCES `encounter` (`encounter_id`),
+  CONSTRAINT `nbs_hl7_export_ibfk_1` FOREIGN KEY (`status`) REFERENCES `nbs_hl7_export_status` (`hl7_export_status_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1600 DEFAULT CHARSET=latin1;
 
-INSERT IGNORE INTO scheduler_task_config
-   (`name`, `schedulable_class`, `start_time_pattern`, `repeat_interval`, `start_on_startup`, `started`, `created_by`, `date_created`)
-select 'INPCMessageProcessor', 'org.openmrs.module.nbsmodule.hl7.messageProcessor', 
-'MM/dd/yyyy HH:mm:ss', 86400000, 1, 0, 1,NOW() from 
-(select count(*) as cnt from scheduler_task_config where name='INPCMessageProcessor') a
-where a.cnt=0;
+	DROP TABLE IF EXISTS nbs_hl7_export_map;
+CREATE TABLE  nbs_hl7_export_map (
+  `hl7_export_map_id` int(11) NOT NULL AUTO_INCREMENT,
+  `hl7_export_queue_id` int(11) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `date_inserted` datetime NOT NULL DEFAULT '0002-11-30 00:00:00',
+  `voided` smallint(6) NOT NULL DEFAULT '0',
+  `date_voided` datetime DEFAULT NULL,
+  PRIMARY KEY (`hl7_export_map_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1596 DEFAULT CHARSET=utf8;
 
- INSERT IGNORE INTO scheduler_task_config_property
-   (`name`, `value`, `task_config_id`)
-select a.* from 
-(select 'port', '5003', max(task_config_id) from scheduler_task_config where name='INPCMessageProcessor')a,
-(select count(*) as cnt from scheduler_task_config_property where name='port'
-and task_config_id=(select max(task_config_id) from scheduler_task_config where name='INPCMessageProcessor') )b
-where b.cnt=0;
-
-INSERT IGNORE INTO `scheduler_task_config` 
-(`name`, `schedulable_class`, `start_time_pattern`, `repeat_interval`, `start_on_startup`, `started`, `created_by`, `date_created`)
-select 'NBSResponseGenerator', 'org.openmrs.module.nbsmodule.ResponseGenerator', 
-'MM/dd/yyyy HH:mm:ss', 86400000, 1, 0, 1,NOW() from 
-(select count(*) as cnt from scheduler_task_config where name='NBSResponseGenerator') a
-where a.cnt=0;
-
-INSERT IGNORE INTO scheduler_task_config_property
-   (`name`, `value`, `task_config_id`)
-select a.* from 
-(select 'port', '8765', max(task_config_id) from scheduler_task_config where name='NBSResponseGenerator')a,
-(select count(*) as cnt from scheduler_task_config_property where name='port'
-and task_config_id=(select max(task_config_id) from scheduler_task_config where name='NBSResponseGenerator') )b
-where b.cnt=0;
-
-		</sql>
+	
+	</sql>
 	</diff>
 	
 	<diff>
-		<version>1.0.4</version>
+		<version>1.4.0</version>
 		<author>Meena Sheley</author>
-		<date>Mar 17th 2010</date>
+		<date>May 31, 2011</date>
 		<description>
-			Add nbs_alert_status table.
+		study attribute tables
 		</description>
-		<sql>
-		DROP TABLE IF EXISTS `nbs_alert_status`;
-		CREATE TABLE `nbs_alert_status` (
-		  `status_id` int(11) NOT NULL auto_increment,
-		  `name` varchar(200) default NULL,
-		  `description` varchar(200) default NULL,
-		  `date_created` datetime default NULL,
-		  PRIMARY KEY  (`status_id`),
-		  KEY `status_id` USING BTREE (`status_id`)
-		) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+<sql>
+CREATE TABLE nbs_study (
+  study_id int(11) NOT NULL auto_increment,
+  start_date date default NULL,
+  end_date date default NULL,
+  title varchar(255) NOT NULL,
+  investigators varchar(255) default NULL,
+  study_concept_id int(11) NOT NULL,
+  status tinyint(1) NOT NULL default '0',
+  purpose varchar(255) default NULL,
+  PRIMARY KEY  (study_id),
+  KEY study_fk_concept (study_concept_id),
+  CONSTRAINT study_fk_concept FOREIGN KEY (study_concept_id) REFERENCES concept (concept_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE nbs_study_attribute (
+  study_attribute_id int(11) NOT NULL auto_increment,
+  name varchar(255) NOT NULL,
+  description varchar(255) default NULL,
+  PRIMARY KEY  (study_attribute_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
-		</sql>
+CREATE TABLE nbs_study_attribute_value (
+  study_attribute_value_id int(11) NOT NULL auto_increment,
+  study_id int(11) NOT NULL,
+  value varchar(255) NOT NULL,
+  study_attribute_id int(11) NOT NULL,
+  PRIMARY KEY  (study_attribute_value_id),
+  KEY study_value_fk_study (study_id),
+  KEY study_value_fk_attr (study_attribute_id),
+  CONSTRAINT study_value_fk_attr FOREIGN KEY (study_attribute_id) REFERENCES nbs_study_attribute (study_attribute_id),
+  CONSTRAINT study_value_fk_study FOREIGN KEY (study_id) REFERENCES nbs_study (study_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+	
+	</sql>
 	</diff>
-	
-	
 </sqldiff>
+
+

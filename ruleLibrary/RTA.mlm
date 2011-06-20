@@ -1,0 +1,45 @@
+Maintenance:
+	Title:		RTA                                                   ;;
+	Filename:		RTA                                    ;;
+	Version:	1.0       ;;
+	Institution:	Indiana University School of Medicine             ;;
+	Author:		Steve Downs                                     ;;
+	Specialist:	Pediatrics;;
+	Date:		2010-07-05T03:38:06-0400;;
+	Validation:	;;
+Library:
+	Purpose:		Real time alerts to physicians .                                                                                                                                                                                                                                                                                                                                             ;;
+	Explanation:	Real time alerts to physicians.                                                                                                                                                                                                                                                                         ;;
+	Keywords:	diabetes                                                               ;;
+	Citations:		Brody DS, Hahn SR, Spitzer RL, et al, Arch Intern Med. 1998; 158:2469-75                            ;;
+	Links:		http://medicine.ucsf.edu/resources/guidelines/guide5html                                            ;;
+Knowledge:
+	Type:		data_driven;;
+Data:
+
+mode:=read {mode from Parameters};
+If (mode = PRODUCE) then   
+asthma_cohort := read exist {ASTHMA_COHORT from RMRS};    
+diabetes_suspected := read last {DIABETES_COHORT from RMRS};      
+endif
+
+;;
+Priority:		1       ;;
+	Evoke:		;;
+Logic:
+
+If (mode = PRODUCE) then
+
+CahText := call CAH;
+
+If  NOT (cahText = null ) then 
+call CREATE_JIT with "CAH";
+conclude false;
+
+endif;
+
+;;
+Action:
+;;
+
+end:

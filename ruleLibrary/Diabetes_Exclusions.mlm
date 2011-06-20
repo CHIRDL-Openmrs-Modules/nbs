@@ -1,0 +1,98 @@
+Maintenance:
+ Title: Diabetes Exclusions;;
+ Filename: Diabetes_Exclusions;;
+ Version: 1.0;;
+ Institution: Indiana University School of Medicine;;
+ Author: Tammy Dugan;;
+ Specialist: Pediatrics;;
+ Date: 2010-08-03T11:00:00-0400;;
+ Validation: ;;
+Library:
+ Purpose: Lookup up Exclusions for diabetic patients.                                                                                                                                                                                                                                                                                                                                                                                                                                        ;;
+ Explanation:            ;;
+ Keywords: ;;
+ Citations: ;;
+ Links: ;;
+Knowledge:
+ Type: data_driven;;
+Data:
+
+mode:=read {mode from Parameters};
+If (mode = PRODUCE) then
+
+polycystic:= read exist {ovaries polycystic from RMRS};
+
+hosp_proc:= read {Hosp Procedures from RMRS};
+hosp_icd9_dx:= read {Hosp ICD9 Dx from RMRS};
+dx_complaints:= read {Dx and Complaints from RMRS};
+clinic_billing_dx:= read {Clinic Billing Diagnosis from RMRS};
+admitting_icd9_dx:= read {Admitting ICD9 Dx from RMRS};
+admission_dx:= read {Admission Diagnosis from RMRS};
+discharge_dx:= read {DISCHARGE DIAGNOSIS from RMRS};
+er_dx:= read {E.R. Diagnosis from RMRS};
+primary_care_dx:= read {Primary Care Dx from RMRS};
+visit_dx:= read {VISIT DIAGNOSIS from RMRS};
+gyn_hx:= read {Gyn Hx from RMRS};
+
+endif
+;;
+Priority: ;;
+ Evoke: ;;
+Logic:
+If (mode = PRODUCE) then
+
+/* check for polycystic ovaries exclusion */
+If ('256.4' is in hosp_proc) OR ('256.4' is in hosp_icd9_dx) OR ('256.4' is in dx_complaints) OR
+ ('256.4' is in clinic_billing_dx) OR ('256.4' is in admitting_icd9_dx) OR ('256.4' is in admission_dx) OR
+  ('256.4' is in discharge_dx) OR ('256.4' is in er_dx) OR ('256.4' is in primary_care_dx) OR
+   ('256.4' is in visit_dx) OR ('256.4' is in gyn_hx) then || exclude || = "true";
+
+/* check for steroid induced exclusion */
+If ('251.8' is in hosp_proc) OR ('251.8' is in hosp_icd9_dx) OR ('251.8' is in dx_complaints) OR
+ ('251.8' is in clinic_billing_dx) OR ('251.8' is in admitting_icd9_dx) OR ('251.8' is in admission_dx) OR
+  ('251.8' is in discharge_dx) OR ('251.8' is in er_dx) OR ('251.8' is in primary_care_dx) OR
+   ('251.8' is in visit_dx) OR ('251.8' is in gyn_hx) OR
+   ('POIS-CORTICOSTEROIDS' is in hosp_proc) OR ('POIS-CORTICOSTEROIDS' is in hosp_icd9_dx) OR 
+   ('POIS-CORTICOSTEROIDS' is in dx_complaints) OR
+ ('POIS-CORTICOSTEROIDS' is in clinic_billing_dx) OR ('POIS-CORTICOSTEROIDS' is in admitting_icd9_dx) OR 
+ ('POIS-CORTICOSTEROIDS' is in admission_dx) OR
+  ('POIS-CORTICOSTEROIDS' is in discharge_dx) OR ('POIS-CORTICOSTEROIDS' is in er_dx) OR 
+  ('POIS-CORTICOSTEROIDS' is in primary_care_dx) OR
+   ('POIS-CORTICOSTEROIDS' is in visit_dx) OR ('POIS-CORTICOSTEROIDS' is in gyn_hx) then || exclude || = "true";
+
+/* check for gestational diabetes exclusion */
+If ('648.8' is in hosp_proc) OR ('648.8' is in hosp_icd9_dx) OR ('648.8' is in dx_complaints) OR
+ ('648.8' is in clinic_billing_dx) OR ('648.8' is in admitting_icd9_dx) OR ('648.8' is in admission_dx) OR
+  ('648.8' is in discharge_dx) OR ('648.8' is in er_dx) OR ('648.8' is in primary_care_dx) OR
+   ('648.8' is in visit_dx) OR ('648.8' is in gyn_hx) OR
+   ('648.80' is in hosp_proc) OR ('648.80' is in hosp_icd9_dx) OR ('648.80' is in dx_complaints) OR
+ ('648.80' is in clinic_billing_dx) OR ('648.80' is in admitting_icd9_dx) OR ('648.80' is in admission_dx) OR
+  ('648.80' is in discharge_dx) OR ('648.80' is in er_dx) OR ('648.80' is in primary_care_dx) OR
+   ('648.80' is in visit_dx) OR ('648.80' is in gyn_hx) OR
+   ('648.81' is in hosp_proc) OR ('648.81' is in hosp_icd9_dx) OR ('648.81' is in dx_complaints) OR
+ ('648.81' is in clinic_billing_dx) OR ('648.81' is in admitting_icd9_dx) OR ('648.81' is in admission_dx) OR
+  ('648.81' is in discharge_dx) OR ('648.81' is in er_dx) OR ('648.81' is in primary_care_dx) OR
+   ('648.81' is in visit_dx) OR ('648.81' is in gyn_hx) OR
+   ('648.82' is in hosp_proc) OR ('648.82' is in hosp_icd9_dx) OR ('648.82' is in dx_complaints) OR
+ ('648.82' is in clinic_billing_dx) OR ('648.82' is in admitting_icd9_dx) OR ('648.82' is in admission_dx) OR
+  ('648.82' is in discharge_dx) OR ('648.82' is in er_dx) OR ('648.82' is in primary_care_dx) OR
+   ('648.82' is in visit_dx) OR ('648.82' is in gyn_hx) OR
+   ('648.83' is in hosp_proc) OR ('648.83' is in hosp_icd9_dx) OR ('648.83' is in dx_complaints) OR
+ ('648.83' is in clinic_billing_dx) OR ('648.83' is in admitting_icd9_dx) OR ('648.83' is in admission_dx) OR
+  ('648.83' is in discharge_dx) OR ('648.83' is in er_dx) OR ('648.83' is in primary_care_dx) OR
+   ('648.83' is in visit_dx) OR ('648.83' is in gyn_hx) OR
+   ('648.84' is in hosp_proc) OR ('648.84' is in hosp_icd9_dx) OR ('648.84' is in dx_complaints) OR
+ ('648.84' is in clinic_billing_dx) OR ('648.84' is in admitting_icd9_dx) OR ('648.84' is in admission_dx) OR
+  ('648.84' is in discharge_dx) OR ('648.84' is in er_dx) OR ('648.84' is in primary_care_dx) OR
+   ('648.84' is in visit_dx) OR ('648.84' is in gyn_hx) then || exclude || = "true";
+   
+endif
+;;
+Action:
+
+write ("|| exclude ||");
+                                                                                                                                                                                                                                                                            
+;;
+Age_Min: 0 years;;
+Age_Max: 100 years;;
+end:

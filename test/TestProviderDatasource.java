@@ -43,7 +43,7 @@ public class TestProviderDatasource extends BaseModuleContextSensitiveTest
 		rule.setTokenName("TestProviderDatasource");
 
 		ruleList.add(rule);
-		String defaultPackagePrefix = "org.openmrs.module.nbsmodule.rule.";
+		String defaultPackagePrefix = "org.openmrs.module.nbs.rule.";
 		dssService.runRulesAsString(patient, ruleList,
 				defaultPackagePrefix,null);
 	}
