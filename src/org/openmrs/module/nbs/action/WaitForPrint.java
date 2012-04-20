@@ -35,38 +35,31 @@ public class WaitForPrint implements ProcessStateAction
 	public void processAction(StateAction stateAction, Patient patient,
 			PatientState patientState, HashMap<String, Object> parameters)
 	{
-		//lookup the patient again to avoid lazy initialization errors
 		PatientService patientService = Context.getPatientService();
+		ATDService atdService = Context.getService( ATDService.class);
 		LocationService locationService = Context.getLocationService();
 		Integer patientId = patient.getPatientId();
 		patient = patientService.getPatient(patientId);
 		
-		
 		Integer locationTagId = patientState.getLocationTagId();
 	
-		NbsService nbsService = Context
-				.getService(NbsService.class);
+		FormInstance formInstance = (FormInstance) parameters.get("formInstance");
+		if(formInstance == null){
 		
 		Integer sessionId = patientState.getSessionId();
-		ATDService atdService = Context.getService(ATDService.class);
-		PatientState stateWithFormId = atdService.getPrevPatientStateByAction(sessionId, patientState.getPatientStateId()
-		,"PRODUCE FORM INSTANCE");
-
-		FormInstance formInstance = patientState.getFormInstance();
+		PatientState stateWithFormId = atdService.getPrevPatientStateByAction(sessionId, 
+			patientState.getPatientStateId(),"PRODUCE FORM INSTANCE");
+		
+		formInstance = patientState.getFormInstance();
 
 		if(formInstance == null&&stateWithFormId != null)
 		{
 			formInstance = stateWithFormId.getFormInstance();
 		}
-		
-		if (formInstance == null){
-			formInstance =  (FormInstance) parameters.get("formInstance");
 		}
-		
-		
-		atdService = Context.getService(ATDService.class);
 		patientState.setFormInstance(formInstance);
-		atdService.updatePatientState(patientState);
+		patientState.setParameters(parameters);
+		PatientState patState = atdService.updatePatientState(patientState);
 		
 		String mergeDirectory = IOUtil
 				.formatDirectoryName(org.openmrs.module.atd.util.Util
@@ -75,7 +68,12 @@ public class WaitForPrint implements ProcessStateAction
 								formInstance.getLocationId()));
 		TeleformFileState teleformFileState = TeleformFileMonitor
 				.addToPendingStatesWithFilename(formInstance, mergeDirectory
-						+ formInstance.toString() + ".20");
+						+ formInstance.toString() + ".19");
+		teleformFileState.addParameter("providerId", parameters.get("provider_id"));
+		teleformFileState.addParameter("providerFirstName", parameters.get("providerFirstName"));
+		teleformFileState.addParameter("providerLastName", parameters.get("providerLastName"));
+		teleformFileState.addParameter("patientState", patState);
+		
 		
 		Location defaultLocation = locationService.getLocation("Default Location");
 		Integer defaultLocationId = 1;
@@ -85,7 +83,7 @@ public class WaitForPrint implements ProcessStateAction
 		patientState.setLocationId(defaultLocationId);
 		Integer formId = (Integer) parameters.get("formId");
 		patientState.setFormId(formId);
-		teleformFileState.addParameter("patientState", patientState);
+		
 	}
 
 	public void changeState(PatientState patientState,

@@ -6,15 +6,11 @@ import java.util.Iterator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.api.context.Context;
-import org.openmrs.logic.LogicService;
 import org.openmrs.module.atd.TeleformFileMonitor;
 import org.openmrs.module.atd.TeleformFileState;
-import org.openmrs.module.atd.datasource.TeleformExportXMLDatasource;
-import org.openmrs.module.nbs.datasource.LogicNbsObsDAO;
-import org.openmrs.module.nbs.datasource.ObsNbsDatasource;
-import org.openmrs.module.sockethl7listener.ProcessedMessagesManager;
 import org.springframework.aop.AfterReturningAdvice;
+import org.openmrs.module.sockethl7listener.ProcessedMessagesManager;
+
 
 /**
  * Triggers code in this module when certain other methods are called.

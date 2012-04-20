@@ -17,7 +17,7 @@ import org.junit.Test;
 import org.openmrs.Encounter;
 import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.nbsmodule.NBSService;
+import org.openmrs.module.nbs.service.NbsService;
 import org.openmrs.test.BaseContextSensitiveTest;
 import org.openmrs.test.SkipBaseSetup;
 
@@ -43,11 +43,11 @@ public class NBSServiceTest extends BaseContextSensitiveTest {
 	@Test
 	public void testClass() throws Exception 
 	{
-		NBSService nbsService = 
-			(NBSService) Context.getService(NBSService.class);
+		NbsService nbsService = 
+			(NbsService) Context.getService(NbsService.class);
 		Patient patient = Context.getPatientService().getPatient(631);
 		Encounter encounter = Context.getEncounterService().getEncounter(871);
-		nbsService.writeNBSModuleResponse(patient, encounter);
+	//	nbsService.writeNBSModuleResponse(patient, encounter);
 	}
 	
 }

@@ -17,33 +17,28 @@ Knowledge:
 	Type:		data_driven;;
 Data:
 
-mode:=read {mode from Parameters};
-If (mode = PRODUCE) then   
-   CahResult := call CAH;
-   McadResult:= call MCAD;
-endif
-
 ;;
 Priority:		1       ;;
 	Evoke:		;;
 Logic:
-
 If (mode = PRODUCE) then
 
+cahResult := call CAH 
+conclude true;
 
-If  NOT (CahResult = null ) then 
-call CREATE_JIT with "CAH", "CahResult_value;
-endif;
+endif
 
-If  NOT (McadResult = null ) then
-call CREATE_JIT with "MCAD", McadResult_value;
-endif;
+If (mode = CONSUME) then
 
 
-endif;
-
+endif
 ;;
 Action:
+
+If ( NOT (cahResult = null) ) then
+call CREATE_JIT with "Asthma_Alert";  
+endif;
+
 ;;
 
 end:

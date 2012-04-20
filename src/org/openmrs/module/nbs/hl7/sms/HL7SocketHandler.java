@@ -94,7 +94,7 @@ public class HL7SocketHandler extends org.openmrs.module.sockethl7listener.HL7So
 	 * @see org.openmrs.module.sockethl7listener.HL7SocketHandler#processMessage(ca.uhn.hl7v2.model.Message)
 	 */
 	@Override
-	public synchronized Message processMessage(Message message,HashMap<String,Object> parameters) throws ApplicationException
+	public  Message processMessage(Message message,HashMap<String,Object> parameters) throws ApplicationException
 	{
 		ATDService atdService = Context.getService(ATDService.class);
 
@@ -680,7 +680,7 @@ public class HL7SocketHandler extends org.openmrs.module.sockethl7listener.HL7So
 			if (this.hl7EncounterHandler instanceof org.openmrs.module.nbs.hl7.sms.HL7EncounterHandler25)
 			{
 				Location location = ((org.openmrs.module.nbs.hl7.sms.HL7EncounterHandler25) this.hl7EncounterHandler)
-						.getLocation(message);
+						.getLocation(message,incomingMessageString);
 
 				appointmentTime = ((org.openmrs.module.nbs.hl7.sms.HL7EncounterHandler25) this.hl7EncounterHandler)
 						.getAppointmentTime(message);

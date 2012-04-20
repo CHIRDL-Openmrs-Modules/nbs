@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.HashMap;
 
 import org.openmrs.Location;
-import org.openmrs.LocationTag;
 import org.openmrs.Patient;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.LocationService;
@@ -19,18 +18,18 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.atd.hibernateBeans.ATDError;
 import org.openmrs.module.atd.hibernateBeans.Session;
 import org.openmrs.module.atd.service.ATDService;
-import org.openmrs.module.chirdlutil.service.ChirdlUtilService;
 import org.openmrs.module.chirdlutil.util.IOUtil;
 import org.openmrs.module.chirdlutil.util.Util;
 import org.openmrs.module.nbs.hibernateBeans.Encounter;
-import org.openmrs.module.nbs.hl7.mckesson.MatchHandler;
 import org.openmrs.module.nbs.service.EncounterService;
+import org.openmrs.module.nbs.service.NbsService;
 import org.openmrs.module.sockethl7listener.HL7EncounterHandler;
 import org.openmrs.module.sockethl7listener.HL7Filter;
 import org.openmrs.module.sockethl7listener.HL7ObsHandler;
 import org.openmrs.module.sockethl7listener.HL7PatientHandler;
 import org.openmrs.module.sockethl7listener.PatientHandler;
 import org.openmrs.module.sockethl7listener.Provider;
+import org.openmrs.module.sockethl7listener.service.SocketHL7ListenerService;
 
 import ca.uhn.hl7v2.HL7Exception;
 import ca.uhn.hl7v2.app.ApplicationException;
@@ -66,7 +65,7 @@ public class HL7SocketHandler extends
 	 * ca.uhn.hl7v2.model.Message)
 	 */
 	@Override
-	public synchronized Message processMessage(Message message,
+	public  Message processMessage(Message message,
 			HashMap<String,Object> parameters) throws ApplicationException {
 		AdministrationService adminService = Context.getAdministrationService();
 		String incomingMessageString = null;
@@ -193,14 +192,14 @@ public class HL7SocketHandler extends
 
 		if (this.hl7EncounterHandler instanceof org.openmrs.module.nbs.hl7.sms.HL7EncounterHandler25)
 		{
-			String printerLocation = ((org.openmrs.module.nbs.hl7.sms.HL7EncounterHandler25) this.hl7EncounterHandler)
-					.getPrinterLocation(message,incomingMessageString);
+			//String printerLocation = ((org.openmrs.module.nbs.hl7.sms.HL7EncounterHandler25) this.hl7EncounterHandler)
+			//		.getPrinterLocation(message,incomingMessageString);
 			
-			if (printerLocation != null && printerLocation.equals("0"))
-			{
+			//if (printerLocation != null && printerLocation.equals("0"))
+			//{
 				// ignore this message because it is just kids getting shots
-				return message;
-			}
+			//	return message;
+			//}
 		}
 		return super.processMessage(message,parameters);
 	}
@@ -227,10 +226,9 @@ public class HL7SocketHandler extends
 		LocationService locationService = Context.getLocationService();
 		Location location = null;
 
-		String locationString = null;
+		
 		Date appointmentTime = null;
-		String planCode = null;
-		String carrierCode = null;
+		
 		String printerLocation = null;
 		Message message;
 		try
@@ -243,7 +241,7 @@ public class HL7SocketHandler extends
 			if (this.hl7EncounterHandler instanceof org.openmrs.module.nbs.hl7.mckesson.HL7EncounterHandler25)
 			{
 				location = ((org.openmrs.module.nbs.hl7.mckesson.HL7EncounterHandler25) this.hl7EncounterHandler)
-						.getLocation(message);
+						.getLocation(message, incomingMessageString);
 
 				appointmentTime = ((org.openmrs.module.nbs.hl7.mckesson.HL7EncounterHandler25) this.hl7EncounterHandler)
 						.getAppointmentTime(message);
@@ -294,12 +292,29 @@ public class HL7SocketHandler extends
 			Date encounterDate, Message message, String incomingMessageString,
 			org.openmrs.Encounter newEncounter, HashMap<String,Object> parameters)
 	{
+		NbsService nbsService = Context.getService(NbsService.class);
+			
 		MatchHandler.setPatientMatchingAttribute(provider, patient, encounterDate);
-        
+		
+		
+		if (provider == null){
+			log.error("Provider is required for an encounter." +
+					"Provider name and id are null for " +   patient.getGivenName() + " " 
+					+ patient.getFamilyName());
+			return null;
+		}
+		String id = "";
+		id = provider.getId();
+		if (id == null || id.trim().equalsIgnoreCase("") ){
+			id = nbsService.getNPI(provider.getFirstName(), provider.getLastName());
+		}
+		
+		provider.setId(id);
+		 
 		Encounter enc =  (Encounter) super.checkin(provider, patient, encounterDate,  message,
 				incomingMessageString, newEncounter,parameters);
 		
-		
+
 		
 		return enc;
 	}

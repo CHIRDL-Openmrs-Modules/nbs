@@ -66,7 +66,7 @@ public class Util
 	private static Log log = LogFactory.getLog( Util.class );
 	public static final Random GENERATOR = new Random();
 	
-	public synchronized static int getMaxDssElements(Integer formId,
+	public  static int getMaxDssElements(Integer formId,
 			Integer locationTagId,Integer locationId)
 	{
 		String propertyValue = null;
@@ -94,7 +94,7 @@ public class Util
 		return maxDssElements;
 	}
 	
-	public synchronized static void saveObs(Patient patient, Concept currConcept,
+	public  static void saveObs(Patient patient, Concept currConcept,
 			int encounterId, String value, FormInstance formInstance,
 			Integer ruleId, Integer locationTagId)
 	{
@@ -190,7 +190,7 @@ public class Util
 	 * @param cutoff date to calculate age from
 	 * @return String age with units 
 	 */
-	public synchronized static String adjustAgeUnits(Date birthdate, Date cutoff)
+	public  static String adjustAgeUnits(Date birthdate, Date cutoff)
 	{
 		int years = org.openmrs.module.chirdlutil.util.Util.getAgeInUnits(birthdate, cutoff, YEAR_ABBR);
 		int months = org.openmrs.module.chirdlutil.util.Util.getAgeInUnits(birthdate, cutoff, MONTH_ABBR);
@@ -215,7 +215,7 @@ public class Util
 		return days + " " + DAY_ABBR;
 	}
 	
-	public synchronized static boolean isValidSSN( String ssnFull){
+	public  static boolean isValidSSN( String ssnFull){
 		boolean valid = true;
 		String ssn = null;
 		

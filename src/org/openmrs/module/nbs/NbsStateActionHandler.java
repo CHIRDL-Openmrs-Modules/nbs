@@ -165,7 +165,7 @@ public class NbsStateActionHandler implements StateActionHandler
 		return processStateAction;
 	}
 	
-	public synchronized void changeState(PatientState patientState,
+	public void changeState(PatientState patientState,
 			HashMap<String,Object> parameters){
 		StateAction stateAction = patientState.getState().getAction();
 		if (stateAction == null)
@@ -181,7 +181,7 @@ public class NbsStateActionHandler implements StateActionHandler
 		}	
 	}
 	
-	public synchronized void processAction(StateAction stateAction, Patient patient,
+	public  void processAction(StateAction stateAction, Patient patient,
 			PatientState patientState,HashMap<String,Object> parameters)
 	{
 		if (stateAction == null)
@@ -203,7 +203,7 @@ public class NbsStateActionHandler implements StateActionHandler
 		}	
 	}
 
-	public static synchronized void consume(Integer sessionId,FormInstance formInstance,Patient patient,
+	public static void consume(Integer sessionId,FormInstance formInstance,Patient patient,
 			HashMap<String,Object> parameters,List<FormField> fieldsToConsume,
 			Integer locationTagId)
 	{
@@ -236,7 +236,7 @@ public class NbsStateActionHandler implements StateActionHandler
 		
 		// save specific observations
 		//saveObs(encounterId, patient,locationTagId);
-		System.out.println("NbsStateActionHandler.consume: time of saveObs: "+
+		log.info("NbsStateActionHandler.consume: time of saveObs: "+
 			(System.currentTimeMillis()-startTime));
 		startTime = System.currentTimeMillis();
 		// remove the parsed xml from the xml datasource
@@ -266,7 +266,7 @@ public class NbsStateActionHandler implements StateActionHandler
 		}
 	}
 	
-	private static synchronized void saveObs(Integer encounterId,Patient patient,
+	private static  void saveObs(Integer encounterId,Patient patient,
 			Integer locationTagId){
 		EncounterService encounterService = Context.getService(EncounterService.class);
 		Encounter encounter = (Encounter) encounterService.getEncounter(encounterId);
@@ -287,7 +287,7 @@ public class NbsStateActionHandler implements StateActionHandler
 		
 	}
 	
-	public static synchronized void changeState(Patient patient, Integer sessionId,
+	public static  void changeState(Patient patient, Integer sessionId,
 			State currState,StateAction action,
 			HashMap<String,Object> parameters,
 			Integer locationTagId,Integer locationId)

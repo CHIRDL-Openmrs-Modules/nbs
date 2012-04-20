@@ -105,6 +105,21 @@ CREATE TABLE nbs_study_attribute_value (
 	
 	</sql>
 	</diff>
+<diff>
+		<version>1.4.1</version>
+		<author>Meena Sheley</author>
+		<date>Feb 29, 2012</date>
+		<description>
+		ISDH and trigger file directories for MoveMerge method.
+		</description>
+<sql>	
+insert into chirdlutil_location_attribute (name, description) values ('ISDHSourceHl7Directory', 'Directory for ISDH message arrival');
+insert into chirdlutil_location_attribute (name, description)  values ('ISDHPendingDirectory', 'Pending directory for ISDH messages');
+insert into chirdlutil_location_attribute (name, description)  values ('TriggerSourceHl7Directory', 'Directory for Trigger message arrival');
+insert into chirdlutil_location_attribute (name, description)  values ('TriggerPendingDirectory', 'Pending directory for Trigger messages');
+</sql>
+</diff>
+
 </sqldiff>
 
 

@@ -3,6 +3,7 @@ package org.openmrs.module.nbs.service;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.openmrs.Concept;
@@ -16,6 +17,7 @@ import org.openmrs.module.atd.hibernateBeans.Statistics;
 import org.openmrs.module.nbs.Percentile;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7Export;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMap;
+import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMapType;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportStatus;
 import org.openmrs.module.nbs.hibernateBeans.OldRule;
 import org.openmrs.module.nbs.hibernateBeans.Study;
@@ -32,6 +34,10 @@ public interface NbsService
 	public void produce(OutputStream output, PatientState state,
 			Patient patient,Integer encounterId,String dssType,
 			int maxDssElements,Integer sessionId);
+	
+	public void produce(OutputStream output, PatientState state,
+			Patient patient, Integer encounterId, String dssType,
+			int maxDssElements,Integer sessionId, HashMap<String, Object> parameters);
 
 	public List<Study> getActiveStudies();
 
@@ -67,6 +73,7 @@ public interface NbsService
 	public void saveNbsHL7Export(NbsHL7Export export);
 	
 	public List<NbsHL7Export> getPendingHL7ExportsByEncounterId(Integer encounterId);
+	public NbsHL7Export getNextPendingHL7Export(String resend, String resendNoAck);
 	
 	/**
 	 * @param patientId
@@ -86,11 +93,15 @@ public interface NbsService
 	public List<String> getPrinterStations(Location location);
 	
 	public void  saveHL7ExportMap (NbsHL7ExportMap map);
+	public void  saveHL7ExportMapType (NbsHL7ExportMapType type);
+	public NbsHL7ExportMapType getHL7ExportMapTypeByName (String name);
 	
-	public NbsHL7ExportMap getNbsExportMapByQueueId(Integer queue_id);
+	public NbsHL7ExportMap getNbsExportMapByQueueId(Integer queue_id, NbsHL7ExportMapType mapType);
 	
 	public NbsHL7ExportStatus getNbsExportStatusByName (String name);
 	
 	public NbsHL7ExportStatus getNbsExportStatusById (Integer id);
+
+	public String getNPI(String firstName, String lastName);
 	
 }

@@ -136,10 +136,10 @@ public class HL7EncounterHandler25 extends
 		return location;
 	}
 
-	public Location getLocation(Message message)
+	public Location getLocation(Message message, String mString)
 	{
 		//For one application, we want the building so that we have the name
-		//of the hospital.  Other application don't contain buildings, they contain 
+		//of the hospital.  Other applications don't contain buildings, they contain 
 		//the detail of the point of care (i.e. practices). 
 		LocationService locationService = Context.getLocationService();
 		PV1 pv1 = getPV1(message);
@@ -159,6 +159,7 @@ public class HL7EncounterHandler25 extends
 			}
 			//check ZLR segment
 			ZLR zlr = new ZLR(message);
+			zlr.loadZLRSegment(mString);
 			locationString = zlr.getOrderingFacilityIDNum();
 
 			if (locationString != null && !locationString.trim().equalsIgnoreCase("")){

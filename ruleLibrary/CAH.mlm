@@ -1,0 +1,43 @@
+Maintenance:
+	Title:		CAH Reminder;;
+	Filename:	CAH;;
+	Version:	1.0;;
+	Institution:	Indiana University School of Medicine;;
+	Author:		Steve Downs;;
+	Specialist:	Pediatrics;;
+	Date:		03-20-2008;; 
+	Validation:	;;
+Library:
+	Purpose:	Provides a specific reminder, tailored to the patient who identified one or more endocrine acid disorders;;
+	Explanation:	Based on AAP screening recommendations;;
+  	Keywords:	endocrine, cah, endocrine disorder;;
+	Citations:	Screening for endocrine disorder AAP;;
+	Links:	;;
+Knowledge:
+	Type:	data_driven;;
+	
+Data:
+
+mode:=read {mode from Parameters};
+
+if (mode = PRODUCE) then
+
+endif
+
+;;
+Priority:	;;
+Evoke:	;;
+
+Logic:
+If (mode = PRODUCE) then 
+conclude True;
+endif
+;;
+Action:
+
+                                                                                                         
+write ("|| firstname ||'s screen for Congenital Adrenal Hyperplasia is abnormal. Further follow-up is necessary to evaluate this infant ****.") At paragraphOneText;
+
+
+;;
+end:

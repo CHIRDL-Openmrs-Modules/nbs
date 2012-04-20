@@ -108,9 +108,9 @@ public class ProduceAlert implements ProcessStateAction
 		atdService.updatePatientState(patientState);
 		
 		
-		Rule rule = new Rule();
-		rule.setTokenName("RTA");
-		rule.setParameters(parameters);
+		//Rule rule = new Rule();
+		//rule.setTokenName("RTA");
+		//rule.setParameters(parameters);
 		
 		String defaultPackagePrefix = Util.formatPackagePrefix(
 				adminService.getGlobalProperty("atd.defaultPackagePrefix"));
@@ -119,14 +119,14 @@ public class ProduceAlert implements ProcessStateAction
 		
 		atdService.evaluateRule("RTA", patient, parameters,rulePackagePrefix);
 		
-		//LogicService logicService = Context.getLogicService();
+		LogicService logicService = Context.getLogicService();
 
-		//ObsNbsDatasource xmlDatasource = (ObsNbsDatasource) logicService
-				//.getLogicDataSource("RMRS");
+		ObsNbsDatasource xmlDatasource = (ObsNbsDatasource) logicService
+				.getLogicDataSource("RMRS");
 
 		// clear the in-memory obs from the MRF dump at the end of each
 		// produce state
-		//xmlDatasource.deleteRegenObsByPatientId(patientId);
+		xmlDatasource.deleteRegenObsByPatientId(patientId);
 		
 		StateManager.endState(patientState);
 		NbsStateActionHandler.changeState(patient, sessionId, currState, stateAction, parameters,

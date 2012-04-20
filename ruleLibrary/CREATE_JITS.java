@@ -12,11 +12,13 @@ import org.openmrs.Form;
 import org.openmrs.Location;
 import org.openmrs.Obs;
 import org.openmrs.Patient;
+import org.openmrs.Person;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.FormService;
 import org.openmrs.api.ObsService;
 import org.openmrs.api.PatientService;
+import org.openmrs.api.PersonService;
 import org.openmrs.api.context.Context;
 import org.openmrs.logic.LogicContext;
 import org.openmrs.logic.LogicCriteria;
@@ -37,7 +39,7 @@ import org.openmrs.module.chirdlutil.util.IOUtil;
 import org.openmrs.module.atd.hibernateBeans.PatientState;
 import org.openmrs.module.atd.hibernateBeans.State;
 
-public class CREATE_JIT implements Rule
+public class CREATE_JITS implements Rule
 {
 	private Log log = LogFactory.getLog(this.getClass());
 	private LogicService logicService = Context.getLogicService();
@@ -88,8 +90,9 @@ public class CREATE_JIT implements Rule
 	{
 		ATDService atdService = Context.getService(ATDService.class);
 		FormService formService = Context.getFormService();
+		PersonService personService = Context.getPersonService();
+		
 		String formName = (String) parameters.get("param1");
-		String provider = (String) parameters.get("param2");
 		Form form = formService.getForms(formName,null,null,false,null,null,null).get(0);
 		Integer formId = form.getFormId();
 		Integer sessionId = (Integer) parameters.get("sessionId");
@@ -97,25 +100,50 @@ public class CREATE_JIT implements Rule
 		FormInstance formInstance = (FormInstance) parameters.get("formInstance");
 		//we don't know the formInstanceId yet because the JIT hasn't been created
 		formInstance = new FormInstance(formInstance.getLocationId(),formId,null);
+		Result results = Result.emptyResult();
 
-		Integer locationId = formInstance.getLocationId();
-		if(sessionId != null){
-			State currState = atdService.getStateByName("JIT_create");
-			
-			try {
-				HashMap<String,Object> actionParameters = new HashMap<String,Object>();
-				actionParameters.put("formName", formName);
-				actionParameters.put("provider_id" , provider)
-	            PatientState patientState = 
-	            	StateManager.runState(patient, sessionId, currState,actionParameters,
-	            		locationTagId,
-	            		locationId,
-	            		NbsStateActionHandler.getInstance());
-            }
-            catch (Exception e) {
-	            log.error("",e);
-            }
-		}	
+		Integer locationId = formInstance.getLocationId(); 
+	
+    	
+		Object paramObj = "";
+		String providerId = null;
+    	int i = 2;
+    	
+    	
+    	while(paramObj != null){
+			paramObj = parameters.get("param"+i);
+			if(paramObj instanceof Result){
+				results = (Result) parameters.get("param"+i);
+			}else{
+
+				continue;
+			}
+			if(results != null){
+				for(Result result:results){
+					if (result != null ) {
+						providerId = result.toString();
+    					//check if sent in last few days
+    					 parameters.put("providerId", providerId);
+						 String firstName = "";
+						 String lastName = "";
+						 
+						 if (providerId != null){
+							 Person provider = personService.getPerson(personId);
+							 if (provider != null){
+								 firstName = provider.getGivenName();
+								 lastName = provider.getFamilyName();
+							 }
+						 }
+						 parameters.put("providerFirstName", firstName);
+						 parameters.put("providerLastName", lastName);
+						 
+    					 logicService.eval(patient, "CREATE_JIT",parameters);
+    				}
+				}
+			}
+			i++;
+		}
+    	
 		return Result.emptyResult();
 	}
 }

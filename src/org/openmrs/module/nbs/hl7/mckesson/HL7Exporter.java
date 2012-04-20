@@ -628,7 +628,7 @@ public class HL7Exporter extends AbstractTask {
 	private Integer getFormIdByExportQueueId(Integer queueId){
 		Integer formId = null;
 		NbsService nbsService = Context.getService(NbsService.class);
-		NbsHL7ExportMap exportmap =  nbsService.getNbsExportMapByQueueId(queueId);
+		NbsHL7ExportMap exportmap =  nbsService.getNbsExportMapByQueueId(queueId, null);
 		if (exportmap == null){
 			return null;
 		}

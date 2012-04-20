@@ -215,7 +215,7 @@ public class HibernateLogicProviderDAO implements LogicProviderDAO
 		{
 			criteria.add(c);
 		}
-		List<User> results = null;
+		List<User> results = new ArrayList<User>();
 
 		criteria.add(Restrictions.in("userId", userIds));
 		results.addAll(criteria.list());

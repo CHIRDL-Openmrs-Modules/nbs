@@ -10,15 +10,19 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
+import org.openmrs.PersonAttributeType;
+import org.openmrs.module.atd.hibernateBeans.FormAttributeValue;
 import org.openmrs.module.atd.hibernateBeans.PatientState;
 import org.openmrs.module.atd.hibernateBeans.Statistics;
 import org.openmrs.module.chirdlutil.util.Util;
 import org.openmrs.module.nbs.db.NbsDAO;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7Export;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMap;
+import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMapType;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportStatus;
 import org.openmrs.module.nbs.hibernateBeans.OldRule;
 import org.openmrs.module.nbs.hibernateBeans.Study;
@@ -386,8 +390,81 @@ public class HibernateNbsDAO implements NbsDAO
 	
 	public void saveNbsHL7Export(NbsHL7Export export) {
 		this.sessionFactory.getCurrentSession().saveOrUpdate(export);
+		
 		return;
 	}
+	
+	public void saveHL7ExportMapType(NbsHL7ExportMapType mapType){
+		this.sessionFactory.getCurrentSession().saveOrUpdate(mapType);
+		
+	}
+	
+	public NbsHL7ExportMapType getHL7ExportMapTypeByName (String name){
+	
+		try {
+			String sql = "select * from nbs_hl7_export_map_type where name=?";
+			SQLQuery qry = this.sessionFactory.getCurrentSession()
+					.createSQLQuery(sql);
+			qry.setString(0, name);
+			qry.addEntity(NbsHL7ExportMapType.class);
+			
+			List<NbsHL7ExportMapType> list = qry.list();
+
+			if (list != null && list.size() > 0)
+			{
+				return list.get(0);
+			}
+
+	} catch (Exception e)
+	{
+		log.error(Util.getStackTrace(e));
+	}
+	return null;
+		
+	}
+public NbsHL7Export getNextPendingHL7Export(String resendImagesNotFound, String resendNoAck){
+		
+		try {
+			String resend = "";
+			String resendNoAckExtension = "";
+			if (resendImagesNotFound != null && (resendImagesNotFound.equalsIgnoreCase("yes")||
+					resendImagesNotFound.equalsIgnoreCase("true")))
+			{
+				NbsHL7ExportStatus status = getNbsExportStatusByName("image_not_found");
+				if (status != null ){
+					resend = " or status = " + status.getHl7ExportStatusId() ;
+				}
+			} 
+			
+			if (resendNoAck != null && (resendNoAck.equalsIgnoreCase("yes")||
+					resendNoAck.equalsIgnoreCase("true")))
+			{
+				NbsHL7ExportStatus status = getNbsExportStatusByName("ACK_not_received");
+				NbsHL7ExportStatus statusSocket = getNbsExportStatusByName("open_socket_failed");
+				if (status != null ){
+					resendNoAckExtension = " or status = " + status.getHl7ExportStatusId()
+					 +  " or status = " + statusSocket.getHl7ExportStatusId();
+				}
+			} 
+			
+			SQLQuery qry = this.sessionFactory.getCurrentSession()
+				.createSQLQuery("select * from Nbs_hl7_export " +
+			" where voided = 0 and ((status = 1 and date_processed is null) " 
+						+ resend + resendNoAckExtension + " ) order by date_inserted ");
+
+			
+			qry.addEntity(NbsHL7Export.class);
+			List <NbsHL7Export> exports = qry.list();
+			if (exports != null && exports.size() > 0) {
+				return exports.get(0);
+			}
+		} catch (HibernateException e) {
+			log.error(e);
+		}
+		
+		return null;
+	}
+	
 	
 	public List<NbsHL7Export> getPendingHL7ExportsByEncounterId(Integer encounterId){
 		SQLQuery qry = this.sessionFactory.getCurrentSession()
@@ -450,12 +527,24 @@ public class HibernateNbsDAO implements NbsDAO
 		}
 	}
 	
-	public NbsHL7ExportMap getNbsExportMapByQueueId(Integer queueId){
+	public NbsHL7ExportMap getNbsExportMapByQueueId(Integer queueId, NbsHL7ExportMapType mapType){
 		try {
+			
+			String mapTypeString = "";
+			Integer mapTypeId = null;
+			if (mapType != null){
+				mapTypeString  = " and nbs_hl7_export_map_type_id = ?";
+				mapTypeId = mapType.getNbsHl7ExportMapTypeId();
+			}
+			
+			
 			SQLQuery qry = this.sessionFactory.getCurrentSession()
 			.createSQLQuery("select * from Nbs_hl7_export_map " +
-			" where hl7_export_queue_id = ?");
+			" where hl7_export_queue_id = ? " + mapTypeString );
 			qry.setInteger(0, queueId);
+			if (mapTypeId != null) {
+				qry.setInteger(1, mapTypeId);
+			}
 			qry.addEntity(NbsHL7ExportMap.class);
 			List<NbsHL7ExportMap> list = qry.list();
 			if (list != null && list.size() > 0) {
@@ -515,6 +604,7 @@ public class HibernateNbsDAO implements NbsDAO
 		return null;
 		
 	}
+
 	
 	
 }

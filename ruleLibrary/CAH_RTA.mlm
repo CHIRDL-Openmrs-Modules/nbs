@@ -1,0 +1,49 @@
+Maintenance:
+	Title:		CAH RTA;;
+	Filename:	CAH_RTA;;
+	Version:	1.0;;
+	Institution:	Indiana University School of Medicine;;
+	Author:		Steve Downs;;
+	Specialist:	Pediatrics;;
+	Date:		03-20-2008;; 
+	Validation:	;;
+Library:
+	Purpose:	Provides a specific reminder, tailored to the patient who identified one or more endocrine acid disorders;;
+	Explanation:	Based on AAP screening recommendations;;
+  	Keywords:	endocrine, cah, endocrine disorder;;
+	Citations:	Screening for endocrine disorder AAP;;
+	Links:	;;
+Knowledge:
+	Type:	data_driven;;
+	
+Data:
+
+mode:=read {mode from Parameters};
+
+if (mode = PRODUCE) then
+endocrineResults := read last {ENDOCRINE DISORDERS from CHICA} ;
+providers := read {provider_id from provider};
+endif
+
+;;
+Priority:	;;
+Evoke:	;;
+
+Logic:
+If (mode = PRODUCE) then 
+If ('OH-F-06-002' is in endocrineResults) then 
+	for provider in providers do
+		call CREATE_JITS with "CAH", "providers";
+	endif;
+	conclude True;
+Else conclude False;
+endif
+
+;;
+Action:
+
+
+
+;;
+
+end:

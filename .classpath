@@ -32,7 +32,6 @@
 	<classpathentry kind="lib" path="lib-common/xerces/resolver.jar"/>
 	<classpathentry kind="lib" path="lib-common/xerces/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib-common/xerces/xml-apis.jar"/>
-	<classpathentry kind="lib" path="/atd/dist"/>
 	<classpathentry kind="lib" path="/dss/dist"/>
 	<classpathentry kind="lib" path="lib-common/spring-framework/spring-test.jar"/>
 	<classpathentry kind="lib" path="lib-common/spring-framework/spring-webmvc.jar"/>
@@ -138,10 +137,11 @@
 	<classpathentry kind="lib" path="lib-common/axis2/XmlSchema-1.4.3.jar"/>
 	<classpathentry kind="lib" path="lib-common/axis2/XmlSchema-LICENSE.txt"/>
 	<classpathentry kind="lib" path="lib-common/dss-2.27.12.jar" sourcepath="/dss/src"/>
-	<classpathentry kind="lib" path="lib-common/hl7api/hapi-0.5.jar"/>
-	<classpathentry kind="lib" path="lib-common/atd-1.61.21.jar" sourcepath="/atd/src"/>
-	<classpathentry kind="lib" path="lib-common/sockethl7listener-1.3.25.jar" sourcepath="/sockethl7listener/src"/>
-	<classpathentry kind="lib" path="lib-common/chirdlutil-1.0.18.jar"/>
+	<classpathentry kind="lib" path="lib-common/hl7api/hapi-0.5.jar" sourcepath="/HAPI/src"/>
+	<classpathentry kind="lib" path="lib-common/chirdlutil-1.0.18.jar" sourcepath="/chirdlutil/src"/>
 	<classpathentry kind="lib" path="lib-common/patientmatching-1.2.3.jar"/>
+	<classpathentry kind="lib" path="lib-common/atd-1.61.24.jar" sourcepath="/atd/src"/>
+	<classpathentry kind="lib" path="/atd/dist"/>
+	<classpathentry kind="lib" path="lib-common/sockethl7listener-1.3.26.jar" sourcepath="/sockethl7listener/src"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>

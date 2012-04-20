@@ -132,7 +132,7 @@ public class HL7EncounterHandler25 extends
 	}
 	
 	
-	public Location getLocation(Message message)
+	public Location getLocation(Message message, String mString)
 	{
 		//For one application, we want the building so that we have the name
 		//of the hospital.  Other application don't contain buildings, they contain 
@@ -155,6 +155,8 @@ public class HL7EncounterHandler25 extends
 			}
 			//check ZLR segment
 			ZLR zlr = new ZLR(message);
+			
+			zlr.loadZLRSegment(mString);
 			locationString = zlr.getOrderingFacilityIDNum();
 
 			if (locationString != null && !locationString.trim().equalsIgnoreCase("")){

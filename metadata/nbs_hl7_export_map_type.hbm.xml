@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+    <hibernate-mapping package="org.openmrs.module.nbs" auto-import="false">
+		<class name="org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMapType"
+			table="nbs_hl7_export_map_type">
+
+			<id name="nbsHl7ExportMapTypeId" type="java.lang.Integer"
+				column="nbs_hl7_export_map_type_id" unsaved-value="0">
+				<generator class="native" />
+			</id>
+
+			<discriminator column="nbs_hl7_export_map_type_id" insert="false" />
+			
+			<property name="name" type="java.lang.String"
+				column="name" not-null="true" length="255" />
+		
+			<property name="description" type="java.lang.String"
+				column="description" not-null="true" length="65535" />
+	
+			<property name="format" type="java.lang.String" column="format"
+				length="50" />
+			
+			<property name="foreignKey" type="java.lang.Integer" column="foreign_key" />
+				
+			<property name="searchable" type="boolean" not-null="true" />
+	
+			<many-to-one name="creator" class="org.openmrs.User"
+				not-null="true" column="creator" />
+			<property name="dateCreated" type="java.util.Date"
+				column="date_created" not-null="true" length="19" />
+	
+			<many-to-one name="changedBy" class="org.openmrs.User"
+				column="changed_by" />
+				
+			<property name="dateChanged" type="java.util.Date"
+				column="date_changed"  />
+				
+			<many-to-one name="retiredBy" class="org.openmrs.User" column="retired_by" />
+			
+			<property name="dateRetired" type="java.util.Date"
+				column="date_retired" length="19" />
+				
+			<property name="retireReason" type="java.lang.String"
+				column="retire_reason" length="255" />
+				
+			<property name="retired" type="java.lang.Boolean" column="retired"
+			length="1" not-null="true" />
+									
+			
+		</class>
+	</hibernate-mapping>

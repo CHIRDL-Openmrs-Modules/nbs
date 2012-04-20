@@ -21,7 +21,18 @@ import ca.uhn.hl7v2.model.v25.message.ORU_R01;
 import ca.uhn.hl7v2.model.v25.segment.OBR;
 import ca.uhn.hl7v2.model.v25.segment.PID;
 import ca.uhn.hl7v2.model.v25.segment.PV1;
-
+import ca.uhn.hl7v2.model.v231.datatype.NM;
+import ca.uhn.hl7v2.model.v25.datatype.CE;
+import ca.uhn.hl7v2.model.v25.datatype.ED;
+import ca.uhn.hl7v2.model.v25.datatype.ST;
+import ca.uhn.hl7v2.model.v25.message.ORU_R01;
+import ca.uhn.hl7v2.model.v25.segment.MSH;
+import ca.uhn.hl7v2.model.v25.segment.NK1;
+import ca.uhn.hl7v2.model.v25.segment.OBR;
+import ca.uhn.hl7v2.model.v25.segment.OBX;
+import ca.uhn.hl7v2.model.v25.segment.PID;
+import ca.uhn.hl7v2.model.v25.segment.PV1;
+import ca.uhn.hl7v2.parser.PipeParser;
 
 /**
  * Constructs the hl7 message resulting from an abnormal newborn screen
@@ -37,6 +48,7 @@ public class HL7MessageConstructor extends org.openmrs.module.sockethl7listener.
 	String formInstance = null;
 	private Log log = LogFactory.getLog(this.getClass());
 	private Properties props;
+
 	
 	public HL7MessageConstructor() {
 
@@ -52,10 +64,13 @@ public class HL7MessageConstructor extends org.openmrs.module.sockethl7listener.
 	public HL7MessageConstructor(String hl7configFileLocation, String formInst) {
 
 		super(hl7configFileLocation);
-		formInstance = formInst;
+		super.setProperties(hl7configFileLocation);
+		
 		props = Util.getProps(hl7configFileLocation);
 		
 	}
+	
+	
 	
 	
 	
@@ -95,46 +110,25 @@ public class HL7MessageConstructor extends org.openmrs.module.sockethl7listener.
 	}
 
 	
-	public PV1 AddSegmentPV1(Encounter enc)  {
+	public PV1 AddSegmentPV1(Encounter enc, Integer providerId)  {
 
 		PV1 pv1 = super.AddSegmentPV1(enc);
-		String poc = "";
+		
+		
 		PersonService personService = Context.getPersonService();
 		
 		try {
 			
-		/*	PersonAttribute pocAttr = enc.getProvider().getAttribute("POC");
-			if (pocAttr != null) {
-				poc = pocAttr.getValue();
-				if (poc != null && !poc.equals("")) {
-					pv1.getAssignedPatientLocation().getPointOfCare().setValue(poc);
-					pv1.getAssignedPatientLocation().getFacility()
-					.getNamespaceID().setValue(poc);
-				}
-
-			}
 			
-			
-			if (props != null){
-				String useClinicAsProvider = props.getProperty("use_clinic_as_provider");
-				if (useClinicAsProvider != null && useClinicAsProvider.equalsIgnoreCase("true")) {
-					pv1.getAttendingDoctor(0).getFamilyName().getSurname().setValue(poc);
-					pv1.getAttendingDoctor(0).getGivenName().setValue("");
-					pv1.getAttendingDoctor(0).getIDNumber().setValue(poc);
-					pv1.getVisitNumber().getIDNumber().setValue("");
-				}
-			}
-			*/
-			
-			Integer userId = enc.getProvider().getUserId();
-			Person providerPerson = personService.getPerson(userId);
-			String providerId = null;
+		
+			Person providerPerson = personService.getPerson(providerId);
 			String providerFirstName = null;
 			String providerLastName = null;
+			String npi = null;
 			if (providerPerson != null) {
 				PersonAttribute pa = providerPerson.getAttribute("Provider ID");
-				if (pa != null){
-					providerId = pa.getValue();
+				if (pa != null && pa.getValue()!= null ){
+					npi = pa.getValue();
 				}
 				
 				providerFirstName = providerPerson.getGivenName();
@@ -145,7 +139,7 @@ public class HL7MessageConstructor extends org.openmrs.module.sockethl7listener.
 			//get the location for D4D from the provider.
 			pv1.getAttendingDoctor(0).getFamilyName().getSurname().setValue(providerLastName);
 			pv1.getAttendingDoctor(0).getGivenName().setValue(providerFirstName);
-			pv1.getAttendingDoctor(0).getIDNumber().setValue(providerId);
+			pv1.getAttendingDoctor(0).getIDNumber().setValue(npi);
 
 			
 		} catch (DataTypeException e) {

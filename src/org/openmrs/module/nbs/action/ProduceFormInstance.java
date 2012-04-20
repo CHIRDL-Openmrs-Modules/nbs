@@ -77,8 +77,11 @@ public class ProduceFormInstance implements ProcessStateAction
 		Session session = atdService.getSession(sessionId);
 		Integer encounterId = session.getEncounterId();
 		String formName = null;
+		String providerId = null;
+		
 		if(parameters != null){
 			formName = (String) parameters.get("formName");
+			providerId = (String) parameters.get("providerId");
 		}
 		if(formName == null){
 			formName = currState.getFormName();
@@ -155,7 +158,8 @@ public class ProduceFormInstance implements ProcessStateAction
 		try {
 			FileOutputStream output = new FileOutputStream(mergeFilename);
 			startTime = System.currentTimeMillis();
-			nbsService.produce(output, patientState, patient, encounterId, formName, maxDssElements, sessionId);
+			nbsService.produce(output, patientState, patient, encounterId, formName, maxDssElements, 
+					sessionId, parameters);
 			startTime = System.currentTimeMillis();
 			output.flush();
 			output.close();
@@ -170,7 +174,7 @@ public class ProduceFormInstance implements ProcessStateAction
 
 		
 		StateManager.endState(patientState);
-		System.out.println("Produce: Total time to produce "+form.getName()+": "+(System.currentTimeMillis()-totalTime));
+		log.error("Produce: Total time to produce "+form.getName()+": "+(System.currentTimeMillis()-totalTime));
 		NbsStateActionHandler.changeState(patient, sessionId, currState, stateAction, parameters,
 				locationTagId, locationId);
 		startTime = System.currentTimeMillis();

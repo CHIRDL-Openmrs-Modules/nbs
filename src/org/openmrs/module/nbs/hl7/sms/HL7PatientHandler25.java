@@ -220,20 +220,22 @@ public class HL7PatientHandler25 extends
 							.getValue();
 					
 					if (assignAuth == null || assignAuth.trim().equals("")){
-						assignAuth = "MRN_OTHER";
+						assignAuth = "OTHER";
 					} else {
+						
+					}
 					
-						pit = patientService
+					
+					pit = patientService
 						.getPatientIdentifierTypeByName("MRN_" + assignAuth);
 					
-						if (pit == null)
-						{
-							PatientIdentifierType idType = new PatientIdentifierType();
-							idType.setDescription(assignAuth);
-							idType.setName("MRN_" + assignAuth);
-							pit = patientService.savePatientIdentifierType(idType);
+					if (pit == null)
+					{
+						PatientIdentifierType idType = new PatientIdentifierType();
+						idType.setDescription(assignAuth);
+						idType.setName("MRN_" + assignAuth);
+						pit = patientService.savePatientIdentifierType(idType);
 							
-						}
 					}
 					pi.setIdentifierType(pit);
 					pi.setIdentifier(stIdent);

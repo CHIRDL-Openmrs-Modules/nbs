@@ -6,7 +6,7 @@
 	<!-- nbs Module Properties -->
 	<id>nbs</id>
 	<name>nbs</name>
-	<version>0.2</version>
+	<version>0.3</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Meena Sheley</author>
 	<description>
@@ -128,6 +128,18 @@
    		<description>Generic provider id to use for medication query when no other provider id.
    		</description>
 	</globalProperty>
+	<globalProperty>
+		<property>nbs.hl7DirectoryBatchSize</property>
+		<defaultValue>10</defaultValue>
+   		<description>Limit number of hl7 messages to send to nbs at a time.
+   		</description>
+	</globalProperty>
+	<globalProperty>
+		<property>rgrta.defaultHl7ConfigFileLocation</property>
+		<defaultValue>c:\nbs\config\default\hl7_config.xml</defaultValue>
+   		<description>Directory where the confg file for outbound hl7 messages exists.
+   		</description>
+	</globalProperty>
 	
 	<!-- Internationalization -->
 	<!-- All message codes should start with @MODULE_ID@.* -->
@@ -143,6 +155,7 @@
 		nbs_hl7_export.hbm.xml
 		nbs_hl7_export_map.hbm.xml
 		nbs_hl7_export_status.hbm.xml
+		nbs_hl7_export_map_type.hbm.xml
 		study.hbm.xml
 		study_attribute.hbm.xml
 		study_attribute_value.hbm.xml

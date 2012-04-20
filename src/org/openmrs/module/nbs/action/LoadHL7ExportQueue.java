@@ -5,7 +5,6 @@ package org.openmrs.module.nbs.action;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -23,9 +22,8 @@ import org.openmrs.module.atd.service.ATDService;
 import org.openmrs.module.nbs.NbsStateActionHandler;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7Export;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMap;
+import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMapType;
 import org.openmrs.module.nbs.service.NbsService;
-import org.openmrs.module.chirdlutil.impl.ChirdlUtilServiceImpl;
-import org.openmrs.module.chirdlutil.service.ChirdlUtilService;
 
 
 /**
@@ -34,7 +32,7 @@ import org.openmrs.module.chirdlutil.service.ChirdlUtilService;
  */
 public class LoadHL7ExportQueue implements ProcessStateAction
 {
-
+	private static Log log = LogFactory.getLog(NbsStateActionHandler.class);
 	/* (non-Javadoc)
 	 * @see org.openmrs.module.nbs.action.ProcessStateAction#processAction(org.openmrs.module.atd.hibernateBeans.StateAction, org.openmrs.Patient, org.openmrs.module.atd.hibernateBeans.PatientState, java.util.HashMap)
 	 */
@@ -60,6 +58,7 @@ public class LoadHL7ExportQueue implements ProcessStateAction
 		
 		//Integer formId = (Integer) parameters.get("formId");
 		FormInstance formInstance = (FormInstance) parameters.get("formInstance");
+		String providerId = (String) parameters.get("providerId");
 		Integer formId = formInstance.getFormId();
 		String formIdString = String.valueOf(formId);
 		State currState = patientState.getState();
@@ -70,19 +69,43 @@ public class LoadHL7ExportQueue implements ProcessStateAction
 		try {
 			
 			NbsHL7Export export = new NbsHL7Export();
+		
 			export.setDateInserted(new Date());
 			export.setEncounterId(encounterId);
 			export.setSessionId(sessionId);
 			export.setVoided(false);
 			export.setStatus(1);
 			NbsHL7ExportMap exportMap = new NbsHL7ExportMap();
+			
+			NbsHL7ExportMapType formMapType = nbsService.getHL7ExportMapTypeByName("form_instance");
+			if ( formMapType == null) {
+				log.error("Null form map type.  Check name of export map type.");
+				return;
+			}
+			NbsHL7ExportMapType providerMapType = nbsService.getHL7ExportMapTypeByName("provider_id");
+			if ( formMapType == null) {
+				log.error("Null provider map type.  Check name of export map type.");
+				return;
+			}
+			
+			NbsHL7ExportMap  exportMapProvider = new NbsHL7ExportMap();
 			NbsHL7Export insertedExport = nbsService.insertEncounterToHL7ExportQueue(export);
-			exportMap.setValue(formIdString);
+			exportMap.setValue(formInstance.toString());
 			exportMap.setHl7ExportQueueId(insertedExport.getQueueId());
 			exportMap.setDateInserted(new Date());
 			exportMap.setVoided(false);
+			exportMap.setNbsHl7ExportMapTypeId(formMapType.getNbsHl7ExportMapTypeId());
 			nbsService.saveHL7ExportMap(exportMap);
 			
+			exportMapProvider.setValue(providerId);
+			exportMapProvider.setHl7ExportQueueId(insertedExport.getQueueId());
+			exportMapProvider.setDateInserted(new Date());
+			exportMapProvider.setVoided(false);
+			exportMapProvider.setNbsHl7ExportMapTypeId(providerMapType.getNbsHl7ExportMapTypeId());
+			nbsService.saveHL7ExportMap(exportMapProvider);
+			
+		} catch (Exception e){
+			log.error("Exception loading hl7 export table"  , e);
 		} finally{
 
 			StateManager.endState(patientState);

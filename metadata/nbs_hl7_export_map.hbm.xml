@@ -15,7 +15,7 @@
 		<property name="dateInserted" type="java.util.Date" column="date_inserted"/>
 		<property name="voided" type="boolean" column="voided" length="1" />
 		<property name="dateVoided" type="java.util.Date" column="date_voided"/>
-	
+		<property name="nbsHl7ExportMapTypeId" type="java.lang.Integer" column="nbs_hl7_export_map_type_id" not-null="true" />
 	</class>
 	
 </hibernate-mapping>

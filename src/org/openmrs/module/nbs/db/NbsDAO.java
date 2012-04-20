@@ -10,6 +10,7 @@ import org.openmrs.module.atd.hibernateBeans.PatientState;
 import org.openmrs.module.atd.hibernateBeans.Statistics;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7Export;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMap;
+import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMapType;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportStatus;
 import org.openmrs.module.nbs.hibernateBeans.OldRule;
 import org.openmrs.module.nbs.hibernateBeans.Study;
@@ -69,8 +70,12 @@ public interface NbsDAO {
 	 * @return
 	 */
 	public void  saveHL7ExportMap (NbsHL7ExportMap map);
+	public void  saveHL7ExportMapType (NbsHL7ExportMapType mapType);
+	public NbsHL7ExportMapType getHL7ExportMapTypeByName (String name);
 	
-	public NbsHL7ExportMap getNbsExportMapByQueueId(Integer queue_id);
+	public NbsHL7ExportMap getNbsExportMapByQueueId(Integer queue_id, NbsHL7ExportMapType mapType);
+	
+	public NbsHL7Export getNextPendingHL7Export(String resend, String resendNoAck);
 	
 	public NbsHL7ExportStatus getNbsExportStatusByName (String name);
 	

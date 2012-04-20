@@ -5,6 +5,8 @@ package org.openmrs.module.nbs.action;
 
 import java.util.HashMap;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.Form;
 import org.openmrs.Patient;
 import org.openmrs.api.FormService;
@@ -17,6 +19,7 @@ import org.openmrs.module.atd.hibernateBeans.PatientState;
 import org.openmrs.module.atd.hibernateBeans.State;
 import org.openmrs.module.atd.hibernateBeans.StateAction;
 import org.openmrs.module.atd.service.ATDService;
+import org.openmrs.module.nbs.action.ConsumeFormInstance;
 import org.openmrs.module.nbs.NbsStateActionHandler;
 
 /**
@@ -25,7 +28,7 @@ import org.openmrs.module.nbs.NbsStateActionHandler;
  */
 public class ConsumeFormInstance implements ProcessStateAction
 {
-
+	private static Log log = LogFactory.getLog(ConsumeFormInstance.class);
 	/* (non-Javadoc)
 	 * @see org.openmrs.module.nbs.action.ProcessStateAction#processAction(org.openmrs.module.atd.hibernateBeans.StateAction, org.openmrs.Patient, org.openmrs.module.atd.hibernateBeans.PatientState, java.util.HashMap)
 	 */
@@ -55,7 +58,7 @@ public class ConsumeFormInstance implements ProcessStateAction
 				parameters,null,locationTagId);
 		startTime = System.currentTimeMillis();
 		StateManager.endState(patientState);
-		System.out.println("Consume: Total time to consume "+form.getName()+": "+(System.currentTimeMillis()-totalTime));
+		log.error("Consume: Total time to consume "+form.getName()+": "+(System.currentTimeMillis()-totalTime));
 		NbsStateActionHandler.changeState(patient, sessionId, currState,
 				stateAction,parameters,locationTagId,locationId);
 

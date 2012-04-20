@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.Random;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -52,6 +53,7 @@ import org.openmrs.module.nbs.db.NbsDAO;
 import org.openmrs.module.nbs.hibernateBeans.Encounter;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7Export;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMap;
+import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportMapType;
 import org.openmrs.module.nbs.hibernateBeans.NbsHL7ExportStatus;
 import org.openmrs.module.nbs.hibernateBeans.OldRule;
 import org.openmrs.module.nbs.hibernateBeans.Study;
@@ -256,14 +258,14 @@ public class NbsServiceImpl implements NbsService
 					}
 				}
 			}
-			System.out.println("nbsService.consume: Fields to consume: "+
+			log.info("nbsService.consume: Fields to consume: "+
 				(System.currentTimeMillis()-startTime));
 			
 			startTime = System.currentTimeMillis();
 			atdService.consume(input, formInstance, patient, encounterId,
 					 null, null, parameterHandler,
 					 fieldsToConsume,locationTagId,sessionId);
-			System.out.println("nbsService.consume: Time of atdService.consume: "+
+			log.info("nbsService.consume: Time of atdService.consume: "+
 				(System.currentTimeMillis()-startTime));
 		} catch (Exception e)
 		{
@@ -650,6 +652,47 @@ public class NbsServiceImpl implements NbsService
 		Integer locationId = formInstance.getLocationId();
 		this.saveStats(patient, formInstanceId, dssManager, encounterId,state.getLocationTagId(),locationId);
 	}
+	
+	public void produce(OutputStream output, PatientState state,
+			Patient patient, Integer encounterId, String dssType,
+			int maxDssElements,Integer sessionId, HashMap<String, Object> parameters)
+	{
+		long totalTime = System.currentTimeMillis();
+		long startTime = System.currentTimeMillis();
+
+		DssService dssService = Context
+				.getService(DssService.class);
+		ATDService atdService = Context
+				.getService(ATDService.class);
+
+		DssManager dssManager = new DssManager(patient);
+		dssManager.setMaxDssElementsByType(dssType, maxDssElements);
+		HashMap<String, Object> baseParameters = new HashMap<String, Object>();
+		startTime = System.currentTimeMillis();
+		try {
+	        dssService.loadRule("CREATE_JIT",false);
+	        dssService.loadRule("storeObs",false);
+	        dssService.loadRule("ScoreJit", false);
+	        dssService.loadRule("CAH", false);
+        }
+        catch (Exception e) {
+	        log.error("load rule failed", e);
+        }
+		startTime = System.currentTimeMillis();
+		String providerFirstName = (String) parameters.get("providerFirstName");
+		baseParameters.put("providerFirstName", providerFirstName);
+		String providerLastName = (String) parameters.get("providerLastName");
+		baseParameters.put("providerLastName", providerLastName);
+		String providerId = (String) parameters.get("provider_id");
+		baseParameters.put("providerId", providerId);
+		FormInstance formInstance = state.getFormInstance();
+		atdService.produce(patient, formInstance, output, dssManager,
+				encounterId, baseParameters, null,state.getLocationTagId(),sessionId);
+		startTime = System.currentTimeMillis();
+		Integer formInstanceId = formInstance.getFormInstanceId();
+		Integer locationId = formInstance.getLocationId();
+		this.saveStats(patient, formInstanceId, dssManager, encounterId,state.getLocationTagId(),locationId);
+	}
 
 	private void saveStats(Patient patient, Integer formInstanceId,
 			DssManager dssManager, Integer encounterId, 
@@ -803,6 +846,15 @@ public class NbsServiceImpl implements NbsService
 		public List<NbsHL7Export> getPendingHL7ExportsByEncounterId(Integer encounterId) {
 			return getNbsDAO().getPendingHL7ExportsByEncounterId(encounterId);
 		}
+		
+		
+		public NbsHL7Export getNextPendingHL7Export(String resend, String resendNoAck) {
+			return getNbsDAO().getNextPendingHL7Export(resend, resendNoAck);
+			
+		}
+
+	
+	
 	
 		public List<PatientState> getReprintRescanStatesByEncounter(Integer encounterId, Date optionalDateRestriction, 
 				Integer locationTagId,Integer locationId){
@@ -843,8 +895,8 @@ public class NbsServiceImpl implements NbsService
 			
 		}
 		
-		public NbsHL7ExportMap getNbsExportMapByQueueId(Integer queue_id){
-			return getNbsDAO().getNbsExportMapByQueueId(queue_id);
+		public NbsHL7ExportMap getNbsExportMapByQueueId(Integer queue_id, NbsHL7ExportMapType mapType){
+			return getNbsDAO().getNbsExportMapByQueueId(queue_id, mapType);
 		}
 		
 		public NbsHL7ExportStatus getNbsExportStatusByName (String name){
@@ -853,5 +905,28 @@ public class NbsServiceImpl implements NbsService
 		
 		public NbsHL7ExportStatus getNbsExportStatusById (Integer id){
 			return getNbsDAO().getNbsExportStatusById( id);
+		}	
+		
+		public void  saveHL7ExportMapType (NbsHL7ExportMapType map){
+			getNbsDAO().saveHL7ExportMapType(map);
 		}
+		
+		public NbsHL7ExportMapType getHL7ExportMapTypeByName (String name)
+		{
+			return getNbsDAO().getHL7ExportMapTypeByName(name);
+		}
+		public String getNPI(String firstName, String lastName){
+			String npi = "";
+			
+			//Until we have a source for npi, set to random number
+			//Need to check if duplicates in npi source.
+			Random generator = new Random(111111118);
+			int n = generator.nextInt(9);
+			npi = String.valueOf(n);
+			//
+			return npi;
+			
+		}
+		
+		
 }
