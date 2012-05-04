@@ -127,7 +127,7 @@ public class ProcessFile implements Runnable
 	 */
     public String getName() {
 	    return "Process File (State: " + stateName + " Patient: " + patientId + " Patient State: " + 
-	    	patientState.getPatientStateId() + ")";
+	    	/*patientState.getPatientStateId()*/  ")";
     }
 
 	

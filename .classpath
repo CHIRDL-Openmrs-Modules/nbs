@@ -139,7 +139,7 @@
 	<classpathentry kind="lib" path="lib-common/dss-2.27.12.jar" sourcepath="/dss/src"/>
 	<classpathentry kind="lib" path="lib-common/hl7api/hapi-0.5.jar" sourcepath="/HAPI/src"/>
 	<classpathentry kind="lib" path="lib-common/chirdlutil-1.0.18.jar" sourcepath="/chirdlutil/src"/>
-	<classpathentry kind="lib" path="lib-common/patientmatching-1.2.3.jar"/>
+	<classpathentry kind="lib" path="lib-common/patientmatching-1.2.3.jar" sourcepath="/OpenMRS Patient Matching 1_7/src"/>
 	<classpathentry kind="lib" path="lib-common/atd-1.61.24.jar" sourcepath="/atd/src"/>
 	<classpathentry kind="lib" path="/atd/dist"/>
 	<classpathentry kind="lib" path="lib-common/sockethl7listener-1.3.26.jar" sourcepath="/sockethl7listener/src"/>

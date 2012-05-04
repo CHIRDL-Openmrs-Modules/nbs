@@ -21,8 +21,8 @@ Data:
 mode:=read {mode from Parameters};
 
 if (mode = PRODUCE) then
-endocrineResults := read last {ENDOCRINE DISORDERS from CHICA} ;
-providers := read {provider_id from provider};
+endocrineResults := read {ENDOCRINE DISORDERS from CHICA} ;
+providers := read {user_id from provider};
 endif
 
 ;;
@@ -31,18 +31,14 @@ Evoke:	;;
 
 Logic:
 If (mode = PRODUCE) then 
-If ('OH-F-06-002' is in endocrineResults) then 
-	for provider in providers do
-		call CREATE_JITS with "CAH", "providers";
-	endif;
-	conclude True;
-Else conclude False;
+If ('OH-F-06-002' is in endocrineResults) then conclude True; 
+conclude False;
 endif
 
 ;;
 Action:
 
-
+call CREATE_JITS with "CAH", "providers_object";
 
 ;;
 

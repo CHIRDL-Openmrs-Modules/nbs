@@ -74,6 +74,7 @@ public class HL7SocketHandler extends org.openmrs.module.sockethl7listener.HL7So
 	private static final String ATTRIBUTE_RELIGION = "Religion";
 	private static final String ATTRIBUTE_MARITAL = "Civil Status";
 	private static final String ATTRIBUTE_MAIDEN = "Mother's maiden name";
+	private static final String INPC_MESSAGE = "hl7Message_INPC";
 
 	/**
 	 * @param parser
@@ -573,77 +574,6 @@ public class HL7SocketHandler extends org.openmrs.module.sockethl7listener.HL7So
 	
 	
 
-	/*@Override
-	public Obs CreateObservation(org.openmrs.Encounter enc,
-			boolean saveToDatabase, Message message, int orderRep, int obxRep,
-			Location existingLoc, Patient resultPatient)
-	{
-		ConceptService cs = Context.getConceptService();
-		LogicService logicService = Context.getLogicService();
-		
-		//new born screening does not use Obs datasource
-		ObsNbsDatasource xmlDatasource = (ObsNbsDatasource) logicService
-		.getLogicDataSource("RMRS");
-		
-
-		try {
-			if (enc != null){
-			
-				if (resultPatient.getPatientIdentifier() != null){
-					String  mrn = resultPatient.getPatientIdentifier().getIdentifier();
-					String incomingMessageString = this.parser.encode(message);
-					xmlDatasource.parseHL7ToObs(incomingMessageString,
-						enc.getPatientId(),mrn);
-						Obs obs = new Obs();
-					
-					
-				}
-			}
-		} catch (HL7Exception e) {
-			
-			e.printStackTrace();
-		}
-		
-		HashMap<String, Set<Obs>> regenObsMap = 
-			xmlDatasource.getRegenObs(resultPatient.getPatientId());
-
-		if (message instanceof ca.uhn.hl7v2.model.v25.message.ORU_R01){
-			//Our source for messages fo diabetes patients are always in the IHIE cohort
-			//Diabetes_cohort will always be true.
-			String conceptName = "DIABETES_COHORT";
-			Obs newObs = CreateObservation(enc, resultPatient, conceptName, 
-					"TRUE");
-			Set<Obs> obs = new HashSet<Obs>();
-			obs.add(newObs);
-			regenObsMap.put(conceptName,obs );
-			
-		
-			//add to obs table too
-			Util.saveObs(enc.getPatient(), cs.getConceptByName("DIABETES_COHORT"), 
-				enc.getEncounterId(), "TRUE");
-		}
-		
-		//Asthma patients are not always in the cohort.
-		ConceptService conceptService = Context.getConceptService();
-		Set<Obs> asthmaCohorts = regenObsMap.get("ASTHMA_COHORT");
-		String asthma = "";
-		if (asthmaCohorts != null && !asthmaCohorts.isEmpty()){
-		
-			for ( Obs asthmaCohort : asthmaCohorts){
-				asthma = asthmaCohort.getValueText();
-			}
-			Concept asthmaConcept = conceptService.getConceptByName("ASTHMA_COHORT");
-			if (asthmaConcept != null){
-				Util.saveObs(enc.getPatient(), asthmaConcept, enc.getEncounterId(), 
-				asthma);
-				
-			} else {
-				log.error("Asthma cohort concept does not exist.");
-			}
-		}
-		
-		return null;
-	}*/
 
 	@Override
 	public org.openmrs.Encounter processEncounter(String incomingMessageString,
@@ -710,7 +640,7 @@ public class HL7SocketHandler extends org.openmrs.module.sockethl7listener.HL7So
 					for (EncounterType encType : encTypes){
 						if (encType != null){
 							name = encType.getName();
-							if (name != null && name.equalsIgnoreCase("hl7Message_INPC")){
+							if (name != null && name.equalsIgnoreCase(INPC_MESSAGE)){
 								encounterType = encType;
 								break;
 							}
@@ -719,7 +649,7 @@ public class HL7SocketHandler extends org.openmrs.module.sockethl7listener.HL7So
 					}
 					
 					if (encounterType == null){
-						encounterType = new EncounterType("hl7Message_INPC", "Hl7 trigger message from INPC");
+						encounterType = new EncounterType(INPC_MESSAGE, "Hl7 trigger message from INPC");
 					}
 					encounterService.saveEncounterType(encounterType);
 					nbsEncounter.setEncounterType(encounterType);

@@ -358,7 +358,7 @@ public class HL7ExportTask extends AbstractTask {
 				}	else {
 					nbsHl7Export.setStatus(NbsService.getNbsExportStatusByName("ACK_not_received"));
 					stop = true;
-					return false;
+					entryProcessed = false;
 				}
 				saveMessageFile(message,encId, ackDate);
 			}

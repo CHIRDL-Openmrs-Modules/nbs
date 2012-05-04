@@ -39,7 +39,8 @@ public class CheckinPatient implements Runnable
 {
 	private Log log = LogFactory.getLog(this.getClass());
 	private org.openmrs.Encounter encounter = null;
-
+	private String NBS_STATUS = "NewbornScreenStatus";
+	private String NBS_MESSAGE_TYPE = "HL7message";
 	public CheckinPatient(org.openmrs.Encounter encounter)
 	{
 		this.encounter = encounter;
@@ -63,6 +64,7 @@ public class CheckinPatient implements Runnable
 			ATDService atdService = Context
 					.getService(ATDService.class);
 			LocationService locationService = Context.getLocationService();
+			ConceptService conceptService = Context.getConceptService();
 
 			Patient patient = this.encounter.getPatient();
 			Hibernate.initialize(patient); //fully initialize the patient to
@@ -97,7 +99,14 @@ public class CheckinPatient implements Runnable
 			saveInsuranceInfo(encounterId, patient,locationTagId);
 			EncounterType encType = nbsEncounter.getEncounterType();
 			Program program = atdService.getProgramByNameVersion("nbs", "1.0");
-			
+			Concept NbsStatusConcept = conceptService.getConceptByName(NBS_STATUS);
+			if (encType != null ){
+				String encTypeName = encType.getName();
+				if (encTypeName != null && encTypeName.trim().equalsIgnoreCase(NBS_MESSAGE_TYPE)){
+					//Newborn screen
+					Util.saveObs(patient, NbsStatusConcept, encounterId, "received", null, null, locationTagId);
+				}
+			}
 			StateManager.changeState(patient, sessionId, null,
 					program,null,
 					locationTagId,locationId,NbsStateActionHandler.getInstance());

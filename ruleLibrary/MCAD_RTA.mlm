@@ -1,0 +1,49 @@
+Maintenance:
+	Title:		MCAD RTA;;
+	Filename:	MCAD_RTA;;
+	Version:	1.0;;
+	Institution:	Indiana University School of Medicine;;
+	Author:		Steve Downs;;
+	Specialist:	Pediatrics;;
+	Date:		05-22-2007;;
+	Validation:	;;
+Library:
+	Purpose:	Provides a specific reminder, tailored to the patient who identified one or more fatty acid disorders;;
+	Explanation:	Based on AAP screening recommendations;;
+  	Keywords:	fatty, acid, fatty acid disorder;;
+	Citations:	Screening for fatty acid disorder AAP;;
+	Links:	;;
+Knowledge:
+	Type:	data_driven;;
+/*	Priority:	;;
+	Evoke:	;;
+	Urgency:	;;
+*/	
+Data:
+
+mode:=read {mode from Parameters};
+if (mode = PRODUCE) then
+
+providers := read {user_id from provider};
+fattyAcidDisorder := read {FATTY ACID DISORDERS from CHICA} ;
+proteinFeed := read {TYPE OF PROTEIN FEED from CHICA} ;
+
+;;
+Priority:	;;
+Evoke:	;;
+
+Logic:
+
+If (mode = PRODUCE) then 
+If ( 'HYPERAL(TPN)' is in proteinFeed ) then conclude False;
+If ( 'C8-C-01-003' is in fattyAcidDisorder ) then conclude True;
+endif
+
+
+;;
+Action:
+
+call CREATE_JITS with "MCAD", "providers_object";
+
+;;
+end:

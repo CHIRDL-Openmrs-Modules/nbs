@@ -6,7 +6,7 @@
 	<!-- nbs Module Properties -->
 	<id>nbs</id>
 	<name>nbs</name>
-	<version>0.3</version>
+	<version>1.0</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Meena Sheley</author>
 	<description>
