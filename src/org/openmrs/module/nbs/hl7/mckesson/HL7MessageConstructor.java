@@ -85,7 +85,7 @@ public class HL7MessageConstructor extends org.openmrs.module.sockethl7listener.
 		try {
 
 			obr.getFillerOrderNumber().getEntityIdentifier().setValue(
-					accessionNumber);
+					 accessionNumber);
 			obr.getOrderingProvider(0).getFamilyName().getSurname().setValue(
 					"");
 			obr.getOrderingProvider(0).getGivenName().setValue(
@@ -108,6 +108,40 @@ public class HL7MessageConstructor extends org.openmrs.module.sockethl7listener.
 		return obr;
 
 	}
+	
+	public MSH AddSegmentMSH(Encounter enc, Properties hl7Properties)  {
+
+		MSH msh = super.AddSegmentMSH(enc);
+		String messageControlId = "";
+		String dateFormat = "yyyyMMddHHmmss";
+		SimpleDateFormat formatter = new SimpleDateFormat(dateFormat);
+		String formattedDate = formatter.format(new Date());
+
+		//Change message per config xml. 
+		if (hl7Properties != null){
+			messageControlId = hl7Properties.getProperty("msh_message_control_id");
+		}
+
+		try {
+			
+			msh.getMessageControlID().setValue(
+					messageControlId + "-" + formattedDate );
+
+		
+		} catch (DataTypeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (HL7Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		return msh;
+
+	}
+	
+	
 
 	
 	public PV1 AddSegmentPV1(Encounter enc, Integer providerId)  {
@@ -140,6 +174,58 @@ public class HL7MessageConstructor extends org.openmrs.module.sockethl7listener.
 			pv1.getAttendingDoctor(0).getFamilyName().getSurname().setValue(providerLastName);
 			pv1.getAttendingDoctor(0).getGivenName().setValue(providerFirstName);
 			pv1.getAttendingDoctor(0).getIDNumber().setValue(npi);
+
+			
+		} catch (DataTypeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (HL7Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+
+		return pv1;
+
+	}
+	
+	public PV1 AddSegmentPV1(Encounter enc, String ISDHfirstName, String ISDHlastName, 
+			String ISDHproviderIdent, Integer ReferringProviderID)  {
+		
+		//Referring provider is the patient's provider - recipient of the form ATD
+		//ISDH provider is the inbox for ISDH
+		
+		PV1 pv1 = super.AddSegmentPV1(enc);
+		String referringProviderFirstName  = "";
+		String referringProviderLastName= "";
+		String referringProviderIdentifier = "";
+		PersonAttribute  providerIdAttribute = null;
+		
+		
+		PersonService personService = Context.getPersonService();
+		Person referringProvider = personService.getPerson(ReferringProviderID);
+		if (referringProvider != null){
+			referringProviderFirstName = referringProvider.getGivenName();
+			referringProviderLastName = referringProvider.getFamilyName();
+			providerIdAttribute = referringProvider.getAttribute("PROVIDER_ID");
+			if ( providerIdAttribute != null){
+				referringProviderIdentifier = providerIdAttribute.getValue();
+			}
+		}
+		
+		try {
+			
+			//hl7 will have destination inbox for ISDH (PV1-7)
+			//referring doctor will contain that patient's doctor.
+
+			pv1.getAttendingDoctor(0).getFamilyName().getSurname().setValue(ISDHlastName);
+			pv1.getAttendingDoctor(0).getGivenName().setValue(ISDHfirstName);
+			pv1.getAttendingDoctor(0).getIDNumber().setValue(ISDHproviderIdent);
+			
+			pv1.getReferringDoctor(0).getFamilyName().getSurname().setValue(referringProviderLastName);
+			pv1.getReferringDoctor(0).getGivenName().setValue(referringProviderFirstName);
+			pv1.getReferringDoctor(0).getIDNumber().setValue(referringProviderIdentifier);
+		
 
 			
 		} catch (DataTypeException e) {
@@ -191,6 +277,14 @@ public class HL7MessageConstructor extends org.openmrs.module.sockethl7listener.
 			return null;
 		}
 
+	}
+
+	public Properties getProps() {
+		return props;
+	}
+
+	public void setProps(Properties props) {
+		this.props = props;
 	}
 
 	

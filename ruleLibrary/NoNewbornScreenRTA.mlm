@@ -1,0 +1,45 @@
+Maintenance:
+	Title:		NoNewbornScreenRTA;;
+	Filename:	NoNewbornScreenRTA;;
+	Version:	1.0;;
+	Institution:	Indiana University School of Medicine;;
+	Author:		;;
+	Specialist:	Pediatrics;;
+	Date:		04-20-2012;; 
+	Validation:	;;
+Library:
+	Purpose:	Provides a specific reminder, tailored to the patient who does not have a newborn screen on record;;
+	Explanation:	Based on AAP screening recommendations;;
+  	Keywords:	newborn;;
+	Citations:	Screening for missing screen AAP;;
+	Links:	;;
+Knowledge:
+	Type:	data_driven;;
+	
+Data:
+
+mode:=read {mode from Parameters};
+
+if (mode = PRODUCE) then
+nbsStatus := read {NewbornScreenStatus from CHICA};
+providers := read {user_id from provider};
+endif
+
+;;
+Priority:	;;
+Evoke:	;;
+
+Logic:
+If (mode = PRODUCE) then 
+If ('received' is in nbsStatus) then conclude False; 
+conclude True;
+endif
+
+;;
+Action:
+
+call CREATE_JITS with "NO_SCREEN", "providers_object";
+
+;;
+
+end:

@@ -1,6 +1,6 @@
 Maintenance:
-	Title:		CAH RTA;;
-	Filename:	CAH_RTA;;
+	Title:		CAH Reminder;;
+	Filename:	CAH;;
 	Version:	1.0;;
 	Institution:	Indiana University School of Medicine;;
 	Author:		Steve Downs;;
@@ -18,12 +18,14 @@ Knowledge:
 	
 Data:
 
-mode:=read {mode from Parameters};
+mode:=read {mode from Parameters}; 
 
+ 
 if (mode = PRODUCE) then
-endocrineResults := read {ENDOCRINE DISORDERS from CHICA} ;
-providers := read {user_id from provider};
-excluded_providers := read {CAH_Alerted from CHICA} within past 24 Hours;
+
+provId:= read {providerId from Parameters};
+providerFirstName:= read {providerFirstName from Parameters};
+providerLastName:= read {providerLastName from Parameters}; 
 
 endif
 
@@ -33,15 +35,15 @@ Evoke:	;;
 
 Logic:
 If (mode = PRODUCE) then 
-If ('OH-F-06-002' is in endocrineResults) then conclude True; 
-conclude False;
-endif
 
+conclude True;
+endif
 ;;
 Action:
-valid_providers := call getValidProviders with "providers_object", "excluded_providers_object";
-call CREATE_JITS with "CAH", "valid_providers_object";
+
+write(" ||providerFirstName_value ||  || providerLastName_value || ")  At DrName;
+                                                                                                         
+write (" || firstname ||'s screen for Congenital Adrenal Hyperplasia is abnormal. Further follow-up is necessary to evaluate this infant.") At paragraphOneText;
 
 ;;
-
 end:

@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Concept;
@@ -67,11 +66,10 @@ import org.openmrs.scheduler.TaskDefinition;
 import org.openmrs.scheduler.tasks.AbstractTask;
 
 import ca.uhn.hl7v2.HL7Exception;
-import ca.uhn.hl7v2.model.v25.message.ORU_R01;
+import ca.uhn.hl7v2.model.v25.datatype.ST;
+import ca.uhn.hl7v2.model.v25.datatype.XCN;
 import ca.uhn.hl7v2.model.v25.segment.OBX;
 import ca.uhn.hl7v2.model.v25.segment.PV1;
-import ca.uhn.hl7v2.model.v25.datatype.XCN;
-import ca.uhn.hl7v2.model.v25.datatype.ST;
 
 /**
  * Implementation of a task that process all form entry queues. NOTE: This class does not need to be
@@ -98,6 +96,11 @@ public class HL7ExportTask extends AbstractTask {
 	private String sendPing;
 	private boolean stop = false;
 	private Integer sleepAfterConnectError;
+	private boolean testMode = false;
+	private boolean sendISDHMessage = false;
+	private String providerFirstName = "";
+	private String providerLastName = "";
+	private String providerIdent = "";
 	
 	/**
 	 * Default Constructor (Uses SchedulerConstants.username and SchedulerConstants.password
@@ -125,8 +128,27 @@ public class HL7ExportTask extends AbstractTask {
 			resendOption  = this.taskConfig.getProperty("resendOption");
 			resendNoAck  = this.taskConfig.getProperty("resendNoAck");
 			sendPing  = this.taskConfig.getProperty("sendPing");
+			
+			
 			String  sleepAfterConnectErrorString  = this.taskConfig.getProperty("sleepAfterConnectError");
 			String socketReadTimeoutString  = this.taskConfig.getProperty("socketReadTimeout");
+			String testModeSring  = this.taskConfig.getProperty("testMode");
+			
+			if (testModeSring != null  || testModeSring.trim().equalsIgnoreCase("true")
+					|| testModeSring.trim().equalsIgnoreCase("1") 
+					|| testModeSring.trim().equalsIgnoreCase("y")
+					|| testModeSring.trim().equalsIgnoreCase("yes")){
+				testMode = true;
+			}
+			
+			String sendISDHString  = this.taskConfig.getProperty("sendISDH");
+			
+			if (sendISDHString != null  || sendISDHString.trim().equalsIgnoreCase("true")
+					|| sendISDHString.trim().equalsIgnoreCase("1") 
+					|| sendISDHString.trim().equalsIgnoreCase("y")
+					|| sendISDHString.trim().equalsIgnoreCase("yes")){
+				sendISDHMessage = true;
+			}
 			
 			if (host == null){
 				host = "localhost";
@@ -192,6 +214,158 @@ public class HL7ExportTask extends AbstractTask {
 			
 		}
 	}
+	
+	/**
+	 * Export message to ISDH to send provider information as object. When ever an nbs message is sent
+	 * to providers,  we send an hl7 message to ISDH with provider name/id. 
+	 * 
+	 */
+	public boolean exportISDH(NbsHL7Export nbsHl7Export) {
+		
+		
+		ATDService atdService = Context.getService(ATDService.class);
+		EncounterService encounterService = Context.getService(EncounterService.class);
+		LocationService locService = Context.getLocationService();
+		AdministrationService  adminService = Context.getAdministrationService();
+		boolean entryProcessed = true;
+		Integer sessionId = nbsHl7Export.getSessionId();
+		
+		try
+		{
+		
+			
+			if (!socketHandler.openSocket(host, port)){
+				log.error("Unable to open socket to send ISDH message for host: " + host + " port: " + port );
+				ATDError error = new ATDError("Warning", "Hl7 Export", 
+						"Cannot connect to server for export of ISDH message."
+						,"",
+						 new Date(), null);
+				atdService.saveError(error);
+				socketHandler.closeSocket();	
+				return false;
+			}
+			
+			
+			Integer encId = nbsHl7Export.getEncounterId();
+			Encounter openmrsEncounter = (Encounter) encounterService.getEncounter(encId);
+			
+			//Get patient and session id
+			Patient patient = openmrsEncounter.getPatient();
+			if (patient == null){
+				sessionId = nbsHl7Export.getSessionId();
+				ATDError ce = new ATDError("Error", "Hl7 Export", 
+						"Cannot export ISDH because patient is null. " + openmrsEncounter.getEncounterId(), 
+						null ,
+						 new Date(), sessionId);
+				atdService.saveError(ce);
+				return entryProcessed;
+			}	
+			
+			//Get hl7 configuration file 
+			String isdhConfigFileName = IOUtil.formatDirectoryName(adminService
+					.getGlobalProperty("nbs.defaultISDHConfigFileLocation"));
+			
+			if (isdhConfigFileName == null || isdhConfigFileName.trim().equals("")){
+				ATDError ce = new ATDError("Error", "Hl7 Export", 
+						"ISDH Configuration file name not found. " + openmrsEncounter.getEncounterId(), 
+						null ,
+						 new Date(), sessionId);
+				atdService.saveError(ce);
+				return entryProcessed;
+			}
+			
+			Integer hl7ExportQueueId = nbsHl7Export.getQueueId();
+			Integer trigger_NBS_ProviderId = this.getProviderIdByExportQueueId(hl7ExportQueueId);
+		
+			
+			//Construct message
+			org.openmrs.module.nbs.hl7.mckesson.HL7MessageConstructor constructor = 
+				new org.openmrs.module.nbs.hl7.mckesson.HL7MessageConstructor(isdhConfigFileName, null );
+			
+			
+			List<Encounter> queryEncounterList = new ArrayList<Encounter>();
+			queryEncounterList.add(openmrsEncounter);
+		
+			//MSH
+			constructor.AddSegmentMSH(openmrsEncounter);
+			
+			//PID
+			PatientIdentifier identifier = patient.getPatientIdentifier();
+			String npi = null;
+			constructor.AddSegmentPID(openmrsEncounter.getPatient());
+			
+			//PV1
+			//*** Need to get provider id for IDSH provider.  Create a user/provider")
+			//*** For now, get from properties
+			Properties properties = constructor.getProps();
+			
+			providerFirstName = properties.getProperty("isdhProviderFirstName");
+			providerLastName = properties.getProperty("isdhProviderLastName");
+			providerIdent = properties.getProperty("isdhProviderID");
+			
+			PV1 providerSegment = constructor.AddSegmentPV1(openmrsEncounter,
+					providerFirstName, providerLastName, providerIdent, trigger_NBS_ProviderId);
+			if (providerSegment != null  ){
+				XCN attDoctor = providerSegment.getAttendingDoctor(0);
+				if (attDoctor != null){
+					ST pv1ID = attDoctor.getIDNumber();
+					if (pv1ID != null){
+						npi =providerSegment.getAttendingDoctor(0).getIDNumber().getValue();
+					}
+				}
+			}
+
+			constructor.setAssignAuthority(identifier);
+			
+			//Add this if ISDH wants an OBX leave off until we know for sure.
+			/*if (!addOBX(constructor, openmrsEncounter , formInstance.getFormId(), null, 
+					properties, trigger_NBS_ProviderId)){
+					sessionId = nbsHl7Export.getSessionId();
+					ATDError ce = new ATDError("Error", "Hl7 Export", 
+							"Error creating OBX for ISDH " + formInstance, 
+							null ,
+							 new Date(), sessionId);
+					atdService.saveError(ce);
+					return entryProcessed;
+			}*/
+				
+			
+		
+			String message = constructor.getMessage();
+			Date ackDate = null;
+			if (testMode) {
+				saveMessageFile(message,encId, ackDate, sendISDHMessage);
+				return true;
+			}
+			
+			
+			if (message != null && !message.equals("")){
+				ackDate = sendMessage(message, openmrsEncounter, socketHandler);
+				entryProcessed = false;
+			}
+			saveMessageFile(message,encId, ackDate,sendISDHMessage);
+	    
+		} catch (IOException e ){
+			log.error("Error exporting message:" + e);
+			
+		}catch (Exception e)
+		
+		{
+			String message = e.getMessage();
+			ATDError ce = new ATDError("Error", "Hl7 Export", 
+					"Error creating ISDH hl7 export:" + message,Util.getStackTrace(e) , 
+					 new Date(), sessionId);
+			atdService.saveError(ce);
+			
+		} finally
+		{
+			socketHandler.closeSocket();
+		
+		}
+		
+		return entryProcessed;
+
+	}	
 	
 	/**
 	 * Export hl7 from a single queue entry in the export table. Tests connection to host and
@@ -341,8 +515,18 @@ public class HL7ExportTask extends AbstractTask {
 					return entryProcessed;
 			}
 				
+			
 			//Send the message
 			String message = constructor.getMessage();
+			
+			
+			if (testMode) {
+				saveMessageFile(message,encId, null);
+				nbsHl7Export.setStatus(NbsService.getNbsExportStatusByName("test_mode"));
+				NbsService.saveNbsHL7Export(nbsHl7Export);
+				return true;
+			}
+			
 			nbsHl7Export.setStatus(NbsService.getNbsExportStatusByName("hl7_sent"));
 			nbsHl7Export.setDateProcessed(new Date());
 			
@@ -382,7 +566,7 @@ public class HL7ExportTask extends AbstractTask {
 		} finally
 		{
 			socketHandler.closeSocket();
-			Context.closeSession();
+			
 		}
 		
 		return entryProcessed;
@@ -394,11 +578,14 @@ public class HL7ExportTask extends AbstractTask {
 	 * Transform the next pending HL7 inbound queue entry. If there are no pending items in the
 	 * queue, this method simply returns quietly.
 	 * 
+	 * Send to ISDH in a second hl7 if the actual nbs hl7 was exported
+	 * 
 	 * @return true if a queue entry was processed, false if queue was empty
 	 */
 	public boolean processNextHL7InQueue(String resendOption, String resendNoAck) {
 		Context.openSession();
 		boolean entryProcessed;
+		boolean ISDHProcessed;
 		NbsHL7Export nbsHl7Export = null;
 		try {
 			if (Context.isAuthenticated() == false);
@@ -408,6 +595,11 @@ public class HL7ExportTask extends AbstractTask {
 			nbsHl7Export = nbsService.getNextPendingHL7Export(resendOption, resendNoAck);
 			if (nbsHl7Export != null) {
 				entryProcessed = exportHL7(nbsHl7Export);;
+			}
+			if (nbsHl7Export != null && sendISDHMessage == true
+					&&  entryProcessed == true){
+				ISDHProcessed = exportISDH(nbsHl7Export);;
+				
 			}
 		} finally {
 			Context.closeSession();
@@ -625,6 +817,112 @@ private String getConfigFileLocation( Integer formId){
 		
 	}
 	
+	private boolean addOBX(org.openmrs.module.nbs.hl7.mckesson.HL7MessageConstructor constructor,
+			Encounter encounter, Integer formId ,Hashtable<String,
+			String> mappings, 
+			Properties hl7Properties,
+			Integer attendingProviderId){
+		
+		
+		ATDService atdService = Context.getService(ATDService.class);
+		boolean obxcreated = false;
+		Integer locationTagId = null;
+		String formName = null;
+		int obsRep = 0;
+		
+		String obrBatteryName = hl7Properties.getProperty("obr_name");
+		String obrBatteryCode = hl7Properties.getProperty("obr__code");
+		String obxAlertTitle = hl7Properties.getProperty("obx_title");
+		String obxAlertTitleCode = hl7Properties.getProperty("obx_title_code");
+		String obxAlertDescripton = hl7Properties.getProperty("obx_alert_description");
+		String obxAlert = hl7Properties.getProperty("obx_alert");
+		String obxAlertCode = hl7Properties.getProperty("obx_alert_code");
+		
+		
+		String formDir = "";
+		String hl7Abbreviation = "ST";
+		Integer encounterId = encounter.getEncounterId();
+		locationTagId = getLocationTagIdByEncounter(encounterId);
+		
+		
+		List<PatientState> patientStates = 
+			atdService.getPatientStatesWithFormInstances(formName, encounterId);
+		
+		FormInstance formInstance = null;
+		Integer formInstanceId = null;
+		Integer formLocationId = null;
+		
+		if (patientStates == null){
+			return false; 
+		}
+		
+		Iterator<PatientState> psIterator = patientStates.iterator();
+		if (psIterator.hasNext()){
+			formInstance = psIterator.next().getFormInstance();
+			if (formInstance == null){
+				return false;
+			}
+		}
+		
+		String filename = "";
+		String encodedForm = "";
+		try {
+			formId = formInstance.getFormId();
+			formInstanceId = formInstance.getFormInstanceId();
+			formLocationId = formInstance.getLocationId();
+			
+			if (formId == null || locationTagId == null || formLocationId == null
+					|| formInstanceId == null){
+				return false;
+			}
+			
+			formDir  = IOUtil
+						.formatDirectoryName(org.openmrs.module.atd.util.Util
+								.getFormAttributeValue(formId,
+										"imageDirectory", locationTagId,
+										formLocationId));
+			
+
+			if (formDir == null || formDir.equals("")){
+				return false;
+			}
+			filename = formLocationId + "-" + formId + "-" + formInstanceId;
+			
+			//This FilenameFilter will get ALL tifs starting with the filename
+			//including of rescan versions nnn_1.tif, nnn_2.tif, etc
+			FilenameFilter filtered = new FileListFilter(filename, "pdf");
+			File dir = new File(formDir);
+			File[] files = dir.listFiles(filtered); 
+			if (files == null || files.length == 0){
+				return false;
+			}
+			
+			//This FileDateComparator will list in order
+			//with newest file first.
+			Arrays.sort(files, new FileDateComparator());
+		
+			encodedForm = encodeForm(files[0]);
+				
+			int orderRep = 0;
+			
+			constructor.setFormInstance(formInstance.toString());
+			constructor.AddSegmentOBR(encounter, obrBatteryCode, obrBatteryName, orderRep);
+			constructor.AddSegmentOBX(obxAlertTitle, obxAlertTitleCode,
+						null, null, obxAlertDescripton, null, new Date() , "ST", orderRep, obsRep);
+			OBX resultOBX = constructor.AddSegmentOBX(obxAlert, obxAlertCode, 
+						null, "", encodedForm, "", new Date() , hl7Abbreviation, orderRep, obsRep + 1);
+			if (resultOBX != null){
+					obxcreated = true;
+			} 
+		
+		} catch (Exception e) {
+			log.error("Exception adding OBX for tiff image. " + e.getMessage());
+		}
+			
+		return obxcreated;
+		
+	}
+	
 	private Integer getLocationTagIdByEncounter(Integer encId){
 		Integer locationTagId = null;
 		String printerLocation = null;
@@ -707,14 +1005,16 @@ private String getConfigFileLocation( Integer formId){
 		
 	}
 	
-	
+	public void saveMessageFile( String message, Integer encid, Date ackDate){
+		saveMessageFile(message, encid, ackDate, false);
+	}
 	
 	/**
 	 * Saves message string to archive directory
 	 * @param message
 	 * @param encid
 	 */
-	public void saveMessageFile( String message, Integer encid, Date ackDate){
+	public void saveMessageFile( String message, Integer encid, Date ackDate, boolean ISDH){
 		AdministrationService adminService = Context.getAdministrationService();
 		EncounterService es = Context.getService(EncounterService.class);
 
@@ -725,17 +1025,30 @@ private String getConfigFileLocation( Integer formId){
 		PatientIdentifier pi = patient.getPatientIdentifier();
 		String mrn = "";
 		String ack = "";
+		String archiveDir = "";
+		
+		if (ISDH){
+			ack = "-ISDH";
+		}
+		if (testMode){
+			ack += "-TEST";
+		}
+			
 		if (ackDate != null){
-			ack = "-ACK";
+			ack += "-ACK";
 		}
 		
 		if (pi != null) mrn = pi.getIdentifier();
 		String filename =  org.openmrs.module.chirdlutil.util.Util.archiveStamp() + "_"+ mrn + ack + ".hl7";
 		
-		String archiveDir = IOUtil.formatDirectoryName(adminService
-				.getGlobalProperty("Nbs.outboundHl7ArchiveDirectory"));
-		
-
+		if (ISDH){
+			archiveDir = IOUtil.formatDirectoryName(
+					adminService.getGlobalProperty("Nbs.ISDHoutboundHl7ArchiveDirectory"));
+		} else {
+			archiveDir = IOUtil.formatDirectoryName(
+					adminService.getGlobalProperty("Nbs.outboundHl7ArchiveDirectory"));
+		}
+	
 		FileOutputStream archiveFile = null;
 		try
 		{
@@ -799,30 +1112,8 @@ private String getConfigFileLocation( Integer formId){
 			log.error("Error exporting message host:" + host + "; port:" + port 
 					+ " Encounter_id = " + enc.getEncounterId());
 		}
-			/*try {
-				Thread.sleep(interval);
-			} catch (InterruptedException e2) {
-				log.error("Error sleeping before resending hl7 message");
-			}
-			log.error("Error exporting message host:" + host + "; port:" + port 
-					+ "- first try. Encounter_id = " + enc.getEncounterId());
-			try {
-				if (message != null) {
-					
-					hl7b = socketHandler.sendMessage(hl7b, socketReadTimeout);
-					 if (hl7b != null && hl7b.getAckReceived() != null){
-						 ackDate = hl7b.getAckReceived();
-						 log.info("Ack received host:" + host + "; port:" + port 
-								 + "- second try. Encounter_id = " + enc.getEncounterId());
-					 }
-				}
-			} *catch (Exception e1) {
-				log.error("Error exporting message host:" + host + "; port:" + port 
-					+ "- second try. Encounter_id = " + enc.getEncounterId());
-			}
-		}*/
-		
-		
+
+	
 		return ackDate;
 	}
 	
