@@ -1,0 +1,58 @@
+Maintenance:
+	Title:		NeedsRepeatRTA;;
+	Filename:	NeedsRepeatRTA;;
+	Version:	1.0;;
+	Institution:	Indiana University School of Medicine;;
+	Author:		;;
+	Specialist:	Pediatrics;;
+	Date:		04-20-2012;; 
+	Validation:	;;
+Library:
+	Purpose:	Provides a specific reminder, tailored to the patient who needs a repeat screen;;
+	Explanation:	Based on AAP screening recommendations;;
+  	Keywords:	newborn;;
+	Citations:	Screening for repeat AAP;;
+	Links:	;;
+Knowledge:
+	Type:	data_driven;;
+	
+Data:
+
+mode:=read {mode from Parameters};
+
+if (mode = PRODUCE) then
+nbsStatus := read {NewbornScreenStatus from CHICA};
+providers := read {user_id from provider};
+providers := read {user_id from provider};
+excluded_providers := read {CAH_Alerted from CHICA} within past 24 Hours;
+specimenQualityCode := read {SPECIMEN QUALITY CODE from CHICA} ; 
+
+endif
+
+;;
+Priority:	;;
+Evoke:	;;
+
+Logic:
+If (mode = PRODUCE) then 
+
+If ('UNACCEPTABLE; CLOTS ON CARD' is in specimenQualityCode) then conclude True; 
+If ('UNACCEPTABLE; CONTAMINATED WITH TISSUE FLUID' is in specimenQualityCode) then conclude True; 
+If ('UNACCEPTABLE; CONTAMINATED WITH LIQUID' is in specimenQualityCode) then conclude True; 
+If ('UNACCEPTABLE; MULTIPLE OVERLAPPED SPOTS is in specimenQualityCode) then conclude True; 
+If ('UNACCEPTABLE; GROSSLY OVERSATURATED' is in specimenQualityCode) then conclude True; 
+If ('UNACCEPTABLE; GROSSLY OVERSATURATED' is in specimenQualityCode) then conclude True;
+If ('REJECTED; DAMAGED BY HEAT' is in specimenQualityCode) then conclude True;
+If ('REJECTED ID DOUBTFUL' is in specimenQualityCode) then conclude True;
+conclude False;
+endif
+
+;;
+Action:
+valid_providers := call getValidProviders with "providers_object", "excluded_providers_object";
+call CREATE_JITS with "NEEDS_REPEAT", "valid_providers_object";
+
+
+;;
+
+end:

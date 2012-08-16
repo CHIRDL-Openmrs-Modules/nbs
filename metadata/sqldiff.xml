@@ -120,6 +120,39 @@ insert into chirdlutil_location_attribute (name, description)  values ('TriggerP
 </sql>
 </diff>
 
+  <diff>
+        <version>1.4.2</version>
+        <author>Meena Sheley</author>
+        <date>May 24, 2012</date>
+        <description>
+            Create new nbs_obs_attribute and nbs_obs_attribute_value tables.
+        </description>
+        <sql>
+            CREATE TABLE `nbs_obs_attribute` (
+			  `obs_attribute_id` int(11) NOT NULL AUTO_INCREMENT,
+			  `name` varchar(255) NOT NULL,
+			  `description` varchar(255) DEFAULT NULL,
+			  PRIMARY KEY (`obs_attribute_id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+			
+			CREATE TABLE `nbs_obs_attribute_value` (
+			  `obs_attribute_value_id` int(11) NOT NULL AUTO_INCREMENT,
+			  `obs_id` int(11) NOT NULL,
+			  `value` varchar(255) NOT NULL,
+			  `obs_attribute_id` int(11) NOT NULL,
+			  PRIMARY KEY (`obs_attribute_value_id`),
+			  KEY `nbs_obs_value_fk_obs` (`obs_id`),
+			  KEY `nbs_obs_value_fk_obs_attr` (`obs_attribute_id`),
+			  CONSTRAINT `nbs_obs_value_fk_obs_attr` 
+			     FOREIGN KEY (`obs_attribute_id`) 
+			     REFERENCES `nbs_obs_attribute` (`obs_attribute_id`),
+			  CONSTRAINT `nbs_obs_value_fk_obs` 
+			     FOREIGN KEY (`obs_id`) 
+			     REFERENCES `obs` (`obs_id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </sql>
+    </diff>
+
 </sqldiff>
 
 

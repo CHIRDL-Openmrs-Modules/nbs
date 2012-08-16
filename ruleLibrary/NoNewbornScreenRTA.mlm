@@ -1,6 +1,6 @@
 Maintenance:
-	Title:		NoNewbornScreenRTA;;
-	Filename:	NoNewbornScreenRTA;;
+	Title:		NeedsRepeatRTA;;
+	Filename:	NeedsRepeatRTA;;
 	Version:	1.0;;
 	Institution:	Indiana University School of Medicine;;
 	Author:		;;
@@ -8,7 +8,7 @@ Maintenance:
 	Date:		04-20-2012;; 
 	Validation:	;;
 Library:
-	Purpose:	Provides a specific reminder, tailored to the patient who does not have a newborn screen on record;;
+	Purpose:	Provides a specific reminder, tailored to the patient who has no newborn screen;;
 	Explanation:	Based on AAP screening recommendations;;
   	Keywords:	newborn;;
 	Citations:	Screening for missing screen AAP;;
@@ -23,6 +23,8 @@ mode:=read {mode from Parameters};
 if (mode = PRODUCE) then
 nbsStatus := read {NewbornScreenStatus from CHICA};
 providers := read {user_id from provider};
+excluded_providers := read {CAH_Alerted from CHICA} within past 24 Hours;
+
 endif
 
 ;;
@@ -38,7 +40,9 @@ endif
 ;;
 Action:
 
-call CREATE_JITS with "NO_SCREEN", "providers_object";
+valid_providers := call getValidProviders with "providers_object", "excluded_providers_object";
+call CREATE_JITS with "NO_SCREEN", "valid_providers_object";
+
 
 ;;
 

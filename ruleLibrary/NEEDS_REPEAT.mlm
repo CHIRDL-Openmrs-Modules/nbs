@@ -1,0 +1,49 @@
+Maintenance:
+	Title:		NeedsRepeatScreen Reminder;;
+	Filename:	REPEAT_SCREEN;;
+	Version:	1.0;;
+	Institution:	Indiana University School of Medicine;;
+	Author:		;;
+	Specialist:	Pediatrics;;
+	Date:		03-20-2008;; 
+	Validation:	;;
+Library:
+	Purpose:	Provides a specific reminder, tailored to the patient who needs a repeat newborn screen;;
+	Explanation:	Based on AAP screening recommendations;;
+  	Keywords:	screen, newborn;;
+	Citations:	Screening needs repeat;;
+	Links:	;;
+Knowledge:
+	Type:	data_driven;;
+	
+Data:
+
+mode:=read {mode from Parameters}; 
+
+ 
+if (mode = PRODUCE) then
+
+provId:= read {providerId from Parameters};
+providerFirstName:= read {providerFirstName from Parameters};
+providerLastName:= read {providerLastName from Parameters}; 
+
+endif
+
+;;
+Priority:	;;
+Evoke:	;;
+
+Logic:
+If (mode = PRODUCE) then 
+
+conclude True;
+endif
+;;
+Action:
+
+write(" ||providerFirstName_value ||  || providerLastName_value || ")  At DrName;
+                                                                                                         
+write ("Our records show that || firstname || needs a repeat newborn screen.  An immediate collection is necessary to further evaluate this infant.") At paragraphOneText;
+
+;;
+end:
