@@ -41,7 +41,7 @@ import java.util.StringTokenizer;
 import org.openmrs.api.ConceptService;
 import java.text.SimpleDateFormat;
 public class Asthma_JIT implements Rule, DssRule{
-
+//Asthma jit 
 	private Patient patient;
 	private String firstname;
 	private ArrayList<String> actions;
