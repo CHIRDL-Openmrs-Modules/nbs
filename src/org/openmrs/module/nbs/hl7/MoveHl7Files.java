@@ -148,7 +148,7 @@ public class MoveHl7Files extends AbstractTask {
 			}
 			
 			//move files from the pending merge directory to the default merge directory
-			//until the batch size number of files are in the default merge directory
+			//until the batch size numbper of files are in the default merge directory
 			int i = 0;
 			for (i = 0; numFiles <= numFilesToMove && i < files.length; numFiles++, i++) {
 				File fileToMove = files[i];

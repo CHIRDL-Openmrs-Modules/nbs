@@ -19,7 +19,7 @@ import org.openmrs.Patient;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
-import org.openmrs.module.nbs.hl7.sms.PatientHandler;
+import org.openmrs.module.nbs.hl7.mckesson.PatientHandler;
 import org.openmrs.module.sockethl7listener.HL7EncounterHandler;
 import org.openmrs.module.sockethl7listener.HL7ObsHandler;
 import org.openmrs.module.sockethl7listener.HL7PatientHandler;

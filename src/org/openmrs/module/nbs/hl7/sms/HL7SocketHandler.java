@@ -685,6 +685,7 @@ public class HL7SocketHandler extends org.openmrs.module.sockethl7listener.HL7So
 		obs.setValueText(value);
 		obs.setDateCreated(new Date());
 		obs.setPerson(resultPatient);
+		obs.setObsDatetime(enc.getEncounterDatetime());
 		
 		return obs;
 	}

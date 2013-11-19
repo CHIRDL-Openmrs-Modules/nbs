@@ -10,6 +10,8 @@ import org.apache.commons.logging.LogFactory;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.nbs.hl7.PrinterLocationHL7Filter;
+import org.openmrs.module.nbs.hl7.mckesson.HL7PatientHandler25;
+import org.openmrs.module.nbs.hl7.mckesson.PatientHandler;
 import org.openmrs.module.sockethl7listener.HL7Filter;
 import org.openmrs.module.sockethl7listener.HL7ObsHandler25;
 import org.openmrs.module.sockethl7listener.SimpleServer;

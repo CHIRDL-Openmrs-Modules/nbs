@@ -15,6 +15,7 @@ import org.openmrs.Location;
 import org.openmrs.Patient;
 import org.openmrs.api.AdministrationService;
 import org.openmrs.api.LocationService;
+import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.atd.hibernateBeans.ATDError;
 import org.openmrs.module.atd.hibernateBeans.Session;
@@ -24,6 +25,7 @@ import org.openmrs.module.chirdlutil.util.Util;
 import org.openmrs.module.nbs.hibernateBeans.Encounter;
 import org.openmrs.module.nbs.service.EncounterService;
 import org.openmrs.module.nbs.service.NbsService;
+import org.openmrs.module.nbs.util.MatchLogger;
 import org.openmrs.module.sockethl7listener.HL7EncounterHandler;
 import org.openmrs.module.sockethl7listener.HL7Filter;
 import org.openmrs.module.sockethl7listener.HL7ObsHandler;
@@ -317,6 +319,43 @@ public class HL7SocketHandler extends
 
 		
 		return enc;
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	protected Patient findPatient(Patient hl7Patient
+			,Date encounterDate,HashMap<String,Object> parameters
+			) {
+
+		PatientService patientService = Context.getPatientService();
+		Patient resultPatient = new Patient();
+		
+		try {
+			MatchLogger.logFindRequest(hl7Patient, encounterDate);
+			Patient matchedPatient = super.findPatient(hl7Patient,encounterDate,
+					 parameters);
+			
+			MatchLogger.logResults(matchedPatient);
+			resultPatient = matchedPatient;
+			
+					
+		} catch (RuntimeException e) {
+			logger.error("Exception logging creating or updating patient. " + e.getMessage() 
+					+ " pid = " +  resultPatient.getPatientId());
+		}
+		return resultPatient;
+
+	}
+	
+	@Override
+	protected Patient createPatient(Patient p){
+		
+		Patient createdPatient = super.createPatient(p);
+		if (createdPatient != null){
+			MatchLogger.logCreatedPatient(createdPatient,createdPatient.getPatientId());
+		}
+			
+		return createdPatient;
 	}
 	
 	
